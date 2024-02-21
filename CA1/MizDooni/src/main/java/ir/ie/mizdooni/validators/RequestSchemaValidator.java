@@ -6,15 +6,16 @@ import java.util.regex.Pattern;
 import java.util.Arrays;
 import java.util.List;
 
+import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
+import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
+
 public class RequestSchemaValidator {
     final static List<String> userAdditionKeys = Arrays.asList("username", "password", "role", "email", "address");
     final static List<String> restAdditionKeys = Arrays.asList("name", "managerUsername", "startTime", "endTime",
             "address", "description", "type");
     final static List<String> userAdditionAddressKeys = Arrays.asList("city", "country");
     final static List<String> restAdditionAddressKeys = Arrays.asList("city", "country", "street");
-    final static String opAddUser = "addUser";
-    final static String opAddRestaurant = "addRestaurant";
-    final static String opAddTable = "addUser";
+
 
     public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws Exception {
         for (String key : keys) {
@@ -73,11 +74,11 @@ public class RequestSchemaValidator {
         String op = r.getOperation();
         Map<String, Object> data = r.getData();
         switch (op) {
-            case opAddUser:
+            case OP_ADD_USER:
                 System.out.println("Calling Validate add user");
                 validateAddUser(data);
                 break;
-            case opAddRestaurant:
+            case OP_ADD_RESTAURANT:
                 validateAddRest(data);
                 break;
         }
