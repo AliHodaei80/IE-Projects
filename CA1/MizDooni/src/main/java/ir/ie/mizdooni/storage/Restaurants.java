@@ -2,8 +2,9 @@ package ir.ie.mizdooni.storage;
 
 import ir.ie.mizdooni.models.Restaurant;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Restaurants {
-    List<Restaurant> restaurants;
+    HashMap<String, Restaurant> restaurants;
 }

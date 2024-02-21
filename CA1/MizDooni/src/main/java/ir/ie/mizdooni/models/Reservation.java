@@ -1,16 +1,18 @@
 package ir.ie.mizdooni.models;
 
+import java.util.Date;
+
 public class Reservation {
     String username;
     String restaurantName;
     int tableNumber;
-    String datetime;
+    Date date;
 
-    public Reservation(String username, String restaurantName, int tableNumber, String datetime) {
+    public Reservation(String username, String restaurantName, int tableNumber, Date date) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.tableNumber = tableNumber;
-        this.datetime = datetime;
+        this.date = date;
     }
 
     public String getUsername() {
@@ -37,11 +39,11 @@ public class Reservation {
         this.tableNumber = tableNumber;
     }
 
-    public String getDatetime() {
-        return datetime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
