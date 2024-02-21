@@ -2,16 +2,17 @@ package ir.ie.mizdooni.controllers;
 
 import ir.ie.mizdooni.commons.Request;
 import ir.ie.mizdooni.commons.Response;
+import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.UserHandler;
 
 import java.util.Map;
-import java.util.Objects;
 
-import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
+import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
+import static ir.ie.mizdooni.defines.RequestKeys.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddUser;
 
 public class MizDooniController {
@@ -38,14 +39,15 @@ public class MizDooniController {
 
     public Response addUser(Map<String, Object> data) {
         try {
-            userHandler.addUser((String) data.get("username"),
-                    (String) data.get("email"),
-                    (String) data.get("role"),
-                    (String) data.get("password"),
-                    (Map<String, String>) data.get("address")
+            userHandler.addUser((String) data.get(USERNAME_KEY),
+                    (String) data.get(EMAIL_KEY),
+                    (String) data.get(USER_ROLE_KEY),
+                    (String) data.get(PASSWORD_KEY),
+                    (Map<String, String>) data.get(USER_ADDRESS_KEY)
             );
             return new Response(true, "User added successfully.");
-        } catch (Exception e) {
+        } catch (
+                UserNameAlreadyTaken | EmailAlreadyTaken | InvalidUserRole e) {
             return new Response(false, e.getMessage());
         }
 
@@ -60,11 +62,11 @@ public class MizDooniController {
                 try {
                     validateAddUser(data);
                     return addUser(data);
-                } catch (Exception e) {
+                } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat e) {
                     return new Response(false, e.getMessage());
                 }
             default:
-                return new Response(false, "Unsupported command");
+                return new Response(false, UNSUPPORTED_COMMAND);
         }
     }
 }

@@ -2,6 +2,7 @@ package ir.ie.mizdooni.services;
 
 public class ReservationHandler {
     private static ReservationHandler reservationHandler;
+
     private ReservationHandler() {
     }
 

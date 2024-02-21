@@ -1,26 +1,33 @@
 package ir.ie.mizdooni.validators;
 
 import ir.ie.mizdooni.commons.Request;
-import java.util.Map;
-import java.util.regex.Pattern;
+import ir.ie.mizdooni.exceptions.InvalidEmailFormat;
+import ir.ie.mizdooni.exceptions.InvalidRequestFormat;
+import ir.ie.mizdooni.exceptions.InvalidTimeFormat;
+import ir.ie.mizdooni.exceptions.InvalidUsernameFormat;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
+import static ir.ie.mizdooni.defines.RequestKeys.*;
 
 public class RequestSchemaValidator {
-    final static List<String> userAdditionKeys = Arrays.asList("username", "password", "role", "email", "address");
-    final static List<String> restAdditionKeys = Arrays.asList("name", "managerUsername", "startTime", "endTime",
-            "address", "description", "type");
-    final static List<String> userAdditionAddressKeys = Arrays.asList("city", "country");
-    final static List<String> restAdditionAddressKeys = Arrays.asList("city", "country", "street");
+    final static List<String> userAdditionKeys = Arrays.asList(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,
+            USER_ADDRESS_KEY);
+    final static List<String> restAdditionKeys = Arrays.asList(ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
+            START_TIME_KEY, END_TIME_KEY, RESTAURANT_ADDRESS_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY);
+    final static List<String> userAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY);
+    final static List<String> restAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY, STREET_KEY);
 
 
-    public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws Exception {
+    public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws InvalidRequestFormat {
         for (String key : keys) {
             if (!data.containsKey(key)) {
-                throw new Exception(String.format("%s field was missing", key));
+                throw new InvalidRequestFormat(key);
             }
         }
     }
@@ -31,46 +38,47 @@ public class RequestSchemaValidator {
                 .matches();
     }
 
-    public static void emailCheck(String email) throws Exception {
+    public static void emailCheck(String email) throws InvalidEmailFormat {
         String regexPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         if (!patternMatches(email, regexPattern)) {
-            throw new Exception("Email format was wrong!");
+            throw new InvalidEmailFormat();
         }
     }
 
-    public static void validateTime(String timeString) throws Exception {
+    public static void validateTime(String timeString) throws InvalidTimeFormat {
         String regexPattern = "^([0-1]?[0-9]|2[0-3]):[0][0]$";
         if (!patternMatches(timeString, regexPattern)) {
-            throw new Exception("Time Format was wrong");
+            throw new InvalidTimeFormat();
         }
     }
 
-    public static void usernameCheck(String username) throws Exception {
+    public static void usernameCheck(String username) throws InvalidUsernameFormat {
         boolean invalid = (username.contains("!") || username.contains("@")
                 || username.contains("&") || username.contains(" "));
         if (invalid) {
-            throw new Exception("Invalid username format");
+            throw new InvalidUsernameFormat();
         }
 
     }
 
-    public static void validateAddUser(Map<String, Object> data) throws Exception {
+    public static void validateAddUser(Map<String, Object> data)
+            throws InvalidEmailFormat, InvalidRequestFormat, InvalidUsernameFormat {
         // TODO fix this(some cases will fail)
         checkKeyInclusion(data, userAdditionKeys);
-        usernameCheck((String) data.get("username"));
-        emailCheck((String) data.get("email"));
-        checkKeyInclusion((Map<String, Object>) (data.get("address")), userAdditionAddressKeys);
+        usernameCheck((String) data.get(USERNAME_KEY));
+        emailCheck((String) data.get(EMAIL_KEY));
+        checkKeyInclusion((Map<String, Object>) (data.get(USER_ADDRESS_KEY)), userAdditionAddressKeys);
     }
 
-    public static void validateAddRest(Map<String, Object> data) throws Exception {
+    public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
         checkKeyInclusion(data, restAdditionAddressKeys); // TODO fix this(some cases will fail)
-        checkKeyInclusion((Map<String, Object>) (data.get("address")), restAdditionAddressKeys);
-        validateTime((String) data.get("endTime"));
-        validateTime((String) data.get("startTime"));
-
+        checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
+        validateTime((String) data.get(END_TIME_KEY));
+        validateTime((String) data.get(START_TIME_KEY));
     }
 
-    public static void validate(Request r) throws Exception {
+    public static void validate(Request r)
+            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat {
         String op = r.getOperation();
         Map<String, Object> data = r.getData();
         switch (op) {

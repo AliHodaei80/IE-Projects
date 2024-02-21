@@ -1,6 +1,10 @@
 package ir.ie.mizdooni;
 
 import ir.ie.mizdooni.controllers.MizDooniController;
+import ir.ie.mizdooni.exceptions.InvalidEmailFormat;
+import ir.ie.mizdooni.exceptions.InvalidRequestFormat;
+import ir.ie.mizdooni.exceptions.InvalidTimeFormat;
+import ir.ie.mizdooni.exceptions.InvalidUsernameFormat;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.validators.RequestSchemaValidator;
 
@@ -29,13 +33,12 @@ public class MizDooniApplication {
 		String request_payload = g.toJson(request_m);
 		System.out.println(request_payload);
 		Request r = Parser.parse("addUser".concat(" ").concat(request_payload));
-		try {
-			RequestSchemaValidator.validate(r);
+        try {
+            RequestSchemaValidator.validate(r);
 			System.out.println(r.getOperation() + " Was Successful");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
+		} catch (InvalidTimeFormat | InvalidUsernameFormat |InvalidRequestFormat | InvalidEmailFormat e) {
+            System.out.println(e.getMessage());
+        }
 		String command = "addUser {\"role\": \"client\", \"username\": \"user1\", \"password\": \"1234\", \"email\":\"user1@gmail.com\", \"address\": {\"country\": \"Iran\", \"city\": \"Tehran\"}}";
 		Request request = Parser.parse(command);
 		MizDooniController controller = MizDooniController.getInstance();

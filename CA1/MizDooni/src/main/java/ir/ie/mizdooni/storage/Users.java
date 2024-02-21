@@ -5,7 +5,6 @@ import ir.ie.mizdooni.models.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 public class Users {
     Map<String, User> users;
@@ -28,6 +27,6 @@ public class Users {
     }
 
     public void addUser(String username, String email, String role, String password, Map<String, String> address) {
-        users.put(username, new User(username,password, email, address, role));
+        users.put(username, new User(username, password, email, address, role));
     }
 }
