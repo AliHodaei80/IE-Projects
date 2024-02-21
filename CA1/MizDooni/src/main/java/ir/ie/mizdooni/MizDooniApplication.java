@@ -1,5 +1,6 @@
 package ir.ie.mizdooni;
 
+import ir.ie.mizdooni.controllers.MizDooniController;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.validators.RequestSchemaValidator;
 
@@ -34,6 +35,15 @@ public class MizDooniApplication {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+
+		String command = "addUser {\"role\": \"client\", \"username\": \"user1\", \"password\": \"1234\", \"email\":\"user1@gmail.com\", \"address\": {\"country\": \"Iran\", \"city\": \"Tehran\"}}";
+		Request request = Parser.parse(command);
+		MizDooniController controller = MizDooniController.getInstance();
+		System.out.println(controller.handleRequest(request));
+		command = "addUser {\"role\": \"client\", \"username\": \"user12\", \"password\": \"1234\", \"email\":\"user2@gmail.com\", \"address\": {\"country\": \"Iran\", \"city\": \"Tehran\"}}";
+		request = Parser.parse(command);
+		System.out.println(controller.handleRequest(request));
+		System.out.println();
 
 	}
 
