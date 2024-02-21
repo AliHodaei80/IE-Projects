@@ -12,14 +12,16 @@ public class RequestSchemaValidator {
             "address", "description", "type");
     final static List<String> userAdditionAddressKeys = Arrays.asList("city", "country");
     final static List<String> restAdditionAddressKeys = Arrays.asList("city", "country", "street");
+    final static String opAddUser = "addUser";
+    final static String opAddRestaurant = "addRestaurant";
+    final static String opAddTable = "addUser";
 
-    public static boolean checkKeyInclusion(Map<String, Object> data, List<String> keys) {
+    public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws Exception {
         for (String key : keys) {
             if (!data.containsKey(key)) {
-                return false;
+                throw new Exception(String.format("%s field was missing", key));
             }
         }
-        return true;
     }
 
     public static boolean patternMatches(String str, String regexPattern) {
@@ -28,36 +30,56 @@ public class RequestSchemaValidator {
                 .matches();
     }
 
-    public static boolean emailCheck(String email) {
-        String regexPattern = "^(.+)@(\\S+)$";
-        return patternMatches(email, regexPattern);
+    public static void emailCheck(String email) throws Exception {
+        String regexPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        if (!patternMatches(email, regexPattern)) {
+            throw new Exception("Email format was wrong!");
+        }
     }
 
-    public static boolean validateTime(String timeString) {
+    public static void validateTime(String timeString) throws Exception {
         String regexPattern = "^([0-1]?[0-9]|2[0-3]):[0][0]$";
-        return patternMatches(timeString, regexPattern);
+        if (!patternMatches(timeString, regexPattern)) {
+            throw new Exception("Time Format was wrong");
+        }
     }
 
-    public static boolean usernameCheck(String username) {
-        return !(username.contains("!") || username.contains("@")
-                || username.contains("&") || username.contains(" ")); // TODO complete if there is more
-    }
-
-    public static boolean validateAddUser(Map<String, Object> data) {
-        return checkKeyInclusion(data, userAdditionKeys) // TODO fix this(some cases will fail)
-                && checkKeyInclusion((Map<String, Object>) (data.get("address")), userAdditionAddressKeys);
-    }
-
-    public static boolean validateAddRest(Map<String, Object> data) {
-        return checkKeyInclusion(data, restAdditionAddressKeys) // TODO fix this(some cases will fail)
-                && checkKeyInclusion((Map<String, Object>) (data.get("address")), restAdditionAddressKeys)
-                && validateTime((String) data.get("endTime")) && validateTime((String) data.get("startTime"));
+    public static void usernameCheck(String username) throws Exception {
+        boolean invalid = (username.contains("!") || username.contains("@")
+                || username.contains("&") || username.contains(" "));
+        if (invalid) {
+            throw new Exception("Invalid username format");
+        }
 
     }
 
-    public static boolean validate(Request r) {
+    public static void validateAddUser(Map<String, Object> data) throws Exception {
+        // TODO fix this(some cases will fail)
+        checkKeyInclusion(data, userAdditionKeys);
+        usernameCheck((String) data.get("username"));
+        emailCheck((String) data.get("email"));
+        checkKeyInclusion((Map<String, Object>) (data.get("address")), userAdditionAddressKeys);
+    }
+
+    public static void validateAddRest(Map<String, Object> data) throws Exception {
+        checkKeyInclusion(data, restAdditionAddressKeys); // TODO fix this(some cases will fail)
+        checkKeyInclusion((Map<String, Object>) (data.get("address")), restAdditionAddressKeys);
+        validateTime((String) data.get("endTime"));
+        validateTime((String) data.get("startTime"));
+
+    }
+
+    public static void validate(Request r) throws Exception {
         String op = r.getOperation();
-
-        return false;
+        Map<String, Object> data = r.getData();
+        switch (op) {
+            case opAddUser:
+                System.out.println("Calling Validate add user");
+                validateAddUser(data);
+                break;
+            case opAddRestaurant:
+                validateAddRest(data);
+                break;
+        }
     }
 }
