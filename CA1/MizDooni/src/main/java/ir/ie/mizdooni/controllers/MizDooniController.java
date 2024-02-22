@@ -13,7 +13,7 @@ import java.util.Map;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
 import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
-import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddUser;
+import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
 
 public class MizDooniController {
     private static UserHandler userHandler;
@@ -56,15 +56,16 @@ public class MizDooniController {
     public Response handleRequest(Request request) {
         String op = request.getOperation();
         Map<String, Object> data = request.getData();
+        try {
+            validate(request);
+        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat e) {
+            return new Response(false, e.getMessage());
+
+        }
         switch (op) {
             case OP_ADD_USER:
                 System.out.println("Calling Validate add user");
-                try {
-                    validateAddUser(data);
-                    return addUser(data);
-                } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat e) {
-                    return new Response(false, e.getMessage());
-                }
+                return addUser(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }
