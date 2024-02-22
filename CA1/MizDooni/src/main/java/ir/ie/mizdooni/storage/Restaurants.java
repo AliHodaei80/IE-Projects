@@ -6,6 +6,7 @@ import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.services.UserHandler;
 
 import java.sql.Date;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +22,8 @@ public class Restaurants {
         return restaurants.get(restName);
     }
 
-    public void addRestaurant(String restName, String type, String startTime, String endTime, String desc,
-            String managerUsername, Map<String, String> address) {
-        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, managerUsername, address));
+    public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
+                              String managerUsername, Map<String, String> address) {
+        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address));
     }
 }

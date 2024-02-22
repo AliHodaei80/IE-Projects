@@ -6,6 +6,9 @@ import ir.ie.mizdooni.exceptions.InvalidRequestFormat;
 import ir.ie.mizdooni.exceptions.InvalidTimeFormat;
 import ir.ie.mizdooni.exceptions.InvalidUsernameFormat;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +17,7 @@ import java.util.regex.Pattern;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
+import static ir.ie.mizdooni.defines.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class RequestSchemaValidator {
     final static List<String> userAdditionKeys = Arrays.asList(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,
@@ -46,9 +50,11 @@ public class RequestSchemaValidator {
     }
 
     public static void validateTime(String timeString) throws InvalidTimeFormat {
-        String regexPattern = "^([0-1]?[0-9]|2[0-3]):[0][0]$";
-        if (!patternMatches(timeString, regexPattern)) {
-            throw new InvalidTimeFormat();
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT);
+            LocalTime.parse(timeString, formatter);
+        } catch (DateTimeParseException e) {
+            throw new InvalidTimeFormat(RESTAURANT_TIME_FORMAT);
         }
     }
 
@@ -71,7 +77,7 @@ public class RequestSchemaValidator {
     }
 
     public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
-        checkKeyInclusion(data, restAdditionAddressKeys); // TODO fix this(some cases will fail)
+        checkKeyInclusion(data, restAdditionKeys); // TODO fix this(some cases will fail)
         checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
         validateTime((String) data.get(END_TIME_KEY));
         validateTime((String) data.get(START_TIME_KEY));

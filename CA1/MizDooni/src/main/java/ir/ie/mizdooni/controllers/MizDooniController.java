@@ -46,7 +46,7 @@ public class MizDooniController {
                     (Map<String, String>) data.get(USER_ADDRESS_KEY));
             return new Response(true, "User added successfully.");
         } catch (
-                UserNameAlreadyTaken | CustomErrors | InvalidUserRole e) {
+                UserNameAlreadyTaken | InvalidUserRole | EmailAlreadyTaken e) {
             return new Response(false, e.getMessage());
         }
 
@@ -54,15 +54,16 @@ public class MizDooniController {
 
     public Response addRestaurant(Map<String, Object> data) {
         try {
-            RestaurantHandler.addRestaurant((String) data.get(ADD_RESTAURANT_NAME_KEY),
+            restaurantHandler.addRestaurant((String) data.get(ADD_RESTAURANT_NAME_KEY),
+                    (String) data.get(RESTAURANT_TYPE_KEY),
                     (String) data.get(START_TIME_KEY),
                     (String) data.get(END_TIME_KEY),
                     (String) data.get(MANAGER_USERNAME_KEY),
                     (String) data.get(DESCRIPTION_KEY),
                     (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY));
-            return new Response(true, "User added successfully.");
+            return new Response(true, "Restaurant added successfully.");
         } catch (
-                 InvalidUserRole | RestaurantManagerNotFound | e) {
+                 InvalidUserRole | RestaurantManagerNotFound e) {
             return new Response(false, e.getMessage());
         }
 
@@ -81,7 +82,7 @@ public class MizDooniController {
             case OP_ADD_USER:
                 return addUser(data);
             case OP_ADD_RESTAURANT:
-                return addUser(data);
+                return addRestaurant(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }

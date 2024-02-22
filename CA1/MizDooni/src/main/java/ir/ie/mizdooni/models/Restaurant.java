@@ -1,20 +1,24 @@
 package ir.ie.mizdooni.models;
 
+import java.time.LocalTime;
 import java.util.Map;
 
 public class Restaurant {
     String name;
-    String startTime;
-    String endTime;
+    LocalTime startTime;
+    LocalTime endTime;
     String type;
+    String description;
     String managerUsername;
     Map<String, String> address;
 
-    public Restaurant(String name, String startTime, String endTime, String type, String managerUsername, Map<String, String> address) {
+    public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,
+                      String managerUsername, Map<String, String> address) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.type = type;
+        this.description = description;
         this.managerUsername = managerUsername;
         this.address = address;
     }
@@ -27,19 +31,19 @@ public class Restaurant {
         this.name = name;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
