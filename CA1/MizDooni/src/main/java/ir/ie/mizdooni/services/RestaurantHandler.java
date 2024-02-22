@@ -7,12 +7,19 @@ import ir.ie.mizdooni.exceptions.RestaurantManagerNotFound;
 import ir.ie.mizdooni.exceptions.InvalidUserRole;
 
 import ir.ie.mizdooni.models.UserRole;
+import ir.ie.mizdooni.storage.Restaurants;
+import ir.ie.mizdooni.utils.Parser;
+
+import static ir.ie.mizdooni.defines.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class RestaurantHandler {
     private static RestaurantHandler restaurantHandler;
-    private static UserHandler userHandler;
+    private final UserHandler userHandler;
+    private final Restaurants restaurants;
 
     private RestaurantHandler() {
+        userHandler = UserHandler.getInstance();
+        restaurants = new Restaurants();
     }
 
     private boolean isManager(String managerUsername) {
@@ -25,21 +32,18 @@ public class RestaurantHandler {
         return (u != null);
     }
 
-    public void addRestaurant(String name,
-            String startTimeString,
-            String endTimeString,
-            String managerUsernameString,
-            String descriptionString,
-            Map<String, String> address)
+    public void addRestaurant(String name, String type, String startTime, String endTime, String managerUsername,
+                              String description, Map<String, String> address)
             throws RestaurantManagerNotFound, InvalidUserRole {
-        if (!managerExists(managerUsernameString)) {
+
+        if (!managerExists(managerUsername)) {
             throw new RestaurantManagerNotFound();
         }
-        if (!(isManager(managerUsernameString))) {
+        if (!(isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
-        // users.addUser(username, email, UserRole.getUserRole(role), password,
-        // address);
+        restaurants.addRestaurant(name, type, Parser.parseTime(startTime, RESTAURANT_TIME_FORMAT),
+                Parser.parseTime(endTime, RESTAURANT_TIME_FORMAT), description, managerUsername, address);
     }
 
     public static RestaurantHandler getInstance() {

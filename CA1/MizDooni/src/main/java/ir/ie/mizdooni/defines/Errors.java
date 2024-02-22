@@ -8,7 +8,7 @@ public class Errors {
     public static final String EMAIL_ALREADY_TAKEN = "Username should be unique. Choose another one.";
     public static final String INVALID_USERNAME_FORMAT = "Invalid username format";
     public static final String INVALID_EMAIL_FORMAT = "Invalid email format";
-    public static final String INVALID_TIME_FORMAT = "Invalid time format";
+    public static final String INVALID_TIME_FORMAT = "Invalid time format. Format should be: ";
     public static final String REST_M_NOT_FOUND = "Restaurant manager was not found";
     public static final String REST_NAME_NOT_UNIQUE = "Restaurant name was not unique";
 
