@@ -63,7 +63,7 @@ public class MizDooniController {
                     (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY));
             return new Response(true, "Restaurant added successfully.");
         } catch (
-                 InvalidUserRole | RestaurantManagerNotFound e) {
+                 InvalidUserRole | RestaurantManagerNotFound | RestaurentExists e) {
             return new Response(false, e.getMessage());
         }
 

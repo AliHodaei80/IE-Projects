@@ -4,8 +4,10 @@ import java.util.Map;
 
 import ir.ie.mizdooni.exceptions.RestaurantNameNotUnique;
 import ir.ie.mizdooni.exceptions.RestaurantManagerNotFound;
-import ir.ie.mizdooni.exceptions.InvalidUserRole;
+import ir.ie.mizdooni.exceptions.RestaurentExists;
 
+import ir.ie.mizdooni.exceptions.InvalidUserRole;
+import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Restaurants;
 import ir.ie.mizdooni.utils.Parser;
@@ -32,9 +34,19 @@ public class RestaurantHandler {
         return (u != null);
     }
 
-    public void addRestaurant(String name, String type, String startTime, String endTime, String managerUsername,
-                              String description, Map<String, String> address)
-            throws RestaurantManagerNotFound, InvalidUserRole {
+    public Restaurant getRestaurant(String restName) {
+        Restaurant res = restaurants.getRestaurantByName(restName);
+        return res;
+    }
+
+    public boolean restaurantExists(String restName) {
+        System.out.println(getRestaurant(restName));
+        return getRestaurant(restName) == null;
+    }
+
+    public void addRestaurant(String restName, String type, String startTime, String endTime, String managerUsername,
+            String description, Map<String, String> address)
+            throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {
 
         if (!managerExists(managerUsername)) {
             throw new RestaurantManagerNotFound();
@@ -42,7 +54,10 @@ public class RestaurantHandler {
         if (!(isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
-        restaurants.addRestaurant(name, type, Parser.parseTime(startTime, RESTAURANT_TIME_FORMAT),
+        if (!(restaurantExists(restName))){
+            throw new RestaurentExists();
+        }
+        restaurants.addRestaurant(restName, type, Parser.parseTime(startTime, RESTAURANT_TIME_FORMAT),
                 Parser.parseTime(endTime, RESTAURANT_TIME_FORMAT), description, managerUsername, address);
     }
 
