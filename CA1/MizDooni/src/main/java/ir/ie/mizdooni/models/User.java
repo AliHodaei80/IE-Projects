@@ -7,9 +7,9 @@ public class User {
     String password;
     String email;
     Map<String, String> address;
-    String role;
+    UserRole role;
 
-    public User(String username, String password, String email, Map<String, String> address, String role) {
+    public User(String username, String password, String email, Map<String, String> address, UserRole role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -49,11 +49,11 @@ public class User {
         this.address = address;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 }

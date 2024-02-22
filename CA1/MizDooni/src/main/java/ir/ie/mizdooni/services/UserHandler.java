@@ -3,6 +3,7 @@ package ir.ie.mizdooni.services;
 import ir.ie.mizdooni.exceptions.EmailAlreadyTaken;
 import ir.ie.mizdooni.exceptions.InvalidUserRole;
 import ir.ie.mizdooni.exceptions.UserNameAlreadyTaken;
+import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Users;
 
 import java.util.Arrays;
@@ -30,7 +31,7 @@ public class UserHandler {
         if (!isUserRoleValid(role)) {
             throw new InvalidUserRole();
         }
-        users.addUser(username, email, role, password, address);
+        users.addUser(username, email, UserRole.getUserRole(role), password, address);
     }
 
     private boolean isUsernameUnique(String username) {
@@ -42,7 +43,7 @@ public class UserHandler {
     }
 
     private boolean isUserRoleValid(String role) {
-        return usersRole.contains(role);
+        return UserRole.getUserRole(role) != null;
     }
 
     public static UserHandler getInstance() {

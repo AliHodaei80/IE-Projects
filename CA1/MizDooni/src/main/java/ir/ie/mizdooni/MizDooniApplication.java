@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class MizDooniApplication {
 
     public static void main(String[] args) {
+        // addUser {"role": "client", "username": "user1", "password": "1234", "email":"user1@gmail.com", "address": {"country": "Iran", "city": "Tehran"}}
         MizDooniController controller = MizDooniController.getInstance();
         Request request;
         Scanner in = new Scanner(System.in);

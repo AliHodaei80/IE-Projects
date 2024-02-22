@@ -83,7 +83,6 @@ public class RequestSchemaValidator {
         Map<String, Object> data = r.getData();
         switch (op) {
             case OP_ADD_USER:
-                System.out.println("Calling Validate add user");
                 validateAddUser(data);
                 break;
             case OP_ADD_RESTAURANT:

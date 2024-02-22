@@ -64,7 +64,6 @@ public class MizDooniController {
         }
         switch (op) {
             case OP_ADD_USER:
-                System.out.println("Calling Validate add user");
                 return addUser(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
