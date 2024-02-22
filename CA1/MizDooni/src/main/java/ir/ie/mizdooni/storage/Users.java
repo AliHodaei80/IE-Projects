@@ -18,6 +18,7 @@ public class Users {
         return users.get(username);
     }
 
+
     public User getUserByEmail(String email) {
         return new ArrayList<>(users.values())
                 .stream()

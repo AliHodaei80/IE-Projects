@@ -10,6 +10,7 @@ import ir.ie.mizdooni.services.UserHandler;
 
 import java.util.Map;
 
+import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
 import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
@@ -22,7 +23,6 @@ public class MizDooniController {
     private static RestaurantHandler restaurantHandler;
 
     private static MizDooniController mizDooniController;
-
 
     private MizDooniController() {
         userHandler = UserHandler.getInstance();
@@ -43,11 +43,26 @@ public class MizDooniController {
                     (String) data.get(EMAIL_KEY),
                     (String) data.get(USER_ROLE_KEY),
                     (String) data.get(PASSWORD_KEY),
-                    (Map<String, String>) data.get(USER_ADDRESS_KEY)
-            );
+                    (Map<String, String>) data.get(USER_ADDRESS_KEY));
             return new Response(true, "User added successfully.");
         } catch (
-                UserNameAlreadyTaken | EmailAlreadyTaken | InvalidUserRole e) {
+                UserNameAlreadyTaken | CustomErrors | InvalidUserRole e) {
+            return new Response(false, e.getMessage());
+        }
+
+    }
+
+    public Response addRestaurant(Map<String, Object> data) {
+        try {
+            RestaurantHandler.addRestaurant((String) data.get(ADD_RESTAURANT_NAME_KEY),
+                    (String) data.get(START_TIME_KEY),
+                    (String) data.get(END_TIME_KEY),
+                    (String) data.get(MANAGER_USERNAME_KEY),
+                    (String) data.get(DESCRIPTION_KEY),
+                    (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY));
+            return new Response(true, "User added successfully.");
+        } catch (
+                 InvalidUserRole | RestaurantManagerNotFound | e) {
             return new Response(false, e.getMessage());
         }
 
@@ -64,6 +79,8 @@ public class MizDooniController {
         }
         switch (op) {
             case OP_ADD_USER:
+                return addUser(data);
+            case OP_ADD_RESTAURANT:
                 return addUser(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
