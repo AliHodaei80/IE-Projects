@@ -3,3 +3,4 @@ addUser {"role": "manager","username": "user2","password": "1234","email": "user
 addRestaurant {"name": "restaurant1","managerUsername": "user1","type": "Iranian","startTime": "08:00","endTime": "23:00","description": "Open seven days a week","address": {"country": "Iran","city": "Tehran","street": "North Kargar"}}
 addRestaurant {"name": "r1","managerUsername": "user2","type": "Iranian","startTime": "08:00","endTime": "23:00","description": "Open seven days a week","address": {"country": "Iran","city": "Tehran","street": "North Kargar"}}
 addTable {"tableNumber": 1,"restaurantName": "r1","managerUsername": "user3","seatsNumber": 4}
+exit
