@@ -5,4 +5,6 @@ public class Commands {
     public final static String OP_ADD_USER = "addUser";
     public final static String OP_ADD_RESTAURANT = "addRestaurant";
     public final static String OP_ADD_TABLE = "addTable";
+    public final static String OP_RESERVE_TABLE = "reserveTable";
+
 }

@@ -1,28 +1,23 @@
 package ir.ie.mizdooni.services;
 
-import java.util.Map;
-
 import ir.ie.mizdooni.exceptions.InvalidUserRole;
 import ir.ie.mizdooni.exceptions.RestaurantManagerNotFound;
 import ir.ie.mizdooni.exceptions.RestaurantNotFound;
-
 import ir.ie.mizdooni.exceptions.TableAlreadyExists;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.RestaurantTables;
-import ir.ie.mizdooni.storage.Restaurants;
-import ir.ie.mizdooni.utils.Parser;
 
 public class RestaurantTableHandler {
 
     private static RestaurantTableHandler restaurantTableHandler;
     private final RestaurantHandler restaurantsHandler;
     private final UserHandler userHandler;
-    private final RestaurantTables restauarantTables;
+    private final RestaurantTables restaurantTables;
 
     private RestaurantTableHandler(RestaurantHandler restsHandler, UserHandler usrHandler) {
         restaurantsHandler = restsHandler;
         userHandler = usrHandler;
-        restauarantTables = new RestaurantTables();
+        restaurantTables = new RestaurantTables();
     }
 
     public void addRestaurantTable(String restName, Long tableNo, Long seatsNo, String managerUsername)
@@ -34,16 +29,15 @@ public class RestaurantTableHandler {
                 && (restaurantsHandler.isManager(managerUsername)))) {
             throw new InvalidUserRole();
         }
-        if (restauarantTables.tableExists(restName, tableNo)) {
+        if (restaurantTables.tableExists(restName, tableNo)) {
             throw new TableAlreadyExists();
-
         }
-        restauarantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
-        System.out.println(restauarantTables.getAllTables());
+        restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
+        System.out.println(restaurantTables.getAllTables());
     }
 
     public static RestaurantTableHandler getInstance(RestaurantHandler restaurantHandler,
-            UserHandler userHandler) {
+                                                     UserHandler userHandler) {
         if (restaurantTableHandler == null)
             restaurantTableHandler = new RestaurantTableHandler(restaurantHandler, userHandler);
         return restaurantTableHandler;
