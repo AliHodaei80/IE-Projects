@@ -1,23 +1,23 @@
 package ir.ie.mizdooni.models;
 
 public class RestaurantTable {
-    int tableNumber;
+    Long tableNumber;
     String restaurantName;
     String managerUsername;
-    int seatsNumber;
+    Long seatsNumber;
 
-    public RestaurantTable(int tableNumber, String restaurantName, String managerUsername, int seatsNumber) {
+    public RestaurantTable(Long tableNumber, String restaurantName, String managerUsername, Long seatsNumber) {
         this.tableNumber = tableNumber;
         this.restaurantName = restaurantName;
         this.managerUsername = managerUsername;
         this.seatsNumber = seatsNumber;
     }
 
-    public int getTableNumber() {
+    public Long getTableNumber() {
         return tableNumber;
     }
 
-    public void setTableNumber(int tableNumber) {
+    public void setTableNumber(Long tableNumber) {
         this.tableNumber = tableNumber;
     }
 
@@ -37,11 +37,11 @@ public class RestaurantTable {
         this.managerUsername = managerUsername;
     }
 
-    public int getSeatsNumber() {
+    public Long getSeatsNumber() {
         return seatsNumber;
     }
 
-    public void setSeatsNumber(int seatsNumber) {
+    public void setSeatsNumber(Long seatsNumber) {
         this.seatsNumber = seatsNumber;
     }
 }

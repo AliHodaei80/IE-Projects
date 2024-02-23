@@ -25,13 +25,13 @@ public class RestaurantTableHandler {
         restauarantTables = new RestaurantTables();
     }
 
-    public void addRestaurantTable(String restName, int tableNo, int seatsNo, String managerUsername)
+    public void addRestaurantTable(String restName, Long tableNo, Long seatsNo, String managerUsername)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists {
-        if (!restaurantsHandler.restaurantExists(managerUsername)) {
+        if (!restaurantsHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
         }
-        if (!(userHandler.getUserRole(managerUsername).equals(UserRole.MANAGER))
-                || !(restaurantsHandler.isManager(managerUsername))) {
+        if (!((userHandler.getUserRole(managerUsername) == (UserRole.MANAGER))
+                && (restaurantsHandler.isManager(managerUsername)))) {
             throw new InvalidUserRole();
         }
         if (restauarantTables.tableExists(restName, tableNo)) {
@@ -39,6 +39,7 @@ public class RestaurantTableHandler {
 
         }
         restauarantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
+        System.out.println(restauarantTables.getAllTables());
     }
 
     public static RestaurantTableHandler getInstance(RestaurantHandler restaurantHandler,

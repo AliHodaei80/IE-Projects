@@ -40,8 +40,7 @@ public class RestaurantHandler {
     }
 
     public boolean restaurantExists(String restName) {
-        System.out.println(getRestaurant(restName));
-        return getRestaurant(restName) == null;
+        return getRestaurant(restName) != null;
     }
 
     public void addRestaurant(String restName, String type, String startTime, String endTime, String managerUsername,
@@ -54,7 +53,7 @@ public class RestaurantHandler {
         if (!(isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
-        if (!(restaurantExists(restName))){
+        if ((restaurantExists(restName))){
             throw new RestaurentExists();
         }
         restaurants.addRestaurant(restName, type, Parser.parseTime(startTime, RESTAURANT_TIME_FORMAT),
