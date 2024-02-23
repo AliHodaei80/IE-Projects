@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static ir.ie.mizdooni.defines.Commands.*;
-import static ir.ie.mizdooni.defines.RequestKeys.*;
-import static ir.ie.mizdooni.defines.TimeFormats.RESERVE_DATETIME_FORMAT;
-import static ir.ie.mizdooni.defines.TimeFormats.RESTAURANT_TIME_FORMAT;
+import static ir.ie.mizdooni.definitions.Commands.*;
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class RequestSchemaValidator {
     final static List<String> userAdditionKeys = Arrays.asList(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,

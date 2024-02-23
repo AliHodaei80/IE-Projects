@@ -1,6 +1,6 @@
 package ir.ie.mizdooni.exceptions;
 
-import static ir.ie.mizdooni.defines.Errors.TABLE_NOT_FOUND;
+import static ir.ie.mizdooni.definitions.Errors.TABLE_NOT_FOUND;
 
 public class TableDoesntExist extends Exception {
     public TableDoesntExist() {

@@ -7,7 +7,7 @@ import ir.ie.mizdooni.utils.Parser;
 
 import java.time.LocalDateTime;
 
-import static ir.ie.mizdooni.defines.TimeFormats.RESERVE_DATETIME_FORMAT;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 
 public class ReservationHandler {
     private static ReservationHandler reservationHandler;

@@ -1,6 +1,6 @@
 package ir.ie.mizdooni.exceptions;
 
-import static ir.ie.mizdooni.defines.Errors.TABLE_ALREADY_EXISTS;
+import static ir.ie.mizdooni.definitions.Errors.TABLE_ALREADY_EXISTS;
 
 public class TableAlreadyExists extends Exception {
     public TableAlreadyExists() {

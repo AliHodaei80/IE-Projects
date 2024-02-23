@@ -1,4 +1,4 @@
-package ir.ie.mizdooni.defines;
+package ir.ie.mizdooni.definitions;
 
 public class TimeFormats {
     final public static String RESTAURANT_TIME_FORMAT = "HH:00";

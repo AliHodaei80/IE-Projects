@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ir.ie.mizdooni.defines.Commands.*;
-import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
-import static ir.ie.mizdooni.defines.RequestKeys.*;
-import static ir.ie.mizdooni.defines.ResponseKeys.*;
+import static ir.ie.mizdooni.definitions.Commands.*;
+import static ir.ie.mizdooni.definitions.Errors.UNSUPPORTED_COMMAND;
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
+import static ir.ie.mizdooni.definitions.ResponseKeys.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
 
 public class MizDooniController {

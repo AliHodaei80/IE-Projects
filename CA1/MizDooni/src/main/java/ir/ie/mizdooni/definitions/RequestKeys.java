@@ -1,4 +1,4 @@
-package ir.ie.mizdooni.defines;
+package ir.ie.mizdooni.definitions;
 
 public class RequestKeys {
     final public static String USERNAME_KEY = "username";

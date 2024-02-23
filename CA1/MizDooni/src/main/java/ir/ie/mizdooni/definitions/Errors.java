@@ -1,4 +1,4 @@
-package ir.ie.mizdooni.defines;
+package ir.ie.mizdooni.definitions;
 
 public class Errors {
     public final static String UNSUPPORTED_COMMAND = "Unsupported command!";

@@ -1,6 +1,6 @@
 package ir.ie.mizdooni.exceptions;
 
-import static ir.ie.mizdooni.defines.Errors.EMAIL_ALREADY_TAKEN;
+import static ir.ie.mizdooni.definitions.Errors.EMAIL_ALREADY_TAKEN;
 
 public class EmailAlreadyTaken extends Exception {
     public EmailAlreadyTaken() {
