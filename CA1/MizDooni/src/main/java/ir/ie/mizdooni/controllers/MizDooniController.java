@@ -76,12 +76,11 @@ public class MizDooniController {
             restaurantTableHandler.addRestaurantTable((String) data.get(RESTAURANT_NAME_KEY),
                     (Integer) data.get(TABLE_NUM_KEY), (Integer) data.get(SEATS_NUM_KEY),
                     (String) data.get(MANAGER_USERNAME_KEY));
-            return new Response(true, "Restaurant added successfully.");
+            return new Response(true, "Table added successfully");
         } catch (
                 InvalidUserRole | RestaurantManagerNotFound | TableAlreadyExists | RestaurantNotFound e) {
             return new Response(false, e.getMessage());
         }
-
     }
 
     public Response handleRequest(Request request) {
