@@ -12,6 +12,7 @@ import ir.ie.mizdooni.services.UserHandler;
 import java.util.Map;
 
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
+import static ir.ie.mizdooni.defines.Commands.OP_ADD_TABLE;
 import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
 import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
@@ -97,6 +98,8 @@ public class MizDooniController {
                 return addUser(data);
             case OP_ADD_RESTAURANT:
                 return addRestaurant(data);
+            case OP_ADD_TABLE:
+                return addRestaurantTable(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }
