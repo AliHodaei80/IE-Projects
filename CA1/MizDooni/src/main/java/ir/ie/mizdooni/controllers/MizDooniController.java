@@ -86,12 +86,18 @@ public class MizDooniController {
         return new Response(false, "");
     }
 
+    public Response searchRestaurantByType(Map<String, Object> data) {
+        Response res = new Response(true, data);
+        return res;
+    }
+
     public Response handleRequest(Request request) {
         String op = request.getOperation();
         Map<String, Object> data = request.getData();
         try {
             validate(request);
-        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat e) {
+        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
+                | InvalidNumType e) {
             return new Response(false, e.getMessage());
 
         }
@@ -103,7 +109,9 @@ public class MizDooniController {
             case OP_ADD_TABLE:
                 return addRestaurantTable(data);
             case OP_RESERVE_TABLE:
-                    return reserveTable(data);
+                return reserveTable(data);
+            case OP_SEARCH_RESTAURANT_BY_TYPE:
+                return searchRestaurantByType(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }
