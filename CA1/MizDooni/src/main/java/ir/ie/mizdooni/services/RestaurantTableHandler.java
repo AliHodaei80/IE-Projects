@@ -14,9 +14,9 @@ public class RestaurantTableHandler {
     private final UserHandler userHandler;
     private final RestaurantTables restaurantTables;
 
-    private RestaurantTableHandler(RestaurantHandler restsHandler, UserHandler usrHandler) {
-        restaurantsHandler = restsHandler;
-        userHandler = usrHandler;
+    private RestaurantTableHandler() {
+        restaurantsHandler = RestaurantHandler.getInstance();
+        userHandler = UserHandler.getInstance();
         restaurantTables = new RestaurantTables();
     }
 
@@ -25,21 +25,26 @@ public class RestaurantTableHandler {
         if (!restaurantsHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
         }
-        if (!((userHandler.getUserRole(managerUsername) == (UserRole.MANAGER))
-                && (restaurantsHandler.isManager(managerUsername)))) {
+        if (!userHandler.isUserExist(managerUsername)) {
+            throw new RestaurantManagerNotFound();
+        }
+        if (!(restaurantsHandler.isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
-        if (restaurantTables.tableExists(restName, tableNo)) {
+        if (isTableExists(restName, tableNo)) {
             throw new TableAlreadyExists();
         }
         restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
         System.out.println(restaurantTables.getAllTables());
     }
 
-    public static RestaurantTableHandler getInstance(RestaurantHandler restaurantHandler,
-                                                     UserHandler userHandler) {
+    public static RestaurantTableHandler getInstance() {
         if (restaurantTableHandler == null)
-            restaurantTableHandler = new RestaurantTableHandler(restaurantHandler, userHandler);
+            restaurantTableHandler = new RestaurantTableHandler();
         return restaurantTableHandler;
+    }
+
+    public boolean isTableExists(String restName, Long tableNumber) {
+        return restaurantTables.getRestaurantTable(restName, tableNumber) != null;
     }
 }

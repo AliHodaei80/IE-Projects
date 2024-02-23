@@ -29,10 +29,6 @@ public class RestaurantTables {
         return restaurantTables;
     }
 
-    public boolean tableExists(String restName, Long tableNo) {
-        return getRestaurantTable(restName, tableNo) != null;
-    }
-
     public void addRestaurantTable(String restName, String restManagerName, Long tableNo, Long seatsNo) {
         if (restaurantTables.get(restName) == null) {
             restaurantTables.put(restName, new HashMap<>());
