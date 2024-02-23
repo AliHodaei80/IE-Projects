@@ -2,6 +2,7 @@ package ir.ie.mizdooni.utils;
 
 import ir.ie.mizdooni.commons.Request;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,5 +18,10 @@ public class Parser {
     public static LocalTime parseTime(String timeString, String timeFormat) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
         return LocalTime.parse(timeString, formatter);
+    }
+
+    public static LocalDateTime parseDateTime(String dateTimeString, String dateTimeFormat) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateTimeFormat);
+        return LocalDateTime.parse(dateTimeString, formatter);
     }
 }

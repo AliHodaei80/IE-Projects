@@ -9,6 +9,7 @@ import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.UserHandler;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static ir.ie.mizdooni.defines.Commands.*;
@@ -28,7 +29,7 @@ public class MizDooniController {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
         reservationHandler = ReservationHandler.getInstance();
-        restaurantTableHandler = RestaurantTableHandler.getInstance(restaurantHandler, userHandler);
+        restaurantTableHandler = RestaurantTableHandler.getInstance();
     }
 
     public static MizDooniController getInstance() {
@@ -83,7 +84,20 @@ public class MizDooniController {
     }
 
     public Response reserveTable(Map<String, Object> data) {
-        return new Response(false, "");
+        try {
+            Map<String, Object> resultDate = new HashMap<>();
+            long reservationNum = reservationHandler.addReservation((String) data.get(RESTAURANT_NAME_KEY),
+                    (String) data.get(USERNAME_KEY),
+                    ((Double) data.get(TABLE_NUM_KEY)).intValue(),
+                    (String) data.get(DATETIME_KEY));
+            resultDate.put(RESERVATION_NUM_KEY, reservationNum);
+
+            return new Response(true, resultDate);
+        } catch (
+                InvalidUserRole | RestaurantManagerNotFound | TableAlreadyReserved | RestaurantNotFound
+                | TableDoesntExist | InvalidDateTime | DateTimeNotInRange e) {
+            return new Response(false, e.getMessage());
+        }
     }
 
     public Response searchRestaurantByType(Map<String, Object> data) {
@@ -96,10 +110,9 @@ public class MizDooniController {
         Map<String, Object> data = request.getData();
         try {
             validate(request);
-        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
-                | InvalidNumType e) {
+        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat |
+                 InvalidTimeFormat | InvalidNumType e) {
             return new Response(false, e.getMessage());
-
         }
         switch (op) {
             case OP_ADD_USER:

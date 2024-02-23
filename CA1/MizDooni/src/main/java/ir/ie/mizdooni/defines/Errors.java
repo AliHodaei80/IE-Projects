@@ -17,5 +17,8 @@ public class Errors {
     public static final String RESTUARANT_NOT_FOUND = "Restaurant was not found";
     public static final String TABLE_NOT_FOUND = "Table was not found";
     public static final String INVALID_NUM_TYPE = "Number type is invalid";
+    public static final String TABLE_ALREADY_RESERVED = "The table already reserved";
+    public static final String INVALID_DATETIME = "The datetime is invalid. The datetime should be after current datetime";
+    public static final String DATETIME_NOT_IN_RANGE = "The datetime should be in range of restaurant work time.";
 
 }

@@ -1,12 +1,11 @@
 package ir.ie.mizdooni.services;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Map;
 
-import ir.ie.mizdooni.exceptions.RestaurantNameNotUnique;
-import ir.ie.mizdooni.exceptions.RestaurantManagerNotFound;
-import ir.ie.mizdooni.exceptions.RestaurentExists;
+import ir.ie.mizdooni.exceptions.*;
 
-import ir.ie.mizdooni.exceptions.InvalidUserRole;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Restaurants;
@@ -29,11 +28,6 @@ public class RestaurantHandler {
         return (u != null && u.equals(UserRole.MANAGER));
     }
 
-    private boolean managerExists(String managerUsername) {
-        UserRole u = userHandler.getUserRole(managerUsername);
-        return (u != null);
-    }
-
     public Restaurant getRestaurant(String restName) {
         Restaurant res = restaurants.getRestaurantByName(restName);
         return res;
@@ -47,7 +41,7 @@ public class RestaurantHandler {
             String description, Map<String, String> address)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {
 
-        if (!managerExists(managerUsername)) {
+        if (!userHandler.isUserExist(managerUsername)) {
             throw new RestaurantManagerNotFound();
         }
         if (!(isManager(managerUsername))) {
@@ -58,6 +52,18 @@ public class RestaurantHandler {
         }
         restaurants.addRestaurant(restName, type, Parser.parseTime(startTime, RESTAURANT_TIME_FORMAT),
                 Parser.parseTime(endTime, RESTAURANT_TIME_FORMAT), description, managerUsername, address);
+    }
+
+    public boolean dateIsInRestaurantRange(String restName, LocalDateTime dateTime) throws RestaurantNotFound {
+        Restaurant restaurant = restaurants.getRestaurantByName(restName);
+        if (restaurant == null)
+            throw new RestaurantNotFound();
+        LocalTime startTime = restaurant.getStartTime();
+        LocalTime endTime = restaurant.getEndTime();
+
+        LocalTime timeToCheck = LocalTime.of(dateTime.getHour(), dateTime.getMinute());
+        return (timeToCheck.isAfter(startTime) && timeToCheck.isBefore(endTime)) ||
+                timeToCheck.equals(startTime) || timeToCheck.equals(endTime);
     }
 
     public static RestaurantHandler getInstance() {
