@@ -35,8 +35,12 @@ public class RestaurantHandler {
         return res;
     }
 
-    public List<Restaurant> searchByType(String restType) {
+    public List<Restaurant> searchRestaurantByType(String restType) {
         return restaurants.searchByType(restType);
+    }
+
+    public List<Restaurant> searchRestaurantByName(String restName) {
+        return restaurants.searchByName(restName);
     }
 
     public boolean restaurantExists(String restName) {

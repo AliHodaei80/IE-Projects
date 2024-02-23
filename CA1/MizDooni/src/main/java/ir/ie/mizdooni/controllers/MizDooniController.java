@@ -17,6 +17,7 @@ import java.util.Map;
 import static ir.ie.mizdooni.defines.Commands.*;
 import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
+import static ir.ie.mizdooni.defines.ResponseKeys.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
 
 public class MizDooniController {
@@ -103,8 +104,18 @@ public class MizDooniController {
     }
 
     public Response searchRestaurantByType(Map<String, Object> data) {
-        List<Restaurant> results = restaurantHandler.searchByType((String) data.get(RESTAURANT_TYPE_KEY));
-        Response res = new Response(true, results);
+        List<Restaurant> results = restaurantHandler.searchRestaurantByType((String) data.get(RESTAURANT_TYPE_KEY));
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put(RESTAURANTS_KEY, results);
+        Response res = new Response(true, responseBody);
+        return res;
+    }
+
+    public Response searchRestaurantByName(Map<String, Object> data) {
+        List<Restaurant> results = restaurantHandler.searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put(RESTAURANTS_KEY, results);
+        Response res = new Response(true, responseBody);
         return res;
     }
 
@@ -128,6 +139,8 @@ public class MizDooniController {
                 return reserveTable(data);
             case OP_SEARCH_RESTAURANT_BY_TYPE:
                 return searchRestaurantByType(data);
+            case OP_SEARCH_RESTAURANT_BY_NAME:
+                return searchRestaurantByName(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }

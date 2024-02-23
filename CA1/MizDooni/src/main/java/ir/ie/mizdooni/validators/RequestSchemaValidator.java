@@ -29,6 +29,7 @@ public class RequestSchemaValidator {
     final static List<String> userAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY);
     final static List<String> restAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY, STREET_KEY);
     final static List<String> searchRestaurantByTypeKeys = Arrays.asList(RESTAURANT_TYPE_KEY);
+    final static List<String> searchRestaurantByNameKeys = Arrays.asList(RESTAURANT_SEARCH_NAME_KEY);
 
     public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws InvalidRequestFormat {
         for (String key : keys) {
@@ -118,6 +119,14 @@ public class RequestSchemaValidator {
 
     }
 
+    public static void validateSearchRestaurantByName(Map<String, Object> data) throws InvalidRequestFormat {
+        checkKeyInclusion(data, searchRestaurantByNameKeys);
+        if (data.get(RESTAURANT_SEARCH_NAME_KEY) == null) {
+            throw new InvalidRequestFormat(RESTAURANT_SEARCH_NAME_KEY);
+        }
+
+    }
+
     // TODO add validate request for adding restaurant table
     public static void validate(Request r)
             throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType {
@@ -137,6 +146,9 @@ public class RequestSchemaValidator {
                 validateReserveTable(data);
             case OP_SEARCH_RESTAURANT_BY_TYPE:
                 validateSearchRestaurantByType(data);
+                break;
+            case OP_SEARCH_RESTAURANT_BY_NAME:
+                validateSearchRestaurantByName(data);
                 break;
         }
     }

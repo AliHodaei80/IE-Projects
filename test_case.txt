@@ -5,4 +5,7 @@ addRestaurant {"name": "r1","managerUsername": "user2","type": "Iranian","startT
 addTable {"tableNumber": 1,"restaurantName": "r1","managerUsername": "user2","seatsNumber": 4}
 reserveTable {"username": "user1", "restaurantName": "r1", "tableNumber": 1,"datetime": "2024-02-24 08:00"}
 searchRestaurantsByType {"type":"Iranian"}
+searchRestaurantsByName {"name":"r1"}
+searchRestaurantsByName {"name":"r2"}
+searchRestaurantsByName {"restaurantName":"r2"}
 exit
