@@ -24,7 +24,7 @@ public class RestaurantHandler {
         restaurants = new Restaurants();
     }
 
-    private boolean isManager(String managerUsername) {
+    public boolean isManager(String managerUsername) {
         UserRole u = userHandler.getUserRole(managerUsername);
         return (u != null && u.equals(UserRole.MANAGER));
     }

@@ -27,11 +27,11 @@ public class RestaurantTableHandler {
 
     public void addRestaurantTable(String restName, int tableNo, int seatsNo, String managerUsername)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists {
-
         if (!restaurantsHandler.restaurantExists(managerUsername)) {
             throw new RestaurantNotFound();
         }
-        if (!(userHandler.getUserRole(managerUsername).equals(UserRole.MANAGER))) {
+        if (!(userHandler.getUserRole(managerUsername).equals(UserRole.MANAGER))
+                || !(restaurantsHandler.isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
         if (restauarantTables.tableExists(restName, tableNo)) {
