@@ -86,7 +86,6 @@ public class RequestSchemaValidator {
 
     public static void validateAddUser(Map<String, Object> data)
             throws InvalidEmailFormat, InvalidRequestFormat, InvalidUsernameFormat {
-        // TODO fix this(some cases will fail)
         checkKeyInclusion(data, userAdditionKeys);
         usernameCheck((String) data.get(USERNAME_KEY));
         emailCheck((String) data.get(EMAIL_KEY));
@@ -94,7 +93,7 @@ public class RequestSchemaValidator {
     }
 
     public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
-        checkKeyInclusion(data, restAdditionKeys); // TODO fix this(some cases will fail)
+        checkKeyInclusion(data, restAdditionKeys); 
         checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
         validateTime((String) data.get(END_TIME_KEY));
         validateTime((String) data.get(START_TIME_KEY));
@@ -127,7 +126,6 @@ public class RequestSchemaValidator {
 
     }
 
-    // TODO add validate request for adding restaurant table
     public static void validate(Request r)
             throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType {
         String op = r.getOperation();
