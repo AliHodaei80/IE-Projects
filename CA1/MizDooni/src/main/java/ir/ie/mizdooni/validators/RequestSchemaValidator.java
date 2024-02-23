@@ -83,6 +83,7 @@ public class RequestSchemaValidator {
         validateTime((String) data.get(START_TIME_KEY));
     }
 
+    // TODO add validate request for adding restaurant table
     public static void validate(Request r)
             throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat {
         String op = r.getOperation();

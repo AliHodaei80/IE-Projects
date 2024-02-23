@@ -28,7 +28,7 @@ public class MizDooniController {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
         reservationHandler = ReservationHandler.getInstance();
-        restaurantTableHandler = RestaurantTableHandler.getInstance();
+        restaurantTableHandler = RestaurantTableHandler.getInstance(restaurantHandler);
     }
 
     public static MizDooniController getInstance() {
