@@ -28,7 +28,7 @@ public class RequestSchemaValidator {
             TABLE_NUM_KEY, DATETIME_KEY);
     final static List<String> userAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY);
     final static List<String> restAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY, STREET_KEY);
-
+    final static List<String> searchRestaurantByTypeKeys = Arrays.asList(RESTAURANT_TYPE_KEY);
 
     public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws InvalidRequestFormat {
         for (String key : keys) {
@@ -99,7 +99,8 @@ public class RequestSchemaValidator {
         validateTime((String) data.get(START_TIME_KEY));
     }
 
-    public static void validateAddTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType {
+    public static void validateAddTable(Map<String, Object> data)
+            throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType {
         checkKeyInclusion(data, tableAdditionKeys);
         checkBeNaturalNumber((double) data.get(SEATS_NUM_KEY));
     }
@@ -107,6 +108,14 @@ public class RequestSchemaValidator {
     public static void validateReserveTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
         checkKeyInclusion(data, tableAReserveKeys);
         validateDateTime((String) data.get(DATETIME_KEY));
+    }
+
+    public static void validateSearchRestaurantByType(Map<String, Object> data) throws InvalidRequestFormat {
+        checkKeyInclusion(data, searchRestaurantByTypeKeys);
+        if (data.get(RESTAURANT_TYPE_KEY) == null) {
+            throw new InvalidRequestFormat(RESTAURANT_TYPE_KEY);
+        }
+
     }
 
     // TODO add validate request for adding restaurant table
@@ -126,6 +135,8 @@ public class RequestSchemaValidator {
                 break;
             case OP_RESERVE_TABLE:
                 validateReserveTable(data);
+            case OP_SEARCH_RESTAURANT_BY_TYPE:
+                validateSearchRestaurantByType(data);
                 break;
         }
     }
