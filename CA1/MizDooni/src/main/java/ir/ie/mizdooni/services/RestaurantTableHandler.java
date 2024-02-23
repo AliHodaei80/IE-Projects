@@ -6,17 +6,17 @@ import ir.ie.mizdooni.storage.Restaurants;
 public class RestaurantTableHandler {
 
     private static RestaurantTableHandler restaurantTableHandler;
-    private final Restaurants restaurants;
+    private final RestaurantHandler restaurantsHandler;
     private final RestaurantTables restauarantTables;
 
-    private RestaurantTableHandler(Restaurants rests) {
-        restaurants = rests;
+    private RestaurantTableHandler(RestaurantHandler restsHandler) {
+        restaurantsHandler = restsHandler;
         restauarantTables = new RestaurantTables();
     }
 
-    public static RestaurantTableHandler getInstance(Restaurants rests) {
+    public static RestaurantTableHandler getInstance(RestaurantHandler restaurantHandler) {
         if (restaurantTableHandler == null)
-            restaurantTableHandler = new RestaurantTableHandler(rests);
+            restaurantTableHandler = new RestaurantTableHandler(restaurantHandler);
         return restaurantTableHandler;
     }
 }
