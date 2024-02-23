@@ -15,6 +15,14 @@ public class RestaurantTables {
         return restaurantTables.get(restName).values();
     }
 
+    public RestaurantTable getRestaurantTable(String restName, int tableNo) {
+        return restaurantTables.get(restName).get(tableNo);
+    }
+
+    public boolean tableExists(String restName, int tableNo) {
+        return getRestaurantTable(restName, tableNo) != null;
+    }
+
     public void addRestaurantTable(String restName, String restManagerName, int tableNo, int seatsNo) {
         restaurantTables.get(restName).put(tableNo, new RestaurantTable(seatsNo, restName, restManagerName, tableNo));
     }

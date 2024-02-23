@@ -3,6 +3,7 @@ package ir.ie.mizdooni.controllers;
 import ir.ie.mizdooni.commons.Request;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
@@ -28,7 +29,7 @@ public class MizDooniController {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
         reservationHandler = ReservationHandler.getInstance();
-        restaurantTableHandler = RestaurantTableHandler.getInstance(restaurantHandler);
+        restaurantTableHandler = RestaurantTableHandler.getInstance(restaurantHandler, userHandler);
     }
 
     public static MizDooniController getInstance() {
@@ -63,7 +64,20 @@ public class MizDooniController {
                     (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY));
             return new Response(true, "Restaurant added successfully.");
         } catch (
-                 InvalidUserRole | RestaurantManagerNotFound | RestaurentExists e) {
+                InvalidUserRole | RestaurantManagerNotFound | RestaurentExists e) {
+            return new Response(false, e.getMessage());
+        }
+
+    }
+
+    public Response addRestaurantTable(Map<String, Object> data) {
+        try {
+            restaurantTableHandler.addRestaurantTable((String) data.get(RESTAURANT_NAME_KEY),
+                    (Integer) data.get(TABLE_NUM_KEY), (Integer) data.get(SEATS_NUM_KEY),
+                    (String) data.get(MANAGER_USERNAME_KEY));
+            return new Response(true, "Restaurant added successfully.");
+        } catch (
+                InvalidUserRole | RestaurantManagerNotFound | TableAlreadyExists | RestaurantNotFound e) {
             return new Response(false, e.getMessage());
         }
 
