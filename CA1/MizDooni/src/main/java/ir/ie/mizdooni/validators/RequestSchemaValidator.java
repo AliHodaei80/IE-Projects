@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
-import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
+import static ir.ie.mizdooni.defines.Commands.*;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
 import static ir.ie.mizdooni.defines.TimeFormats.RESTAURANT_TIME_FORMAT;
 
@@ -24,6 +23,8 @@ public class RequestSchemaValidator {
             USER_ADDRESS_KEY);
     final static List<String> restAdditionKeys = Arrays.asList(ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
             START_TIME_KEY, END_TIME_KEY, RESTAURANT_ADDRESS_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY);
+    final static List<String> tableAdditionKeys = Arrays.asList(TABLE_NUM_KEY, RESTAURANT_NAME_KEY,
+            MANAGER_USERNAME_KEY, SEATS_NUM_KEY);
     final static List<String> userAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY);
     final static List<String> restAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY, STREET_KEY);
 
@@ -83,6 +84,10 @@ public class RequestSchemaValidator {
         validateTime((String) data.get(START_TIME_KEY));
     }
 
+    public static void validateAddTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
+        checkKeyInclusion(data, tableAdditionKeys);
+    }
+
     // TODO add validate request for adding restaurant table
     public static void validate(Request r)
             throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat {
@@ -94,6 +99,9 @@ public class RequestSchemaValidator {
                 break;
             case OP_ADD_RESTAURANT:
                 validateAddRest(data);
+                break;
+            case OP_ADD_TABLE:
+                validateAddTable(data);
                 break;
         }
     }

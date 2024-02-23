@@ -11,9 +11,7 @@ import ir.ie.mizdooni.services.UserHandler;
 
 import java.util.Map;
 
-import static ir.ie.mizdooni.defines.Commands.OP_ADD_RESTAURANT;
-import static ir.ie.mizdooni.defines.Commands.OP_ADD_TABLE;
-import static ir.ie.mizdooni.defines.Commands.OP_ADD_USER;
+import static ir.ie.mizdooni.defines.Commands.*;
 import static ir.ie.mizdooni.defines.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.defines.RequestKeys.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
@@ -84,6 +82,10 @@ public class MizDooniController {
         }
     }
 
+    public Response reserveTable(Map<String, Object> data) {
+        return new Response(false, "");
+    }
+
     public Response handleRequest(Request request) {
         String op = request.getOperation();
         Map<String, Object> data = request.getData();
@@ -100,6 +102,8 @@ public class MizDooniController {
                 return addRestaurant(data);
             case OP_ADD_TABLE:
                 return addRestaurantTable(data);
+            case OP_RESERVE_TABLE:
+                    return reserveTable(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }
