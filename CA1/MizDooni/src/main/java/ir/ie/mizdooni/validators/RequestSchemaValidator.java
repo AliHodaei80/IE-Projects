@@ -110,10 +110,10 @@ public class RequestSchemaValidator {
         validateDateTime((String) data.get(DATETIME_KEY));
     }
 
-    public static void searchRestaurantByType(Map<String, Object> data) throws InvalidRequestFormat {
+    public static void validateSearchRestaurantByType(Map<String, Object> data) throws InvalidRequestFormat {
         checkKeyInclusion(data, searchRestaurantByTypeKeys);
         if (data.get(RESTAURANT_TYPE_KEY) == null) {
-            throw new InvalidRequestFormat();
+            throw new InvalidRequestFormat(RESTAURANT_TYPE_KEY);
         }
 
     }
@@ -136,7 +136,7 @@ public class RequestSchemaValidator {
             case OP_RESERVE_TABLE:
                 validateReserveTable(data);
             case OP_SEARCH_RESTAURANT_BY_TYPE:
-                validateReserveTable(data);
+                validateSearchRestaurantByType(data);
                 break;
         }
     }

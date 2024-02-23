@@ -4,4 +4,5 @@ addRestaurant {"name": "restaurant1","managerUsername": "user1","type": "Iranian
 addRestaurant {"name": "r1","managerUsername": "user2","type": "Iranian","startTime": "08:00","endTime": "23:00","description": "Open seven days a week","address": {"country": "Iran","city": "Tehran","street": "North Kargar"}}
 addTable {"tableNumber": 1,"restaurantName": "r1","managerUsername": "user2","seatsNumber": 4}
 reserveTable {"username": "user1", "restaurantName": "r1", "tableNumber": 1,"datetime": "2024-02-24 08:00"}
+searchRestaurantsByType {"type":"Iranian"}
 exit

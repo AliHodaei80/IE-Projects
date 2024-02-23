@@ -9,7 +9,9 @@ import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.UserHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static ir.ie.mizdooni.defines.Commands.*;
@@ -101,7 +103,8 @@ public class MizDooniController {
     }
 
     public Response searchRestaurantByType(Map<String, Object> data) {
-        Response res = new Response(true, data);
+        List<Restaurant> results = restaurantHandler.searchByType((String) data.get(RESTAURANT_TYPE_KEY));
+        Response res = new Response(true, results);
         return res;
     }
 
@@ -110,8 +113,8 @@ public class MizDooniController {
         Map<String, Object> data = request.getData();
         try {
             validate(request);
-        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat |
-                 InvalidTimeFormat | InvalidNumType e) {
+        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
+                | InvalidNumType e) {
             return new Response(false, e.getMessage());
         }
         switch (op) {
