@@ -41,7 +41,7 @@ public class RequestSchemaValidator {
     }
 
     public static void checkBeNaturalNumber(double num) throws InvalidNumType {
-        if (num != (int) num && num >= 1)
+        if (num != (int) num || num < 1)
             throw new InvalidNumType();
     }
 
