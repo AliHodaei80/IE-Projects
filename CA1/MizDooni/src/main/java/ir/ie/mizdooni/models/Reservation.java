@@ -11,11 +11,11 @@ public class Reservation {
     @Expose()
     String restaurantName;
     @Expose()
-    int tableNumber;
+    Long tableNumber;
     @Expose()
     LocalDateTime date;
 
-    public Reservation(String username, String restaurantName, int tableNumber, LocalDateTime date) {
+    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.tableNumber = tableNumber;
@@ -38,11 +38,11 @@ public class Reservation {
         this.restaurantName = restaurantName;
     }
 
-    public int getTableNumber() {
+    public Long getTableNumber() {
         return tableNumber;
     }
 
-    public void setTableNumber(int tableNumber) {
+    public void setTableNumber(Long tableNumber) {
         this.tableNumber = tableNumber;
     }
 

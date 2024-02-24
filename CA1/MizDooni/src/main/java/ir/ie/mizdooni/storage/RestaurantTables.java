@@ -29,10 +29,10 @@ public class RestaurantTables {
         return restaurantTables;
     }
 
-    public void addRestaurantTable(String restName, String restManagerName, Long tableNo, Long seatsNo) {
+    public void addRestaurantTable(String restName, String restManagerName, Long tableNo, int seatsNo) {
         if (restaurantTables.get(restName) == null) {
             restaurantTables.put(restName, new HashMap<>());
         }
-        restaurantTables.get(restName).put(tableNo, new RestaurantTable(seatsNo, restName, restManagerName, tableNo));
+        restaurantTables.get(restName).put(tableNo, new RestaurantTable(tableNo, restName, restManagerName, seatsNo));
     }
 }

@@ -10,9 +10,9 @@ public class RestaurantTable {
     @Expose()
     String managerUsername;
     @Expose()
-    Long seatsNumber;
+    int seatsNumber;
 
-    public RestaurantTable(Long tableNumber, String restaurantName, String managerUsername, Long seatsNumber) {
+    public RestaurantTable(Long tableNumber, String restaurantName, String managerUsername, int seatsNumber) {
         this.tableNumber = tableNumber;
         this.restaurantName = restaurantName;
         this.managerUsername = managerUsername;
@@ -43,11 +43,11 @@ public class RestaurantTable {
         this.managerUsername = managerUsername;
     }
 
-    public Long getSeatsNumber() {
+    public int getSeatsNumber() {
         return seatsNumber;
     }
 
-    public void setSeatsNumber(Long seatsNumber) {
+    public void setSeatsNumber(int seatsNumber) {
         this.seatsNumber = seatsNumber;
     }
 }

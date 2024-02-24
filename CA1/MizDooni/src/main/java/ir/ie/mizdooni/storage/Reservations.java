@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.storage;
 
+import ir.ie.mizdooni.exceptions.RestaurantNotFound;
 import ir.ie.mizdooni.models.Reservation;
 
 import java.nio.ByteBuffer;
@@ -11,10 +12,9 @@ public class Reservations {
     // Outter 3 is restaurent name
     // Outter 2 is table id
     // OUter 1 is the reservation date
-    Map<String, Map<Integer, Map<LocalDateTime, Reservation>>> reservations;
+    Map<String, Map<Long, Map<LocalDateTime, Reservation>>> reservations;
     Map<Long, Reservation> reservationsIdIndex;
     long reservationCounts;
-
 
     public Reservations() {
         reservations = new HashMap<>();
@@ -23,17 +23,25 @@ public class Reservations {
     }
 
     private long generateReservationId() {
-//        UUID uuid = UUID.randomUUID();
-//        ByteBuffer bytebuffer = ByteBuffer.wrap(new byte[16]);
-//        bytebuffer.putLong(uuid.getMostSignificantBits());
-//        bytebuffer.putLong(uuid.getLeastSignificantBits());
-//        bytebuffer.rewind();
-//        return Math.abs(bytebuffer.getLong());
+        // UUID uuid = UUID.randomUUID();
+        // ByteBuffer bytebuffer = ByteBuffer.wrap(new byte[16]);
+        // bytebuffer.putLong(uuid.getMostSignificantBits());
+        // bytebuffer.putLong(uuid.getLeastSignificantBits());
+        // bytebuffer.rewind();
+        // return Math.abs(bytebuffer.getLong());
         return ++reservationCounts;
     }
 
+    public Map<LocalDateTime, Reservation> getTableReservations(String restName, long tableNumber)
+            throws RestaurantNotFound {
+        if (reservations.get(restName) != null) {
+            return reservations.get(restName).get(tableNumber);
+        } else {
+            throw new RestaurantNotFound();
+        }
+    }
 
-    public long addReservation(String username, String restaurantName, int tableNumber, LocalDateTime dateTime) {
+    public long addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime) {
         if (reservations.get(restaurantName) == null) {
             reservations.put(restaurantName, new HashMap<>());
         }
@@ -47,7 +55,7 @@ public class Reservations {
         return reservationId;
     }
 
-    public Reservation getReservation(String restName, int tableNumber, LocalDateTime dateTime) {
+    public Reservation getReservation(String restName, long tableNumber, LocalDateTime dateTime) {
         if (!reservations.containsKey(restName) || !reservations.get(restName).containsKey(tableNumber)) {
             return null;
         }
@@ -63,7 +71,8 @@ public class Reservations {
         if (reservation == null) {
             return;
         }
-        reservations.get(reservation.getRestaurantName()).get(reservation.getTableNumber()).remove(reservation.getDate());
+        reservations.get(reservation.getRestaurantName()).get(reservation.getTableNumber())
+                .remove(reservation.getDate());
         reservationsIdIndex.remove(reservationId);
     }
 
@@ -76,7 +85,7 @@ public class Reservations {
 
     public List<Reservation> getUserReservations(String username) {
         List<Reservation> allReservations = getAllReservations();
-        return  allReservations.stream()
+        return allReservations.stream()
                 .filter(reservation -> username.equals(reservation.getUsername()))
                 .collect(Collectors.toList());
     }

@@ -1,0 +1,80 @@
+Command : addUser {"role": "client","username": "user1","password": "1234","email": "user1@gmail.com","address": {"country": "Iran","city": "Tehran"}} 
+
+{"success":true,"data":"User added successfully."}
+============================================
+
+Command : addUser {"role": "manager","username": "user2","password": "1234","email": "user2@gmail.com","address": {"country": "Iran","city": "Tehran"}} 
+
+{"success":true,"data":"User added successfully."}
+============================================
+
+Command : addRestaurant {"name": "restaurant1","managerUsername": "user1","type": "Iranian","startTime": "08:00","endTime": "23:00","description": "Open seven days a week","address": {"country": "Iran","city": "Tehran","street": "North Kargar"}} 
+
+{"success":false,"data":"User Role is invalid."}
+============================================
+
+Command : addRestaurant {"name": "r1","managerUsername": "user2","type": "Iranian","startTime": "08:00","endTime": "23:00","description": "Open seven days a week","address": {"country": "Iran","city": "Tehran","street": "North Kargar"}} 
+
+{"success":true,"data":"Restaurant added successfully."}
+============================================
+
+Command : addTable {"tableNumber": 1,"restaurantName": "r1","managerUsername": "user2","seatsNumber": 4} 
+
+{}
+{r1={1=ir.ie.mizdooni.models.RestaurantTable@2ff4f00f}}
+{"success":true,"data":"Table added successfully"}
+============================================
+
+Command : reserveTable {"username": "user1", "restaurantName": "r1", "tableNumber": 1,"datetime": "2024-02-24 21:00"} 
+
+{r1={1=ir.ie.mizdooni.models.RestaurantTable@2ff4f00f}}
+{"success":false,"data":"The datetime is invalid. The datetime should surpass current datetime"}
+============================================
+
+Command : searchRestaurantsByType {"type":"Iranian"} 
+
+{"success":true,"data":{"restaurants":[{"name":"r1","startTime":"08:00","endTime":"23:00","type":"Iranian","description":"Open seven days a week","managerUsername":"user2","address":{"country":"Iran","city":"Tehran","street":"North Kargar"}}]}}
+============================================
+
+Command : searchRestaurantsByName {"name":"r1"} 
+
+{"success":true,"data":{"restaurants":[{"name":"r1","startTime":"08:00","endTime":"23:00","type":"Iranian","description":"Open seven days a week","managerUsername":"user2","address":{"country":"Iran","city":"Tehran","street":"North Kargar"}}]}}
+============================================
+
+Command : searchRestaurantsByName {"name":"r2"} 
+
+{"success":true,"data":{"restaurants":[]}}
+============================================
+
+Command : searchRestaurantsByName {"restaurantName":"r2"} 
+
+{"success":false,"data":"Invalid format for request. you should provide all necessary fields. Missing Fields: name"}
+============================================
+
+Command : cancelReservation {"username": "user1", "reservationNumber": 123} 
+
+{"success":false,"data":"The reservation does not belong to user"}
+============================================
+
+Command : showReservationHistory {"username": "user1"} 
+
+{"success":true,"data":{"reservationHistory":[]}}
+============================================
+
+Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.5,"foodRate":5.0,"serviceRate":5.0,"comment":"Bon Appetits","restaurantName":"Grill Guys"} 
+
+{"success":false,"data":"The rating was out of range or in invalid format.Field : overallRate"}
+============================================
+
+Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.0,"foodRate":5.0,"serviceRate":5.0,"comment":"Bon Appetits","restaurantName":"Grill Guys"} 
+
+{"success":false,"data":"Restaurant was not found"}
+============================================
+
+Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.0,"foodRate":5.0,"serviceRate":5.0,"comment":"Ape Tits Bone","restaurantName":"r1"} 
+
+{r1={user1=ir.ie.mizdooni.models.Review@2f7a2457}}
+ir.ie.mizdooni.models.Review@2f7a2457
+{"success":true,"data":"Review added successfully."}
+============================================
+

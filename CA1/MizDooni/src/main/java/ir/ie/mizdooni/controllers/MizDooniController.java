@@ -82,7 +82,7 @@ public class MizDooniController {
         try {
             restaurantTableHandler.addRestaurantTable((String) data.get(RESTAURANT_NAME_KEY),
                     (Long) (Math.round((Double) (data.get(TABLE_NUM_KEY)))),
-                    (Long) (Math.round((Double) (data.get(SEATS_NUM_KEY)))),
+                    (int) (Math.round((Double) (data.get(SEATS_NUM_KEY)))),
                     (String) data.get(MANAGER_USERNAME_KEY));
             return new Response(true, "Table added successfully");
         } catch (
