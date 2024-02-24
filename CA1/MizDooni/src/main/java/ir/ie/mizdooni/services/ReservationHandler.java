@@ -76,9 +76,10 @@ public class ReservationHandler {
         LocalTime startTime = res.getStartTime();
         LocalTime endTime = res.getEndTime();
         ArrayList<LocalDateTime> openingDateTimes = new ArrayList<>();
-        for (LocalTime time = startTime; !time.isAfter(endTime); time = time.plusHours(1)) {
-            openingDateTimes.add(LocalDateTime.of(date, time));
+        for (int time = startTime.getHour(); time <= endTime.getHour(); time = time + 1) {
+            openingDateTimes.add(LocalDateTime.of(date, LocalTime.of(time,0)));
         }
+
         return openingDateTimes;
     }
 

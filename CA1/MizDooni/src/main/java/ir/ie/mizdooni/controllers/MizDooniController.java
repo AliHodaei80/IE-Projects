@@ -199,6 +199,8 @@ public class MizDooniController {
                 return cancelReservation(data);
             case OP_SHOW_RESERVATION_HISTORY:
                 return showReservationHistory(data);
+            case OP_ADD_REVIEW:
+                return addReview(data);
             case OP_SHOW_AVAILABLE_TABLES:
                 return showAvailableTables(data);
             default:
