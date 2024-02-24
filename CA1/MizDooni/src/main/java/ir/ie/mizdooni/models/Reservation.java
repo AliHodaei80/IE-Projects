@@ -1,12 +1,18 @@
 package ir.ie.mizdooni.models;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Reservation {
+    @Expose(serialize = false)
     String username;
+    @Expose()
     String restaurantName;
+    @Expose()
     int tableNumber;
+    @Expose()
     LocalDateTime date;
 
     public Reservation(String username, String restaurantName, int tableNumber, LocalDateTime date) {

@@ -4,10 +4,8 @@ import ir.ie.mizdooni.models.Reservation;
 
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Reservations {
     // Outter 3 is restaurent name
@@ -67,5 +65,19 @@ public class Reservations {
         }
         reservations.get(reservation.getRestaurantName()).get(reservation.getTableNumber()).remove(reservation.getDate());
         reservationsIdIndex.remove(reservationId);
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservations.values().stream()
+                .flatMap(innerMap -> innerMap.values().stream())
+                .flatMap(innerMap2 -> innerMap2.values().stream())
+                .collect(Collectors.toList());
+    }
+
+    public List<Reservation> getUserReservations(String username) {
+        List<Reservation> allReservations = getAllReservations();
+        return  allReservations.stream()
+                .filter(reservation -> username.equals(reservation.getUsername()))
+                .collect(Collectors.toList());
     }
 }

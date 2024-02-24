@@ -7,6 +7,7 @@ import ir.ie.mizdooni.storage.Reservations;
 import ir.ie.mizdooni.utils.Parser;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 
@@ -96,5 +97,9 @@ public class ReservationHandler {
             throw new CancellationTimePassed();
         }
         reservations.removeReservation(reservationId);
+    }
+
+    public List<Reservation> showHistoryReservation(String username) {
+        return reservations.getUserReservations(username);
     }
 }

@@ -1,15 +1,24 @@
 package ir.ie.mizdooni.models;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalTime;
 import java.util.Map;
 
 public class Restaurant {
+    @Expose()
     String name;
+    @Expose()
     LocalTime startTime;
+    @Expose()
     LocalTime endTime;
+    @Expose()
     String type;
+    @Expose()
     String description;
+    @Expose()
     String managerUsername;
+    @Expose()
     Map<String, String> address;
 
     public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,

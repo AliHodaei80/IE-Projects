@@ -3,13 +3,13 @@ package ir.ie.mizdooni.controllers;
 import ir.ie.mizdooni.commons.Request;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.UserHandler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,8 @@ import java.util.Map;
 import static ir.ie.mizdooni.definitions.Commands.*;
 import static ir.ie.mizdooni.definitions.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
-import static ir.ie.mizdooni.definitions.ResponseKeys.*;
+import static ir.ie.mizdooni.definitions.ResponseKeys.RESERVATION_HISTORY_KEY;
+import static ir.ie.mizdooni.definitions.ResponseKeys.RESTAURANTS_KEY;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
 
 public class MizDooniController {
@@ -129,13 +130,20 @@ public class MizDooniController {
         }
     }
 
+    public Response showReservationHistory(Map<String, Object> data) {
+        List<Reservation> userReservations = reservationHandler.showHistoryReservation((String) data.get(USERNAME_KEY));
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put(RESERVATION_HISTORY_KEY, userReservations);
+        return new Response(true, responseBody);
+    }
+
     public Response handleRequest(Request request) {
         String op = request.getOperation();
         Map<String, Object> data = request.getData();
         try {
             validate(request);
         } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
-                | InvalidNumType e) {
+                 | InvalidNumType e) {
             return new Response(false, e.getMessage());
         }
         switch (op) {
@@ -153,6 +161,8 @@ public class MizDooniController {
                 return searchRestaurantByName(data);
             case OP_CANCEL_RESERVATION:
                 return cancelReservation(data);
+            case OP_SHOW_RESERVATION_HISTORY:
+                return showReservationHistory(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }

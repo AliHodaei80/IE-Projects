@@ -1,9 +1,17 @@
 package ir.ie.mizdooni.commons;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import ir.ie.mizdooni.utils.DateTimeSerializer;
+
+
+import java.time.LocalDateTime;
 
 public class Response {
+    @Expose(serialize = true)
     boolean success;
+    @Expose(serialize = true)
     Object data;
 
     public Response(boolean success, Object data) {
@@ -29,7 +37,10 @@ public class Response {
 
     @Override
     public String toString() {
-        Gson g = new Gson();
+        Gson g = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new DateTimeSerializer())
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
         return g.toJson(this);
     }
 }
