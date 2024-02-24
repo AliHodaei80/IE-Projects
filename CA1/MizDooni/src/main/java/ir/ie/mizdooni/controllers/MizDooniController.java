@@ -3,6 +3,7 @@ package ir.ie.mizdooni.controllers;
 import ir.ie.mizdooni.commons.Request;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.models.Opening;
 import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.Review;
@@ -12,6 +13,7 @@ import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.UserHandler;
 import ir.ie.mizdooni.services.ReviewHandler;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +21,7 @@ import java.util.Map;
 import static ir.ie.mizdooni.definitions.Commands.*;
 import static ir.ie.mizdooni.definitions.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
-import static ir.ie.mizdooni.definitions.ResponseKeys.RESERVATION_HISTORY_KEY;
-import static ir.ie.mizdooni.definitions.ResponseKeys.RESTAURANTS_KEY;
+import static ir.ie.mizdooni.definitions.ResponseKeys.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
 
 public class MizDooniController {
@@ -142,6 +143,19 @@ public class MizDooniController {
         return new Response(true, responseBody);
     }
 
+    public Response showAvailableTables(Map<String, Object> data) {
+        try {
+            Map<String, Object> responseBody = new HashMap<>();
+            List<Opening> availableOpenings = reservationHandler.findAvailableTables(
+                    (String) data.get(RESTAURANT_NAME_KEY),
+                    LocalDate.now());
+            responseBody.put(AVAILABLE_TABLES_KEY, availableOpenings);
+            return new Response(true, responseBody);
+        } catch (RestaurantNotFound e) {
+            return new Response(false, e.getMessage());
+        }
+    }
+
     public Response addReview(Map<String, Object> data) {
         try {
             Review review = reviewHandler.addReview((String) data.get(RESTAURANT_NAME_KEY),
@@ -185,8 +199,8 @@ public class MizDooniController {
                 return cancelReservation(data);
             case OP_SHOW_RESERVATION_HISTORY:
                 return showReservationHistory(data);
-            case OP_ADD_REVIEW:
-                return addReview(data);
+            case OP_SHOW_AVAILABLE_TABLES:
+                return showAvailableTables(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }

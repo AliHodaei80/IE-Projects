@@ -25,10 +25,10 @@ Command : addTable {"tableNumber": 1,"restaurantName": "r1","managerUsername": "
 {"success":true,"data":"Table added successfully"}
 ============================================
 
-Command : reserveTable {"username": "user1", "restaurantName": "r1", "tableNumber": 1,"datetime": "2024-02-24 21:00"} 
+Command : reserveTable {"username": "user1", "restaurantName": "r1", "tableNumber": 1,"datetime": "2024-02-29 21:00"} 
 
 {r1={1=ir.ie.mizdooni.models.RestaurantTable@2ff4f00f}}
-{"success":false,"data":"The datetime is invalid. The datetime should surpass current datetime"}
+{"success":true,"data":{"reservationNumber":1}}
 ============================================
 
 Command : searchRestaurantsByType {"type":"Iranian"} 
@@ -58,7 +58,7 @@ Command : cancelReservation {"username": "user1", "reservationNumber": 123}
 
 Command : showReservationHistory {"username": "user1"} 
 
-{"success":true,"data":{"reservationHistory":[]}}
+{"success":true,"data":{"reservationHistory":[{"restaurantName":"r1","tableNumber":1,"date":"2024-02-29 21:00"}]}}
 ============================================
 
 Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.5,"foodRate":5.0,"serviceRate":5.0,"comment":"Bon Appetits","restaurantName":"Grill Guys"} 
@@ -73,8 +73,8 @@ Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.0,"f
 
 Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.0,"foodRate":5.0,"serviceRate":5.0,"comment":"Ape Tits Bone","restaurantName":"r1"} 
 
-{r1={user1=ir.ie.mizdooni.models.Review@2f7a2457}}
-ir.ie.mizdooni.models.Review@2f7a2457
+{r1={user1=ir.ie.mizdooni.models.Review@edf4efb}}
+ir.ie.mizdooni.models.Review@edf4efb
 {"success":true,"data":"Review added successfully."}
 ============================================
 

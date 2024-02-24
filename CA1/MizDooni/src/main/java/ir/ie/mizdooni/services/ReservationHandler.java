@@ -94,7 +94,7 @@ public class ReservationHandler {
         return availableDateTimes;
     }
 
-    public ArrayList<Opening> listOpenTables(String restName, LocalDate desiredDate) throws RestaurantNotFound {
+    public ArrayList<Opening> findAvailableTables(String restName, LocalDate desiredDate) throws RestaurantNotFound {
         Collection<RestaurantTable> tables = restaurantTableHandler.getRestTables(restName);
         ArrayList<Opening> resultOpenings = new ArrayList<Opening>();
         for (RestaurantTable table : tables) {
