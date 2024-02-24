@@ -10,4 +10,5 @@ searchRestaurantsByName {"name":"r2"}
 searchRestaurantsByName {"restaurantName":"r2"}
 cancelReservation {"username": "user1", "reservationNumber": 123}
 showReservationHistory {"username": "user1"}
+addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.5,"foodRate":5.0,"serviceRate":5.0,"comment":"Bon Appetits","restaurantName":"Grill Guys"}
 exit

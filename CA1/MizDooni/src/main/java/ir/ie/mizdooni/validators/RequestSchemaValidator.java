@@ -2,7 +2,9 @@ package ir.ie.mizdooni.validators;
 
 import ir.ie.mizdooni.commons.Request;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.utils.NumberRange;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +33,8 @@ public class RequestSchemaValidator {
     final static List<String> searchRestaurantByTypeKeys = Arrays.asList(RESTAURANT_TYPE_KEY);
     final static List<String> searchRestaurantByNameKeys = Arrays.asList(RESTAURANT_SEARCH_NAME_KEY);
     final static List<String> showReservationHistoryKeys = Arrays.asList(USERNAME_KEY);
+    final static List<String> addReviewKeys = Arrays.asList(AMBIANCE_RATE_KEY, OVERALL_RATE_KEY, FOOD_RATE_KEY,
+            SERVICE_RATE_KEY, COMMENT_KEY, RESTAURANT_NAME_KEY, USERNAME_KEY);
 
     public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws InvalidRequestFormat {
         for (String key : keys) {
@@ -40,7 +44,7 @@ public class RequestSchemaValidator {
         }
     }
 
-    public static void checkBeNaturalNumber(double num) throws InvalidNumType {
+    public static void checkIsNatural(double num) throws InvalidNumType {
         if (num != (int) num || num < 1)
             throw new InvalidNumType();
     }
@@ -94,7 +98,7 @@ public class RequestSchemaValidator {
     }
 
     public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
-        checkKeyInclusion(data, restAdditionKeys); 
+        checkKeyInclusion(data, restAdditionKeys);
         checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
         validateTime((String) data.get(END_TIME_KEY));
         validateTime((String) data.get(START_TIME_KEY));
@@ -103,7 +107,7 @@ public class RequestSchemaValidator {
     public static void validateAddTable(Map<String, Object> data)
             throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType {
         checkKeyInclusion(data, tableAdditionKeys);
-        checkBeNaturalNumber((double) data.get(SEATS_NUM_KEY));
+        checkIsNatural((double) data.get(SEATS_NUM_KEY));
     }
 
     public static void validateReserveTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
@@ -131,8 +135,24 @@ public class RequestSchemaValidator {
         checkKeyInclusion(data, showReservationHistoryKeys);
     }
 
+    public static void checkRatingFieldRange(Map<String, Object> data, String field)  throws InvalidRatingFormat{
+
+        if (!NumberRange.isInRange((Double) data.get(field))) {
+            throw new InvalidRatingFormat(field);
+        }
+    }
+
+    public static void validateAddReview(Map<String, Object> data) throws InvalidRequestFormat, InvalidRatingFormat {
+        checkKeyInclusion(data, addReviewKeys);
+        checkRatingFieldRange(data, FOOD_RATE_KEY);
+        checkRatingFieldRange(data, SERVICE_RATE_KEY);
+        checkRatingFieldRange(data, OVERALL_RATE_KEY);
+        checkRatingFieldRange(data, AMBIANCE_RATE_KEY);
+
+    }
+
     public static void validate(Request r)
-            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType {
+            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType,InvalidRatingFormat {
         String op = r.getOperation();
         Map<String, Object> data = r.getData();
         switch (op) {
@@ -153,6 +173,9 @@ public class RequestSchemaValidator {
                 break;
             case OP_SEARCH_RESTAURANT_BY_NAME:
                 validateSearchRestaurantByName(data);
+                break;
+            case OP_ADD_REVIEW:
+                validateAddReview(data);
                 break;
             case OP_SHOW_RESERVATION_HISTORY:
                 validateShowReservationHistory(data);

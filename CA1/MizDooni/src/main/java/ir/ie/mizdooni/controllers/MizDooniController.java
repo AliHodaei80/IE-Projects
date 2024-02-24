@@ -142,7 +142,7 @@ public class MizDooniController {
         Map<String, Object> data = request.getData();
         try {
             validate(request);
-        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
+        } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat | InvalidRatingFormat
                  | InvalidNumType e) {
             return new Response(false, e.getMessage());
         }

@@ -31,7 +31,7 @@ public class RestaurantTableHandler {
         if (!(restaurantsHandler.isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
-        if (isTableExists(restName, tableNo)) {
+        if (doesTableExist(restName, tableNo)) {
             throw new TableAlreadyExists();
         }
         restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
@@ -44,7 +44,7 @@ public class RestaurantTableHandler {
         return restaurantTableHandler;
     }
 
-    public boolean isTableExists(String restName, Long tableNumber) {
+    public boolean doesTableExist(String restName, Long tableNumber) {
         return restaurantTables.getRestaurantTable(restName, tableNumber) != null;
     }
 }

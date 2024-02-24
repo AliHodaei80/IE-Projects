@@ -10,5 +10,6 @@ public class Commands {
     public final static String OP_SEARCH_RESTAURANT_BY_NAME = "searchRestaurantsByName";
     public final static String OP_CANCEL_RESERVATION = "cancelReservation";
     public final static String OP_SHOW_RESERVATION_HISTORY = "showReservationHistory";
+    public final static String OP_ADD_REVIEW = "addReview";
 
 }
