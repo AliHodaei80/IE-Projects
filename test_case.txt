@@ -8,4 +8,5 @@ searchRestaurantsByType {"type":"Iranian"}
 searchRestaurantsByName {"name":"r1"}
 searchRestaurantsByName {"name":"r2"}
 searchRestaurantsByName {"restaurantName":"r2"}
+cancelReservation {"username": "user1", "reservationNumber": 123}
 exit
