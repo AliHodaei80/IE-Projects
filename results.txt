@@ -68,13 +68,13 @@ Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.5,"f
 
 Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.0,"foodRate":5.0,"serviceRate":5.0,"comment":"Bon Appetits","restaurantName":"Grill Guys"} 
 
-{"success":false,"data":"Restaurant was not found"}
+{"success":false,"data":"Unsupported command!"}
 ============================================
 
 Command : addReview {"username": "user1","ambianceRate":5.0,"overallRate":5.0,"foodRate":5.0,"serviceRate":5.0,"comment":"Ape Tits Bone","restaurantName":"r1"} 
 
-{r1={user1=ir.ie.mizdooni.models.Review@edf4efb}}
-ir.ie.mizdooni.models.Review@edf4efb
-{"success":true,"data":"Review added successfully."}
+{"success":false,"data":"Unsupported command!"}
 ============================================
+
+Command : showAvailableTables {"restaurantName": "r1"} 
 
