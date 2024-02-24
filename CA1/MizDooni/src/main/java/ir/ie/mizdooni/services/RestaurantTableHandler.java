@@ -25,7 +25,7 @@ public class RestaurantTableHandler {
         if (!restaurantsHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
         }
-        if (!userHandler.isUserExist(managerUsername)) {
+        if (!userHandler.doesUserExist(managerUsername)) {
             throw new RestaurantManagerNotFound();
         }
         if (!(restaurantsHandler.isManager(managerUsername))) {

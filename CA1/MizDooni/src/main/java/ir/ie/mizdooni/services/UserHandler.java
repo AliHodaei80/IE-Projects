@@ -59,7 +59,7 @@ public class UserHandler {
     private boolean isUserRoleValid(String role) {
         return UserRole.getUserRole(role) != null;
     }
-    public boolean isUserExist(String username) {return users.getUserByUsername(username) != null;}
+    public boolean doesUserExist(String username) {return users.getUserByUsername(username) != null;}
 
     public static UserHandler getInstance() {
         if (userHandler == null)

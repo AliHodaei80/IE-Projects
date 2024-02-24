@@ -25,7 +25,7 @@ public class Reviews {
         Reviews = new HashMap<>();
     }
 
-    public void addReview(
+    public Review addReview(
             String restName,
             String username,
             Double ambianceRate,
@@ -37,8 +37,12 @@ public class Reviews {
             if (Reviews.get(restName) == null) {
                 Reviews.put(restName, new HashMap<>());
             }
-            Reviews.get(restName).put(username, new Review(username, restName, ambianceRate, foodRate, overallRate,
-                    serviceRate, comment, LocalDateTime.now()));
+            Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
+                    serviceRate, comment, LocalDateTime.now());
+            Reviews.get(restName).put(username, r);
+            System.out.println(Reviews);
+            System.out.println(r);
+            return r;
         }
     }
 }

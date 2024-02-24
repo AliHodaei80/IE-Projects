@@ -4,6 +4,7 @@ public class Errors {
     public final static String UNSUPPORTED_COMMAND = "Unsupported command!";
     public static final String INVALID_REQUEST_FORMAT = "Invalid format for request. you should provide all necessary fields. Missing Fields: ";
     public static final String INVALID_USER_ROLE = "User Role is invalid.";
+    public static final String USER_NOT_FOUND = "User Not found";
     public static final String USERNAME_ALREADY_TAKEN = "Username should be unique. Choose another one.";
     public static final String EMAIL_ALREADY_TAKEN = "Username should be unique. Choose another one.";
     public static final String INVALID_USERNAME_FORMAT = "Invalid username format";
