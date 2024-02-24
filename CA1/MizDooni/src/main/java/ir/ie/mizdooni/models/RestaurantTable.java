@@ -1,9 +1,15 @@
 package ir.ie.mizdooni.models;
 
+import com.google.gson.annotations.Expose;
+
 public class RestaurantTable {
+    @Expose()
     Long tableNumber;
+    @Expose()
     String restaurantName;
+    @Expose()
     String managerUsername;
+    @Expose()
     Long seatsNumber;
 
     public RestaurantTable(Long tableNumber, String restaurantName, String managerUsername, Long seatsNumber) {

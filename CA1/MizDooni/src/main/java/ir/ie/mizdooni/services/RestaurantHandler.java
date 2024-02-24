@@ -13,7 +13,7 @@ import ir.ie.mizdooni.storage.Restaurants;
 import java.util.List;
 import ir.ie.mizdooni.utils.Parser;
 
-import static ir.ie.mizdooni.defines.TimeFormats.RESTAURANT_TIME_FORMAT;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class RestaurantHandler {
     private static RestaurantHandler restaurantHandler;
@@ -35,8 +35,12 @@ public class RestaurantHandler {
         return res;
     }
 
-    public List<Restaurant> searchByType(String restType) {
+    public List<Restaurant> searchRestaurantByType(String restType) {
         return restaurants.searchByType(restType);
+    }
+
+    public List<Restaurant> searchRestaurantByName(String restName) {
+        return restaurants.searchByName(restName);
     }
 
     public boolean restaurantExists(String restName) {
@@ -47,7 +51,7 @@ public class RestaurantHandler {
             String description, Map<String, String> address)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {
 
-        if (!userHandler.isUserExist(managerUsername)) {
+        if (!userHandler.doesUserExist(managerUsername)) {
             throw new RestaurantManagerNotFound();
         }
         if (!(isManager(managerUsername))) {

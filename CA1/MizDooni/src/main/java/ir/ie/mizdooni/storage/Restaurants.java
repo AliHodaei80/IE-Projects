@@ -22,8 +22,12 @@ public class Restaurants {
         restaurants = new HashMap<>();
     }
 
-    public boolean printFilter(Restaurant rest,String type){
+    public boolean typeSearchFilter(Restaurant rest, String type) {
         return rest.getType().equals(type);
+    }
+
+    public boolean nameSearchFilter(Restaurant rest, String type) {
+        return rest.getName().equals(type);
     }
 
     public Restaurant getRestaurantByName(String restName) {
@@ -31,10 +35,16 @@ public class Restaurants {
     }
 
     public List<Restaurant> searchByType(String type) {
-        System.out.println(type);
         return new ArrayList<>(restaurants.values())
                 .stream()
-                .filter(rest -> printFilter(rest,type))
+                .filter(rest -> typeSearchFilter(rest, type))
+                .collect(Collectors.toList());
+    }
+
+    public List<Restaurant> searchByName(String restName) {
+        return new ArrayList<>(restaurants.values())
+                .stream()
+                .filter(rest -> nameSearchFilter(rest, restName))
                 .collect(Collectors.toList());
     }
 

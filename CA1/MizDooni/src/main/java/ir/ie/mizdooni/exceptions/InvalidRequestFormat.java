@@ -2,7 +2,7 @@ package ir.ie.mizdooni.exceptions;
 
 import java.util.List;
 
-import static ir.ie.mizdooni.defines.Errors.INVALID_REQUEST_FORMAT;
+import static ir.ie.mizdooni.definitions.Errors.INVALID_REQUEST_FORMAT;
 
 public class InvalidRequestFormat extends Exception {
     public InvalidRequestFormat(String field) {

@@ -1,4 +1,4 @@
-package ir.ie.mizdooni.defines;
+package ir.ie.mizdooni.definitions;
 
 public class RequestKeys {
     final public static String USERNAME_KEY = "username";
@@ -18,6 +18,7 @@ public class RequestKeys {
     final public static String TABLE_NUM_KEY = "tableNumber";
     final public static String SEATS_NUM_KEY = "seatsNumber";
     final public static String RESTAURANT_NAME_KEY = "restaurantName";
+    final public static String RESTAURANT_SEARCH_NAME_KEY = "name";
     final public static String DATETIME_KEY = "datetime";
     final public static String RESERVATION_NUM_KEY = "reservationNumber";
     final public static String RESTAURANT_TYPE_KEY = "type";

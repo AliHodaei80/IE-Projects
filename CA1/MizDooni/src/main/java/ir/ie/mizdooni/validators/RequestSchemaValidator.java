@@ -2,7 +2,9 @@ package ir.ie.mizdooni.validators;
 
 import ir.ie.mizdooni.commons.Request;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.utils.NumberRange;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -12,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static ir.ie.mizdooni.defines.Commands.*;
-import static ir.ie.mizdooni.defines.RequestKeys.*;
-import static ir.ie.mizdooni.defines.TimeFormats.RESERVE_DATETIME_FORMAT;
-import static ir.ie.mizdooni.defines.TimeFormats.RESTAURANT_TIME_FORMAT;
+import static ir.ie.mizdooni.definitions.Commands.*;
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class RequestSchemaValidator {
     final static List<String> userAdditionKeys = Arrays.asList(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,
@@ -29,6 +31,10 @@ public class RequestSchemaValidator {
     final static List<String> userAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY);
     final static List<String> restAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY, STREET_KEY);
     final static List<String> searchRestaurantByTypeKeys = Arrays.asList(RESTAURANT_TYPE_KEY);
+    final static List<String> searchRestaurantByNameKeys = Arrays.asList(RESTAURANT_SEARCH_NAME_KEY);
+    final static List<String> showReservationHistoryKeys = Arrays.asList(USERNAME_KEY);
+    final static List<String> addReviewKeys = Arrays.asList(AMBIANCE_RATE_KEY, OVERALL_RATE_KEY, FOOD_RATE_KEY,
+            SERVICE_RATE_KEY, COMMENT_KEY, RESTAURANT_NAME_KEY, USERNAME_KEY);
 
     public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws InvalidRequestFormat {
         for (String key : keys) {
@@ -38,8 +44,8 @@ public class RequestSchemaValidator {
         }
     }
 
-    public static void checkBeNaturalNumber(double num) throws InvalidNumType {
-        if (num != (int) num && num >= 1)
+    public static void checkIsNatural(double num) throws InvalidNumType {
+        if (num != (int) num || num < 1)
             throw new InvalidNumType();
     }
 
@@ -85,7 +91,6 @@ public class RequestSchemaValidator {
 
     public static void validateAddUser(Map<String, Object> data)
             throws InvalidEmailFormat, InvalidRequestFormat, InvalidUsernameFormat {
-        // TODO fix this(some cases will fail)
         checkKeyInclusion(data, userAdditionKeys);
         usernameCheck((String) data.get(USERNAME_KEY));
         emailCheck((String) data.get(EMAIL_KEY));
@@ -93,7 +98,7 @@ public class RequestSchemaValidator {
     }
 
     public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
-        checkKeyInclusion(data, restAdditionKeys); // TODO fix this(some cases will fail)
+        checkKeyInclusion(data, restAdditionKeys);
         checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
         validateTime((String) data.get(END_TIME_KEY));
         validateTime((String) data.get(START_TIME_KEY));
@@ -102,7 +107,7 @@ public class RequestSchemaValidator {
     public static void validateAddTable(Map<String, Object> data)
             throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType {
         checkKeyInclusion(data, tableAdditionKeys);
-        checkBeNaturalNumber((double) data.get(SEATS_NUM_KEY));
+        checkIsNatural((double) data.get(SEATS_NUM_KEY));
     }
 
     public static void validateReserveTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
@@ -118,9 +123,36 @@ public class RequestSchemaValidator {
 
     }
 
-    // TODO add validate request for adding restaurant table
+    public static void validateSearchRestaurantByName(Map<String, Object> data) throws InvalidRequestFormat {
+        checkKeyInclusion(data, searchRestaurantByNameKeys);
+        if (data.get(RESTAURANT_SEARCH_NAME_KEY) == null) {
+            throw new InvalidRequestFormat(RESTAURANT_SEARCH_NAME_KEY);
+        }
+
+    }
+
+    public static void validateShowReservationHistory(Map<String, Object> data) throws InvalidRequestFormat {
+        checkKeyInclusion(data, showReservationHistoryKeys);
+    }
+
+    public static void checkRatingFieldRange(Map<String, Object> data, String field)  throws InvalidRatingFormat{
+
+        if (!NumberRange.isInRange((Double) data.get(field))) {
+            throw new InvalidRatingFormat(field);
+        }
+    }
+
+    public static void validateAddReview(Map<String, Object> data) throws InvalidRequestFormat, InvalidRatingFormat {
+        checkKeyInclusion(data, addReviewKeys);
+        checkRatingFieldRange(data, FOOD_RATE_KEY);
+        checkRatingFieldRange(data, SERVICE_RATE_KEY);
+        checkRatingFieldRange(data, OVERALL_RATE_KEY);
+        checkRatingFieldRange(data, AMBIANCE_RATE_KEY);
+
+    }
+
     public static void validate(Request r)
-            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType {
+            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType,InvalidRatingFormat {
         String op = r.getOperation();
         Map<String, Object> data = r.getData();
         switch (op) {
@@ -135,8 +167,18 @@ public class RequestSchemaValidator {
                 break;
             case OP_RESERVE_TABLE:
                 validateReserveTable(data);
+                break;
             case OP_SEARCH_RESTAURANT_BY_TYPE:
                 validateSearchRestaurantByType(data);
+                break;
+            case OP_SEARCH_RESTAURANT_BY_NAME:
+                validateSearchRestaurantByName(data);
+                break;
+            case OP_ADD_REVIEW:
+                validateAddReview(data);
+                break;
+            case OP_SHOW_RESERVATION_HISTORY:
+                validateShowReservationHistory(data);
                 break;
         }
     }
