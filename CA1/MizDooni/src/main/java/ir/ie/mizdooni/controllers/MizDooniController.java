@@ -119,6 +119,16 @@ public class MizDooniController {
         return res;
     }
 
+    public Response cancelReservation(Map<String, Object> data) {
+        try {
+            reservationHandler.cancelReservation((String) data.get(USERNAME_KEY),
+                    (Long) (Math.round((Double) (data.get(RESERVATION_NUM_KEY)))));
+            return new Response(true, "Reservation cancelled successfully.");
+        } catch (CancellationTimePassed | ReservationNotForUser e) {
+            return new Response(false, e.getMessage());
+        }
+    }
+
     public Response handleRequest(Request request) {
         String op = request.getOperation();
         Map<String, Object> data = request.getData();
@@ -141,6 +151,8 @@ public class MizDooniController {
                 return searchRestaurantByType(data);
             case OP_SEARCH_RESTAURANT_BY_NAME:
                 return searchRestaurantByName(data);
+            case OP_CANCEL_RESERVATION:
+                return cancelReservation(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }

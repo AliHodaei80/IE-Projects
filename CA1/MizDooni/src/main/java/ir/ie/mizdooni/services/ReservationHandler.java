@@ -1,6 +1,7 @@
 package ir.ie.mizdooni.services;
 
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Reservations;
 import ir.ie.mizdooni.utils.Parser;
@@ -50,6 +51,17 @@ public class ReservationHandler {
         return dateTime.isAfter(currentDateTime);
     }
 
+    private boolean checkReservationIsForUser(String username, long reservationId) {
+        Reservation reservation = reservations.getReservation(reservationId);
+        return reservation != null && reservation.getUsername().equals(username);
+    }
+
+    private boolean checkCancellationTimeValid(long reservationId) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Reservation reservation = reservations.getReservation(reservationId);
+        return reservation != null && currentDateTime.isBefore(reservation.getDate());
+    }
+
     public long addReservation(String restName, String username, int tableNumber, String dateTime)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableDoesntExist, TableAlreadyReserved, InvalidDateTime, DateTimeNotInRange {
         if (!userExists(username)) {
@@ -74,5 +86,15 @@ public class ReservationHandler {
             throw new DateTimeNotInRange();
         }
         return reservations.addReservation(username, restName, tableNumber, Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT));
+    }
+
+    public void cancelReservation(String username, long reservationId) throws ReservationNotForUser, CancellationTimePassed {
+        if (!checkReservationIsForUser(username, reservationId)) {
+            throw new ReservationNotForUser();
+        }
+        if (!checkCancellationTimeValid(reservationId)) {
+            throw new CancellationTimePassed();
+        }
+        reservations.removeReservation(reservationId);
     }
 }

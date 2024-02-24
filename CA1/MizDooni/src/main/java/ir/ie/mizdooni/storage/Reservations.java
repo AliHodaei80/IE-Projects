@@ -55,4 +55,17 @@ public class Reservations {
         }
         return reservations.get(restName).get(tableNumber).get(dateTime);
     }
+
+    public Reservation getReservation(long reservationId) {
+        return reservationsIdIndex.get(reservationId);
+    }
+
+    public void removeReservation(long reservationId) {
+        Reservation reservation = reservationsIdIndex.get(reservationId);
+        if (reservation == null) {
+            return;
+        }
+        reservations.get(reservation.getRestaurantName()).get(reservation.getTableNumber()).remove(reservation.getDate());
+        reservationsIdIndex.remove(reservationId);
+    }
 }

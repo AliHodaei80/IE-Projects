@@ -8,5 +8,7 @@ public class Commands {
     public final static String OP_RESERVE_TABLE = "reserveTable";
     public final static String OP_SEARCH_RESTAURANT_BY_TYPE = "searchRestaurantsByType";
     public final static String OP_SEARCH_RESTAURANT_BY_NAME = "searchRestaurantsByName";
+    public final static String OP_CANCEL_RESERVATION = "cancelReservation";
+
 
 }

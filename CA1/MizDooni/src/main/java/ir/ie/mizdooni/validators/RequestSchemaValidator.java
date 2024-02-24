@@ -142,6 +142,7 @@ public class RequestSchemaValidator {
                 break;
             case OP_RESERVE_TABLE:
                 validateReserveTable(data);
+                break;
             case OP_SEARCH_RESTAURANT_BY_TYPE:
                 validateSearchRestaurantByType(data);
                 break;
