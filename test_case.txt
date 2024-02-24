@@ -10,5 +10,4 @@ searchRestaurantsByName {"name":"r2"}
 searchRestaurantsByName {"restaurantName":"r2"}
 cancelReservation {"username": "user1", "reservationNumber": 123}
 showReservationHistory {"username": "user1"}
-
 exit
