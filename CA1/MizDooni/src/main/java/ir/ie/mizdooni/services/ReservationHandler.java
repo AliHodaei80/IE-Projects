@@ -74,7 +74,7 @@ public class ReservationHandler {
         if (!(restaurantHandler.restaurantExists(restName))) {
             throw new RestaurantNotFound();
         }
-        if (!restaurantTableHandler.isTableExists(restName, (long) tableNumber)) {
+        if (!restaurantTableHandler.doesTableExist(restName, (long) tableNumber)) {
             throw new TableDoesntExist();
         }
         if (!tableIsAvailable(restName, tableNumber, Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT))) {

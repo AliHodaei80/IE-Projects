@@ -51,7 +51,7 @@ public class RestaurantHandler {
             String description, Map<String, String> address)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {
 
-        if (!userHandler.isUserExist(managerUsername)) {
+        if (!userHandler.doesUserExist(managerUsername)) {
             throw new RestaurantManagerNotFound();
         }
         if (!(isManager(managerUsername))) {

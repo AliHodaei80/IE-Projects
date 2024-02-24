@@ -5,10 +5,12 @@ import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
+import ir.ie.mizdooni.models.Review;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.UserHandler;
+import ir.ie.mizdooni.services.ReviewHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class MizDooniController {
     private static RestaurantTableHandler restaurantTableHandler;
     private static ReservationHandler reservationHandler;
     private static RestaurantHandler restaurantHandler;
+    private static ReviewHandler reviewHandler;
 
     private static MizDooniController mizDooniController;
 
@@ -34,6 +37,7 @@ public class MizDooniController {
         restaurantHandler = RestaurantHandler.getInstance();
         reservationHandler = ReservationHandler.getInstance();
         restaurantTableHandler = RestaurantTableHandler.getInstance();
+        reviewHandler = ReviewHandler.getInstance();
     }
 
     public static MizDooniController getInstance() {
@@ -113,7 +117,8 @@ public class MizDooniController {
     }
 
     public Response searchRestaurantByName(Map<String, Object> data) {
-        List<Restaurant> results = restaurantHandler.searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
+        List<Restaurant> results = restaurantHandler
+                .searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
         HashMap<String, Object> responseBody = new HashMap<>();
         responseBody.put(RESTAURANTS_KEY, results);
         Response res = new Response(true, responseBody);
@@ -137,13 +142,30 @@ public class MizDooniController {
         return new Response(true, responseBody);
     }
 
+    public Response addReview(Map<String, Object> data) {
+        try {
+            Review review = reviewHandler.addReview((String) data.get(RESTAURANT_NAME_KEY),
+                    (String) data.get(USERNAME_KEY),
+                    (Double) data.get(AMBIANCE_RATE_KEY),
+                    (Double) data.get(OVERALL_RATE_KEY),
+                    (Double) data.get(SERVICE_RATE_KEY),
+                    (Double) data.get(FOOD_RATE_KEY),
+                    (String) data.get(COMMENT_KEY));
+            return new Response(true, "Review added successfully.");
+        } catch (InvalidUserRole | UserNotFound | RestaurantNotFound e) {
+            return new Response(false, e.getMessage());
+
+        }
+    }
+
     public Response handleRequest(Request request) {
         String op = request.getOperation();
         Map<String, Object> data = request.getData();
         try {
             validate(request);
         } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
-                 | InvalidNumType e) {
+                | InvalidRatingFormat
+                | InvalidNumType e) {
             return new Response(false, e.getMessage());
         }
         switch (op) {
@@ -163,6 +185,8 @@ public class MizDooniController {
                 return cancelReservation(data);
             case OP_SHOW_RESERVATION_HISTORY:
                 return showReservationHistory(data);
+            case OP_ADD_REVIEW:
+                return addReview(data);
             default:
                 return new Response(false, UNSUPPORTED_COMMAND);
         }
