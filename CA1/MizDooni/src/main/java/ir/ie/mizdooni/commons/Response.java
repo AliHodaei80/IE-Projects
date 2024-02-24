@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import ir.ie.mizdooni.utils.DateTimeSerializer;
+import ir.ie.mizdooni.utils.TimeSerializer;
 
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Response {
     @Expose(serialize = true)
@@ -39,6 +41,7 @@ public class Response {
     public String toString() {
         Gson g = new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new DateTimeSerializer())
+                .registerTypeAdapter(LocalTime.class, new TimeSerializer())
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
         return g.toJson(this);
