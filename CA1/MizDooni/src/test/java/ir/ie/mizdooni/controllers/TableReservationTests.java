@@ -8,10 +8,7 @@ import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
-import ir.ie.mizdooni.services.ReservationHandler;
-import ir.ie.mizdooni.services.RestaurantHandler;
-import ir.ie.mizdooni.services.RestaurantTableHandler;
-import ir.ie.mizdooni.services.UserHandler;
+import ir.ie.mizdooni.services.*;
 import ir.ie.mizdooni.utils.DateTimeSerializer;
 import ir.ie.mizdooni.utils.TimeSerializer;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,6 +56,10 @@ public class TableReservationTests {
         Field restaurantHandlerInstance = RestaurantHandler.class.getDeclaredField("restaurantHandler");
         restaurantHandlerInstance.setAccessible(true);
         restaurantHandlerInstance.set(null, null);
+
+        Field reviewHandlerInstance = ReviewHandler.class.getDeclaredField("reviewHandler");
+        reviewHandlerInstance.setAccessible(true);
+        reviewHandlerInstance.set(null, null);
 
         controller = MizDooniController.getInstance();
     }
@@ -137,7 +138,7 @@ public class TableReservationTests {
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(TABLE_NUM_KEY, restaurantTable.getTableNumber().doubleValue());
-        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 0, null));
+        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 1, restaurant.getStartTime()));
 
         // Exercise
         Response response = controller.handleRequest(new Request(OP_RESERVE_TABLE, convertMapToString(data)));
@@ -172,7 +173,7 @@ public class TableReservationTests {
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(TABLE_NUM_KEY, restaurantTable.getTableNumber().doubleValue());
-        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 0, null));
+        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 1, restaurant.getStartTime()));
 
         // Exercise
         Response response = controller.handleRequest(new Request(OP_RESERVE_TABLE, convertMapToString(data)));
@@ -204,7 +205,7 @@ public class TableReservationTests {
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(TABLE_NUM_KEY, restaurantTable.getTableNumber().doubleValue());
-        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 0, null));
+        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 1, restaurant.getStartTime()));
 
         // Exercise
         Response response = controller.handleRequest(new Request(OP_RESERVE_TABLE, convertMapToString(data)));
@@ -319,7 +320,7 @@ public class TableReservationTests {
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(TABLE_NUM_KEY, restaurantTable.getTableNumber().doubleValue());
-        String date = getCurrDateTimePlus(1, 1, null);
+        String date = getCurrDateTimePlus(1, 1, restaurant.getStartTime());
         data.put(DATETIME_KEY, date.substring(0, date.length() - 1) + "1");
 
         // Exercise
