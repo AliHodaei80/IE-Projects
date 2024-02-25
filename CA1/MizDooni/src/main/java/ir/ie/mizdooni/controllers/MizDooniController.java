@@ -7,13 +7,8 @@ import ir.ie.mizdooni.models.Opening;
 import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.Review;
-import ir.ie.mizdooni.services.ReservationHandler;
-import ir.ie.mizdooni.services.RestaurantHandler;
-import ir.ie.mizdooni.services.RestaurantTableHandler;
-import ir.ie.mizdooni.services.UserHandler;
-import ir.ie.mizdooni.services.ReviewHandler;
+import ir.ie.mizdooni.services.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +18,7 @@ import static ir.ie.mizdooni.definitions.Commands.*;
 import static ir.ie.mizdooni.definitions.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.ResponseKeys.*;
+import static ir.ie.mizdooni.definitions.Successes.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validate;
 
 public class MizDooniController {
@@ -55,7 +51,7 @@ public class MizDooniController {
                     (String) data.get(USER_ROLE_KEY),
                     (String) data.get(PASSWORD_KEY),
                     (Map<String, String>) data.get(USER_ADDRESS_KEY));
-            return new Response(true, "User added successfully.");
+            return new Response(true, USER_ADDED_SUCCESSFULLY);
         } catch (
                 UserNameAlreadyTaken | InvalidUserRole | EmailAlreadyTaken e) {
             return new Response(false, e.getMessage());
@@ -72,7 +68,7 @@ public class MizDooniController {
                     (String) data.get(MANAGER_USERNAME_KEY),
                     (String) data.get(DESCRIPTION_KEY),
                     (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY));
-            return new Response(true, "Restaurant added successfully.");
+            return new Response(true, RESTAURANT_ADDED_SUCCESSFULLY);
         } catch (
                 InvalidUserRole | RestaurantManagerNotFound | RestaurentExists e) {
             return new Response(false, e.getMessage());
@@ -86,7 +82,7 @@ public class MizDooniController {
                     (Long) (Math.round((Double) (data.get(TABLE_NUM_KEY)))),
                     (int) (Math.round((Double) (data.get(SEATS_NUM_KEY)))),
                     (String) data.get(MANAGER_USERNAME_KEY));
-            return new Response(true, "Table added successfully");
+            return new Response(true, TABLE_ADDED_SUCCESSFULLY);
         } catch (
                 InvalidUserRole | RestaurantManagerNotFound | TableAlreadyExists | RestaurantNotFound e) {
             return new Response(false, e.getMessage());
@@ -131,7 +127,7 @@ public class MizDooniController {
         try {
             reservationHandler.cancelReservation((String) data.get(USERNAME_KEY),
                     (Long) (Math.round((Double) (data.get(RESERVATION_NUM_KEY)))));
-            return new Response(true, "Reservation cancelled successfully.");
+            return new Response(true, RESERVATION_CANCELLED_SUCCESSFULLY);
         } catch (CancellationTimePassed | ReservationNotForUser e) {
             return new Response(false, e.getMessage());
         }
@@ -166,7 +162,7 @@ public class MizDooniController {
                     (Double) data.get(SERVICE_RATE_KEY),
                     (Double) data.get(FOOD_RATE_KEY),
                     (String) data.get(COMMENT_KEY));
-            return new Response(true, "Review added successfully.");
+            return new Response(true, REVIEW_ADDED_SUCCESSFULLY);
         } catch (InvalidUserRole | UserNotFound | RestaurantNotFound e) {
             return new Response(false, e.getMessage());
 
@@ -179,8 +175,8 @@ public class MizDooniController {
         try {
             validate(request);
         } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
-                | InvalidRatingFormat
-                | InvalidNumType e) {
+                 | InvalidRatingFormat
+                 | InvalidNumType e) {
             return new Response(false, e.getMessage());
         }
         switch (op) {
