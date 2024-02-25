@@ -18,7 +18,6 @@ public class RestaurantTables {
     }
 
     public RestaurantTable getRestaurantTable(String restName, Long tableNo) {
-        System.out.println(restaurantTables);
         if (restaurantTables.get(restName) != null) {
             return restaurantTables.get(restName).get(tableNo);
         }

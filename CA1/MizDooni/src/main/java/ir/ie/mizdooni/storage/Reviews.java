@@ -40,8 +40,6 @@ public class Reviews {
             Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
                     serviceRate, comment, LocalDateTime.now());
             Reviews.get(restName).put(username, r);
-            System.out.println(Reviews);
-            System.out.println(r);
             return r;
         }
     }
