@@ -45,4 +45,12 @@ public class Reviews {
             return r;
         }
     }
+
+    public Map<String, Map<String, Review>> getReviews() {
+        return Reviews;
+    }
+
+    public void setReviews(Map<String, Map<String, Review>> reviews) {
+        Reviews = reviews;
+    }
 }

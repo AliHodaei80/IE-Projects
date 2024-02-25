@@ -104,7 +104,7 @@ public class MizDooniController {
 
             return new Response(true, resultDate);
         } catch (
-                InvalidUserRole | RestaurantManagerNotFound | TableAlreadyReserved | RestaurantNotFound
+                InvalidUserRole | UserNotExists | TableAlreadyReserved | RestaurantNotFound
                 | TableDoesntExist | InvalidDateTime | DateTimeNotInRange e) {
             return new Response(false, e.getMessage());
         }

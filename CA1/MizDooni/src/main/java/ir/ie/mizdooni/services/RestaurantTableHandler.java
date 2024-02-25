@@ -59,4 +59,8 @@ public class RestaurantTableHandler {
     public boolean doesTableExist(String restName, Long tableNumber) {
         return restaurantTables.getRestaurantTable(restName, tableNumber) != null;
     }
+
+    public RestaurantTables getRestaurantTables() {
+        return restaurantTables;
+    }
 }

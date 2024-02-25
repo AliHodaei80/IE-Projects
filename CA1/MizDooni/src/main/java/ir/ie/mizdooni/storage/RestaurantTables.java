@@ -35,4 +35,12 @@ public class RestaurantTables {
         }
         restaurantTables.get(restName).put(tableNo, new RestaurantTable(tableNo, restName, restManagerName, seatsNo));
     }
+
+    public Map<String, Map<Long, RestaurantTable>> getRestaurantTables() {
+        return restaurantTables;
+    }
+
+    public void setRestaurantTables(Map<String, Map<Long, RestaurantTable>> restaurantTables) {
+        this.restaurantTables = restaurantTables;
+    }
 }

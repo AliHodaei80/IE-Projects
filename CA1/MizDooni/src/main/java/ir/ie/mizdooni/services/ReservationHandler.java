@@ -1,27 +1,16 @@
 package ir.ie.mizdooni.services;
 
 import ir.ie.mizdooni.exceptions.*;
-import ir.ie.mizdooni.models.Reservation;
-import ir.ie.mizdooni.models.Restaurant;
-import ir.ie.mizdooni.models.RestaurantTable;
-import ir.ie.mizdooni.models.UserRole;
-import ir.ie.mizdooni.models.Opening;
+import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.storage.Reservations;
 import ir.ie.mizdooni.utils.Parser;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 import static java.lang.Integer.max;
-import static java.lang.Integer.min;
 
 public class ReservationHandler {
     private static ReservationHandler reservationHandler;
@@ -116,10 +105,10 @@ public class ReservationHandler {
     }
 
     public long addReservation(String restName, String username, int tableNumber, String dateTime)
-            throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableDoesntExist,
-            TableAlreadyReserved, InvalidDateTime, DateTimeNotInRange {
+            throws InvalidUserRole, RestaurantNotFound, TableDoesntExist,
+            TableAlreadyReserved, InvalidDateTime, DateTimeNotInRange, UserNotExists {
         if (!userExists(username)) {
-            throw new RestaurantManagerNotFound();
+            throw new UserNotExists();
         }
         if (!(isClient(username))) {
             throw new InvalidUserRole();
@@ -157,5 +146,9 @@ public class ReservationHandler {
 
     public List<Reservation> showHistoryReservation(String username) {
         return reservations.getUserReservations(username);
+    }
+
+    public Reservations getReservations() {
+        return reservations;
     }
 }

@@ -66,4 +66,8 @@ public class UserHandler {
             userHandler = new UserHandler();
         return userHandler;
     }
+
+    public Users getUsers() {
+        return users;
+    }
 }

@@ -52,4 +52,12 @@ public class Restaurants {
             String managerUsername, Map<String, String> address) {
         restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address));
     }
+
+    public Map<String, Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(Map<String, Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
 }

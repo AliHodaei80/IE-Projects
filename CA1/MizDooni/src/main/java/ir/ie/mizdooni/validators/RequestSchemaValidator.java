@@ -76,7 +76,7 @@ public class RequestSchemaValidator {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESERVE_DATETIME_FORMAT);
             LocalDateTime.parse(dateTimeString, formatter);
         } catch (DateTimeParseException e) {
-            throw new InvalidTimeFormat(RESTAURANT_TIME_FORMAT);
+            throw new InvalidTimeFormat(RESERVE_DATETIME_FORMAT);
         }
     }
 

@@ -31,4 +31,12 @@ public class Users {
     public void addUser(String username, String email, UserRole role, String password, Map<String, String> address) {
         users.put(username, new User(username, password, email, address, role));
     }
+
+    public Map<String, User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Map<String, User> users) {
+        this.users = users;
+    }
 }

@@ -12,8 +12,6 @@ public class Errors {
     public static final String INVALID_TIME_FORMAT = "Invalid time format. Format should be: ";
     public static final String REST_M_NOT_FOUND = "Restaurant manager was not found";
     public static final String REST_NAME_NOT_UNIQUE = "Restaurant name was not unique";
-    public static final String TABLE_ID_NOT_UNIQUE = "Table ID already exists";
-    public static final String INVALID_SEAT_NO = "Seats number was invalid";
     public static final String TABLE_ALREADY_EXISTS = "Table Already Exists";
     public static final String RESTUARANT_NOT_FOUND = "Restaurant was not found";
     public static final String TABLE_NOT_FOUND = "Table was not found";
@@ -24,5 +22,6 @@ public class Errors {
     public static final String INVALID_RATING_FORMAT = "The rating was out of range or in invalid format.";
     public static final String RESERVATION_NOT_FOR_USER = "The reservation does not belong to user";
     public static final String CANCELLATION_TIME_PASSED = "Cancellation Period has expired";
+    public static final String USER_NOT_EXISTS = "User not exists";
 
 }

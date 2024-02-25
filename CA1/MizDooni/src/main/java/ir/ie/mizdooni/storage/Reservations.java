@@ -89,4 +89,28 @@ public class Reservations {
                 .filter(reservation -> username.equals(reservation.getUsername()))
                 .collect(Collectors.toList());
     }
+
+    public Map<String, Map<Long, Map<LocalDateTime, Reservation>>> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Map<String, Map<Long, Map<LocalDateTime, Reservation>>> reservations) {
+        this.reservations = reservations;
+    }
+
+    public Map<Long, Reservation> getReservationsIdIndex() {
+        return reservationsIdIndex;
+    }
+
+    public void setReservationsIdIndex(Map<Long, Reservation> reservationsIdIndex) {
+        this.reservationsIdIndex = reservationsIdIndex;
+    }
+
+    public long getReservationCounts() {
+        return reservationCounts;
+    }
+
+    public void setReservationCounts(long reservationCounts) {
+        this.reservationCounts = reservationCounts;
+    }
 }

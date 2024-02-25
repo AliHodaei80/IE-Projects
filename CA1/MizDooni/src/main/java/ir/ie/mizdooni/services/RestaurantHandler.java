@@ -82,4 +82,7 @@ public class RestaurantHandler {
         return restaurantHandler;
     }
 
+    public Restaurants getRestaurants() {
+        return restaurants;
+    }
 }
