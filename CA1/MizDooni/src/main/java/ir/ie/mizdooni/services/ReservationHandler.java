@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
 
 public class ReservationHandler {
     private static ReservationHandler reservationHandler;
@@ -72,35 +74,42 @@ public class ReservationHandler {
         return reservation != null && currentDateTime.isBefore(reservation.getDate());
     }
 
-    public ArrayList<LocalDateTime> generateOpeningDateTimes(Restaurant res, LocalDate date) {
+    public ArrayList<LocalDateTime> generateOpeningDateTimes(Restaurant res, LocalDateTime date, long nextDays) {
         LocalTime startTime = res.getStartTime();
         LocalTime endTime = res.getEndTime();
         ArrayList<LocalDateTime> openingDateTimes = new ArrayList<>();
-        for (int time = startTime.getHour(); time <= endTime.getHour(); time = time + 1) {
-            openingDateTimes.add(LocalDateTime.of(date, LocalTime.of(time,0)));
-        }
 
+        LocalDateTime currentDateTime;
+        for(int day = 0; day <= nextDays; day++) {
+            currentDateTime = date.plusDays(day);
+            int startHour = (currentDateTime.toLocalDate().isEqual(date.toLocalDate()))?
+                    max(startTime.getHour(), date.getHour() + 1):
+                    startTime.getHour();
+            for (int time = startHour; time <= endTime.getHour(); time = time + 1) {
+                openingDateTimes.add(LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.of(time,0)));
+            }
+        }
         return openingDateTimes;
     }
 
     public ArrayList<LocalDateTime> findAvailableDateTimes(String restName, RestaurantTable table,
-            LocalDate desiredDate) throws RestaurantNotFound {
+            LocalDateTime desiredDate) throws RestaurantNotFound {
         Restaurant rest = restaurantHandler.getRestaurant(restName);
         Map<LocalDateTime, Reservation> tableReserves = reservations.getTableReservations(restName,
                 table.getTableNumber());
-        ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate);
+        ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate, 1);
         Set<LocalDateTime> openingDateTimesSet = new HashSet<>(restOpeningDateTimes);
         openingDateTimesSet.removeAll(tableReserves.keySet());
         ArrayList<LocalDateTime> availableDateTimes = new ArrayList<>(openingDateTimesSet);
         return availableDateTimes;
     }
 
-    public ArrayList<Opening> findAvailableTables(String restName, LocalDate desiredDate) throws RestaurantNotFound {
+    public ArrayList<Opening> findAvailableTables(String restName, LocalDateTime desiredDate) throws RestaurantNotFound {
         Collection<RestaurantTable> tables = restaurantTableHandler.getRestTables(restName);
         ArrayList<Opening> resultOpenings = new ArrayList<Opening>();
         for (RestaurantTable table : tables) {
             ArrayList<LocalDateTime> availableDatetimes = findAvailableDateTimes(restName, table, desiredDate);
-            Opening opening = new Opening(restName, table.getSeatsNumber(), availableDatetimes);
+            Opening opening = new Opening(table.getTableNumber(), table.getSeatsNumber(), availableDatetimes);
             resultOpenings.add(opening);
         }
         return resultOpenings;

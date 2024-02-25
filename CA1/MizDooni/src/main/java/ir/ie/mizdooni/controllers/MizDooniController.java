@@ -14,6 +14,7 @@ import ir.ie.mizdooni.services.UserHandler;
 import ir.ie.mizdooni.services.ReviewHandler;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,7 +149,7 @@ public class MizDooniController {
             Map<String, Object> responseBody = new HashMap<>();
             List<Opening> availableOpenings = reservationHandler.findAvailableTables(
                     (String) data.get(RESTAURANT_NAME_KEY),
-                    LocalDate.now());
+                    LocalDateTime.now());
             responseBody.put(AVAILABLE_TABLES_KEY, availableOpenings);
             return new Response(true, responseBody);
         } catch (RestaurantNotFound e) {
