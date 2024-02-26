@@ -33,10 +33,10 @@ public class Reservations {
 
     public Map<LocalDateTime, Reservation> getTableReservations(String restName, long tableNumber)
             throws RestaurantNotFound {
-        if (reservations.get(restName) != null) {
+        if (reservations.get(restName) != null && reservations.get(restName).get(tableNumber) != null) {
             return reservations.get(restName).get(tableNumber);
         } else {
-            throw new RestaurantNotFound();
+            return new HashMap<>();
         }
     }
 

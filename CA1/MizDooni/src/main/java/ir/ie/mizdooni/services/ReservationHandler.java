@@ -94,6 +94,9 @@ public class ReservationHandler {
     }
 
     public ArrayList<Opening> findAvailableTables(String restName, LocalDateTime desiredDate) throws RestaurantNotFound {
+        if (!restaurantHandler.restaurantExists(restName)) {
+            throw new RestaurantNotFound();
+        }
         Collection<RestaurantTable> tables = restaurantTableHandler.getRestTables(restName);
         ArrayList<Opening> resultOpenings = new ArrayList<Opening>();
         for (RestaurantTable table : tables) {

@@ -2,6 +2,7 @@ package ir.ie.mizdooni.storage;
 
 import ir.ie.mizdooni.models.RestaurantTable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ public class RestaurantTables {
     Map<String, Map<Long, RestaurantTable>> restaurantTables;
 
     public Collection<RestaurantTable> getRestTables(String restName) {
-        return restaurantTables.get(restName).values();
+        return (restaurantTables.containsKey(restName)) ? restaurantTables.get(restName).values() : new ArrayList<>();
     }
 
     public RestaurantTables() {
