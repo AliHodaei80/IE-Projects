@@ -1,11 +1,12 @@
 package ir.ie.mizdooni.services;
 
-import ir.ie.mizdooni.exceptions.InvalidUserRole;
-import ir.ie.mizdooni.exceptions.RestaurantManagerNotFound;
-import ir.ie.mizdooni.exceptions.RestaurantNotFound;
-import ir.ie.mizdooni.exceptions.TableAlreadyExists;
+import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.UserRole;
+import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.storage.RestaurantTables;
+
+import java.util.Collection;
+import java.util.List;
 
 public class RestaurantTableHandler {
 
@@ -20,8 +21,8 @@ public class RestaurantTableHandler {
         restaurantTables = new RestaurantTables();
     }
 
-    public void addRestaurantTable(String restName, Long tableNo, Long seatsNo, String managerUsername)
-            throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists {
+    public void addRestaurantTable(String restName, Long tableNo, int seatsNo, String managerUsername)
+            throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists, ManagerUsernameNotMatch {
         if (!restaurantsHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
         }
@@ -31,11 +32,22 @@ public class RestaurantTableHandler {
         if (!(restaurantsHandler.isManager(managerUsername))) {
             throw new InvalidUserRole();
         }
+        if (!restaurantsHandler.getRestaurant(restName).getManagerUsername().equals(managerUsername)) {
+            throw new ManagerUsernameNotMatch();
+        }
         if (doesTableExist(restName, tableNo)) {
             throw new TableAlreadyExists();
         }
         restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
         System.out.println(restaurantTables.getAllTables());
+    }
+
+    public Collection<RestaurantTable> getRestTables(String restName) throws RestaurantNotFound {
+        if (restaurantsHandler.restaurantExists(restName)) {
+            return restaurantTables.getRestTables(restName);
+        } else {
+            throw new RestaurantNotFound();
+        }
     }
 
     public static RestaurantTableHandler getInstance() {
@@ -46,5 +58,9 @@ public class RestaurantTableHandler {
 
     public boolean doesTableExist(String restName, Long tableNumber) {
         return restaurantTables.getRestaurantTable(restName, tableNumber) != null;
+    }
+
+    public RestaurantTables getRestaurantTables() {
+        return restaurantTables;
     }
 }

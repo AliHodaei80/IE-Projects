@@ -39,7 +39,10 @@ public class RestaurantHandler {
         return restaurants.searchByType(restType);
     }
 
-    public List<Restaurant> searchRestaurantByName(String restName) {
+    public List<Restaurant> searchRestaurantByName(String restName) throws RestaurantNotFound {
+        if (restaurants.getRestaurantByName(restName) == null) {
+            throw new RestaurantNotFound();
+        }
         return restaurants.searchByName(restName);
     }
 
@@ -82,4 +85,7 @@ public class RestaurantHandler {
         return restaurantHandler;
     }
 
+    public Restaurants getRestaurants() {
+        return restaurants;
+    }
 }
