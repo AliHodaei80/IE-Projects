@@ -61,4 +61,9 @@ public class ReviewHandler {
     // //TODO Implement int he future
     // return reservations.getUserReservations(username);
     // }
+
+
+    public Reviews getReviews() {
+        return reviews;
+    }
 }

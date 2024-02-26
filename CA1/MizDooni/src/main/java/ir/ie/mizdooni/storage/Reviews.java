@@ -40,9 +40,15 @@ public class Reviews {
             Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
                     serviceRate, comment, LocalDateTime.now());
             Reviews.get(restName).put(username, r);
-            System.out.println(Reviews);
-            System.out.println(r);
             return r;
         }
+    }
+
+    public Map<String, Map<String, Review>> getReviews() {
+        return Reviews;
+    }
+
+    public void setReviews(Map<String, Map<String, Review>> reviews) {
+        Reviews = reviews;
     }
 }

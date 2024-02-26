@@ -18,8 +18,11 @@ public class MizDooniApplication {
             command = in.nextLine();
             if (command == null || command.equals("exit"))
                 break;
+
+            System.out.println("Command : " + command +  " \n");
             request = Parser.parseCommand(command);
             System.out.println(controller.handleRequest(request));
+            System.out.println("============================================\n");
         }
     }
 
