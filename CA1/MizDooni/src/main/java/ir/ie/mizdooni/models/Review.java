@@ -14,8 +14,8 @@ public class Review {
     LocalDateTime submitDate;
 
     public Review(String username, String restaurantName, Double ambianceRate, Double foodRate, Double overallRate,
-            Double serviceRate,
-            String comment, LocalDateTime submitDate) {
+                  Double serviceRate,
+                  String comment, LocalDateTime submitDate) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.ambianceRate = ambianceRate;
@@ -32,5 +32,29 @@ public class Review {
 
     public String getRestaurantName() {
         return restaurantName;
+    }
+
+    public Double getAmbianceRate() {
+        return ambianceRate;
+    }
+
+    public Double getOverallRate() {
+        return overallRate;
+    }
+
+    public Double getServiceRate() {
+        return serviceRate;
+    }
+
+    public Double getFoodRate() {
+        return foodRate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public LocalDateTime getSubmitDate() {
+        return submitDate;
     }
 }
