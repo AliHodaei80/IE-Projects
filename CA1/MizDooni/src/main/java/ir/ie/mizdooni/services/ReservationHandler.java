@@ -60,7 +60,7 @@ public class ReservationHandler {
     private boolean checkCancellationTimeValid(long reservationId) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         Reservation reservation = reservations.getReservation(reservationId);
-        return reservation != null && currentDateTime.isBefore(reservation.getDate());
+        return reservation != null && currentDateTime.isBefore(reservation.getDatetime());
     }
 
     public ArrayList<LocalDateTime> generateOpeningDateTimes(Restaurant res, LocalDateTime date, long nextDays) {

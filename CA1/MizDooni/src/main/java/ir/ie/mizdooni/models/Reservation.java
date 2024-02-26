@@ -3,7 +3,6 @@ package ir.ie.mizdooni.models;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Reservation {
     @Expose(serialize = false)
@@ -13,13 +12,16 @@ public class Reservation {
     @Expose()
     Long tableNumber;
     @Expose()
-    LocalDateTime date;
+    LocalDateTime datetime;
+    @Expose()
+    Long reservationNumber;
 
-    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date) {
+    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.tableNumber = tableNumber;
-        this.date = date;
+        this.datetime = date;
+        this.reservationNumber = reservationNumber;
     }
 
     public String getUsername() {
@@ -46,11 +48,11 @@ public class Reservation {
         this.tableNumber = tableNumber;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDatetime() {
+        return datetime;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDatetime(LocalDateTime datetime) {
+        this.datetime = datetime;
     }
 }
