@@ -12,6 +12,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import static ir.ie.mizdooni.definitions.Commands.*;
@@ -20,27 +21,45 @@ import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class RequestSchemaValidator {
-    final static List<String> userAdditionKeys = Arrays.asList(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,
+    final static Set<String> userAdditionKeys = Set.of(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,
             USER_ADDRESS_KEY);
-    final static List<String> restAdditionKeys = Arrays.asList(ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
+    final static Set<String> restAdditionKeys = Set.of(ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
             START_TIME_KEY, END_TIME_KEY, RESTAURANT_ADDRESS_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY);
-    final static List<String> tableAdditionKeys = Arrays.asList(TABLE_NUM_KEY, RESTAURANT_NAME_KEY,
+    final static Set<String> tableAdditionKeys = Set.of(TABLE_NUM_KEY, RESTAURANT_NAME_KEY,
             MANAGER_USERNAME_KEY, SEATS_NUM_KEY);
-    final static List<String> tableAReserveKeys = Arrays.asList(USERNAME_KEY, RESTAURANT_NAME_KEY,
+    final static Set<String> tableAReserveKeys = Set.of(USERNAME_KEY, RESTAURANT_NAME_KEY,
             TABLE_NUM_KEY, DATETIME_KEY);
-    final static List<String> userAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY);
-    final static List<String> restAdditionAddressKeys = Arrays.asList(CITY_KEY, COUNTRY_KEY, STREET_KEY);
-    final static List<String> searchRestaurantByTypeKeys = Arrays.asList(RESTAURANT_TYPE_KEY);
-    final static List<String> searchRestaurantByNameKeys = Arrays.asList(RESTAURANT_SEARCH_NAME_KEY);
-    final static List<String> showReservationHistoryKeys = Arrays.asList(USERNAME_KEY);
-    final static List<String> addReviewKeys = Arrays.asList(AMBIANCE_RATE_KEY, OVERALL_RATE_KEY, FOOD_RATE_KEY,
+    final static Set<String> userAdditionAddressKeys = Set.of(CITY_KEY, COUNTRY_KEY);
+    final static Set<String> restAdditionAddressKeys = Set.of(CITY_KEY, COUNTRY_KEY, STREET_KEY);
+    final static Set<String> searchRestaurantByTypeKeys = Set.of(RESTAURANT_TYPE_KEY);
+    final static Set<String> searchRestaurantByNameKeys = Set.of(RESTAURANT_SEARCH_NAME_KEY);
+    final static Set<String> showReservationHistoryKeys = Set.of(USERNAME_KEY);
+    final static Set<String> addReviewKeys = Set.of(AMBIANCE_RATE_KEY, OVERALL_RATE_KEY, FOOD_RATE_KEY,
             SERVICE_RATE_KEY, COMMENT_KEY, RESTAURANT_NAME_KEY, USERNAME_KEY);
+    final static Set<String> mapTypesKeyName = Set.of(USER_ADDRESS_KEY);
+    final static Set<String> stringTypesKeyName = Set.of(USERNAME_KEY, PASSWORD_KEY,
+            RESTAURANT_NAME_KEY, USER_ROLE_KEY, EMAIL_KEY, ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
+            START_TIME_KEY, END_TIME_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY, DATETIME_KEY, CITY_KEY, COUNTRY_KEY,
+            STREET_KEY, COMMENT_KEY);
+    final static Set<String> numTypesKeyName = Set.of(TABLE_NUM_KEY, SEATS_NUM_KEY, AMBIANCE_RATE_KEY, OVERALL_RATE_KEY,
+            FOOD_RATE_KEY, SERVICE_RATE_KEY);
 
-    public static void checkKeyInclusion(Map<String, Object> data, List<String> keys) throws InvalidRequestFormat {
+
+    public static void checkKeyInclusion(Map<String, Object> data, Set<String> keys) throws InvalidRequestFormat, InvalidRequestTypeFormat {
         for (String key : keys) {
             if (!data.containsKey(key)) {
                 throw new InvalidRequestFormat(key);
             }
+            if (mapTypesKeyName.contains(key) && !(data.get(key) instanceof Map)) {
+                throw new InvalidRequestTypeFormat(key);
+            }
+            if (numTypesKeyName.contains(key) && !(data.get(key) instanceof Number)) {
+                throw new InvalidRequestTypeFormat(key);
+            }
+            if (stringTypesKeyName.contains(key) && !(data.get(key) instanceof String)) {
+                throw new InvalidRequestTypeFormat(key);
+            }
+
         }
     }
 
@@ -81,23 +100,20 @@ public class RequestSchemaValidator {
     }
 
     public static void usernameCheck(String username) throws InvalidUsernameFormat {
-        boolean invalid = (username.contains("!") || username.contains("@")
-                || username.contains("&") || username.contains(" "));
-        if (invalid) {
+        if (!username.matches("^\\w+$")) {
             throw new InvalidUsernameFormat();
         }
-
     }
 
     public static void validateAddUser(Map<String, Object> data)
-            throws InvalidEmailFormat, InvalidRequestFormat, InvalidUsernameFormat {
+            throws InvalidEmailFormat, InvalidRequestFormat, InvalidUsernameFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, userAdditionKeys);
         usernameCheck((String) data.get(USERNAME_KEY));
         emailCheck((String) data.get(EMAIL_KEY));
         checkKeyInclusion((Map<String, Object>) (data.get(USER_ADDRESS_KEY)), userAdditionAddressKeys);
     }
 
-    public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
+    public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, restAdditionKeys);
         checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
         validateTime((String) data.get(END_TIME_KEY));
@@ -105,17 +121,17 @@ public class RequestSchemaValidator {
     }
 
     public static void validateAddTable(Map<String, Object> data)
-            throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType {
+            throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType, InvalidRequestTypeFormat {
         checkKeyInclusion(data, tableAdditionKeys);
         checkIsNatural((double) data.get(SEATS_NUM_KEY));
     }
 
-    public static void validateReserveTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat {
+    public static void validateReserveTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, tableAReserveKeys);
         validateDateTime((String) data.get(DATETIME_KEY));
     }
 
-    public static void validateSearchRestaurantByType(Map<String, Object> data) throws InvalidRequestFormat {
+    public static void validateSearchRestaurantByType(Map<String, Object> data) throws InvalidRequestFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, searchRestaurantByTypeKeys);
         if (data.get(RESTAURANT_TYPE_KEY) == null) {
             throw new InvalidRequestFormat(RESTAURANT_TYPE_KEY);
@@ -123,7 +139,7 @@ public class RequestSchemaValidator {
 
     }
 
-    public static void validateSearchRestaurantByName(Map<String, Object> data) throws InvalidRequestFormat {
+    public static void validateSearchRestaurantByName(Map<String, Object> data) throws InvalidRequestFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, searchRestaurantByNameKeys);
         if (data.get(RESTAURANT_SEARCH_NAME_KEY) == null) {
             throw new InvalidRequestFormat(RESTAURANT_SEARCH_NAME_KEY);
@@ -131,7 +147,7 @@ public class RequestSchemaValidator {
 
     }
 
-    public static void validateShowReservationHistory(Map<String, Object> data) throws InvalidRequestFormat {
+    public static void validateShowReservationHistory(Map<String, Object> data) throws InvalidRequestFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, showReservationHistoryKeys);
     }
 
@@ -142,7 +158,7 @@ public class RequestSchemaValidator {
         }
     }
 
-    public static void validateAddReview(Map<String, Object> data) throws InvalidRequestFormat, InvalidRatingFormat {
+    public static void validateAddReview(Map<String, Object> data) throws InvalidRequestFormat, InvalidRatingFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, addReviewKeys);
         checkRatingFieldRange(data, FOOD_RATE_KEY);
         checkRatingFieldRange(data, SERVICE_RATE_KEY);
@@ -152,7 +168,7 @@ public class RequestSchemaValidator {
     }
 
     public static void validate(Request r)
-            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType,InvalidRatingFormat {
+            throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType, InvalidRatingFormat, InvalidRequestTypeFormat {
         String op = r.getOperation();
         Map<String, Object> data = r.getData();
         switch (op) {

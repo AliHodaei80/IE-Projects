@@ -84,7 +84,8 @@ public class MizDooniController {
                     (String) data.get(MANAGER_USERNAME_KEY));
             return new Response(true, TABLE_ADDED_SUCCESSFULLY);
         } catch (
-                InvalidUserRole | RestaurantManagerNotFound | TableAlreadyExists | RestaurantNotFound e) {
+                InvalidUserRole | RestaurantManagerNotFound | TableAlreadyExists | RestaurantNotFound
+                | ManagerUsernameNotMatch e) {
             return new Response(false, e.getMessage());
         }
     }
@@ -115,12 +116,15 @@ public class MizDooniController {
     }
 
     public Response searchRestaurantByName(Map<String, Object> data) {
-        List<Restaurant> results = restaurantHandler
-                .searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
-        HashMap<String, Object> responseBody = new HashMap<>();
-        responseBody.put(RESTAURANTS_KEY, results);
-        Response res = new Response(true, responseBody);
-        return res;
+        try {
+            List<Restaurant> results = restaurantHandler
+                    .searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
+            HashMap<String, Object> responseBody = new HashMap<>();
+            responseBody.put(RESTAURANTS_KEY, results);
+            return new Response(true, responseBody);
+        } catch (RestaurantNotFound e) {
+            return new Response(false, e.getMessage());
+        }
     }
 
     public Response cancelReservation(Map<String, Object> data) {
@@ -175,8 +179,7 @@ public class MizDooniController {
         try {
             validate(request);
         } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
-                 | InvalidRatingFormat
-                 | InvalidNumType e) {
+                 | InvalidRatingFormat | InvalidNumType | InvalidRequestTypeFormat e) {
             return new Response(false, e.getMessage());
         }
         switch (op) {
