@@ -131,6 +131,14 @@ public class AddReviewTests {
         assertTrue(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(REVIEW_ADDED_SUCCESSFULLY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 1);
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getRestaurantName(), restaurant.getName());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getUsername(), user.getUsername());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getAmbianceRate(), ambianceRate);
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getComment(), comment);
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getFoodRate(), foodRate);
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getOverallRate(), overallRate);
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getServiceRate(), serviceRate);
     }
 
     @Test
@@ -167,6 +175,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(RESTUARANT_NOT_FOUND, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -203,6 +212,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(USER_NOT_FOUND, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -244,6 +254,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_USER_ROLE, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -284,6 +295,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + FOOD_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -324,6 +336,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + FOOD_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -364,6 +377,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + SERVICE_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -388,7 +402,6 @@ public class AddReviewTests {
         double foodRate = 4;
         String comment = "Not bad!";
 
-
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(AMBIANCE_RATE_KEY, ambianceRate);
@@ -404,6 +417,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + SERVICE_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -428,7 +442,6 @@ public class AddReviewTests {
         double foodRate = 4;
         String comment = "Not bad!";
 
-
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(AMBIANCE_RATE_KEY, ambianceRate);
@@ -444,6 +457,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + AMBIANCE_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -468,7 +482,6 @@ public class AddReviewTests {
         double foodRate = 4;
         String comment = "Not bad!";
 
-
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(AMBIANCE_RATE_KEY, ambianceRate);
@@ -484,6 +497,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + AMBIANCE_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -524,6 +538,7 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + OVERALL_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 
     @Test
@@ -564,5 +579,6 @@ public class AddReviewTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_RATING_FORMAT + " Field : " + OVERALL_RATE_KEY, (String) response.getData());
+        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
     }
 }

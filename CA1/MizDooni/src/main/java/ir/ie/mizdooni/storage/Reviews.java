@@ -1,28 +1,18 @@
 package ir.ie.mizdooni.storage;
 
-import ir.ie.mizdooni.models.Restaurant;
-import ir.ie.mizdooni.models.RestaurantTable;
-import ir.ie.mizdooni.models.User;
-import ir.ie.mizdooni.models.UserRole;
-import ir.ie.mizdooni.models.Review;
-import ir.ie.mizdooni.services.UserHandler;
+import ir.ie.mizdooni.models.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.List;
 
 public class Reviews {
-    Map<String, Map<String, Review>> Reviews; // first is restaurant second is user
+    Map<String, Map<String, Review>> reviews; // first is restaurant second is user
 
     public Reviews() {
-        Reviews = new HashMap<>();
+        reviews = new HashMap<>();
     }
 
     public Review addReview(
@@ -34,21 +24,26 @@ public class Reviews {
             Double foodRate,
             String comment) {
         {
-            if (Reviews.get(restName) == null) {
-                Reviews.put(restName, new HashMap<>());
+            if (reviews.get(restName) == null) {
+                reviews.put(restName, new HashMap<>());
             }
             Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
                     serviceRate, comment, LocalDateTime.now());
-            Reviews.get(restName).put(username, r);
+            reviews.get(restName).put(username, r);
             return r;
         }
     }
 
+    public List<Review> getAllReviews() {
+        return reviews.values().stream()
+                .flatMap(innerMap -> innerMap.values().stream())
+                .collect(Collectors.toList());
+    }
     public Map<String, Map<String, Review>> getReviews() {
-        return Reviews;
+        return reviews;
     }
 
     public void setReviews(Map<String, Map<String, Review>> reviews) {
-        Reviews = reviews;
+        this.reviews = reviews;
     }
 }

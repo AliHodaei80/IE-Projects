@@ -40,9 +40,6 @@ public class RestaurantHandler {
     }
 
     public List<Restaurant> searchRestaurantByName(String restName) throws RestaurantNotFound {
-        if (restaurants.getRestaurantByName(restName) == null) {
-            throw new RestaurantNotFound();
-        }
         return restaurants.searchByName(restName);
     }
 

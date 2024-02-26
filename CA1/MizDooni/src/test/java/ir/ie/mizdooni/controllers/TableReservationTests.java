@@ -134,11 +134,14 @@ public class TableReservationTests {
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
 
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
+
+        String dateTime = getCurrDateTimePlus(1, 1, restaurant.getStartTime());
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
         data.put(TABLE_NUM_KEY, restaurantTable.getTableNumber().doubleValue());
-        data.put(DATETIME_KEY, getCurrDateTimePlus(1, 1, restaurant.getStartTime()));
+        data.put(DATETIME_KEY, dateTime);
 
         // Exercise
         Response response = controller.handleRequest(new Request(OP_RESERVE_TABLE, convertMapToString(data)));
@@ -148,6 +151,12 @@ public class TableReservationTests {
         assertInstanceOf(Map.class, response.getData());
         assertTrue(((Map<String, Object>) response.getData()).containsKey(RESERVATION_NUM_KEY));
         assertInstanceOf(Long.class, ((Map<String, Object>) response.getData()).get(RESERVATION_NUM_KEY));
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 1);
+        assertEquals(reservationHandler.getReservations().getAllReservations().get(0).getUsername(), user.getUsername());
+        assertEquals(reservationHandler.getReservations().getAllReservations().get(0).getTableNumber(), restaurantTable.getTableNumber());
+        assertEquals(reservationHandler.getReservations().getAllReservations().get(0).getRestaurantName(), restaurant.getName());
+        assertEquals(reservationHandler.getReservations().getAllReservations().get(0).getDatetime(),
+                LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(RESERVE_DATETIME_FORMAT)));
     }
 
     @Test
@@ -168,7 +177,7 @@ public class TableReservationTests {
         restaurantTablesFake.get(restaurant.getName()).put(restaurantTable.getTableNumber(), restaurantTable);
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
-
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -182,6 +191,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(RESTUARANT_NOT_FOUND, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
     @Test
@@ -201,6 +211,7 @@ public class TableReservationTests {
         restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
 
         RestaurantTable restaurantTable = creteRestaurantTable(restaurant.getName(), restaurant.getManagerUsername(), 1, 1);
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -214,6 +225,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(TABLE_NOT_FOUND, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
     @Test
@@ -238,7 +250,7 @@ public class TableReservationTests {
         restaurantTablesFake.get(restaurant.getName()).put(restaurantTable.getTableNumber(), restaurantTable);
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
-
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -252,6 +264,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_DATETIME, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
 
@@ -277,7 +290,7 @@ public class TableReservationTests {
         restaurantTablesFake.get(restaurant.getName()).put(restaurantTable.getTableNumber(), restaurantTable);
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
-
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -291,6 +304,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(DATETIME_NOT_IN_RANGE, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
     @Test
@@ -315,7 +329,7 @@ public class TableReservationTests {
         restaurantTablesFake.get(restaurant.getName()).put(restaurantTable.getTableNumber(), restaurantTable);
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
-
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -330,6 +344,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_TIME_FORMAT + RESERVE_DATETIME_FORMAT, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
     @Test
@@ -350,7 +365,7 @@ public class TableReservationTests {
         restaurantTablesFake.get(restaurant.getName()).put(restaurantTable.getTableNumber(), restaurantTable);
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
-
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -364,6 +379,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(USER_NOT_EXISTS, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
     @Test
@@ -389,7 +405,7 @@ public class TableReservationTests {
         restaurantTablesFake.get(restaurant.getName()).put(restaurantTable.getTableNumber(), restaurantTable);
         RestaurantTableHandler restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantTableHandler.getRestaurantTables().setRestaurantTables(restaurantTablesFake);
-
+        ReservationHandler reservationHandler = ReservationHandler.getInstance();
 
         data.put(RESTAURANT_NAME_KEY, restaurant.getName());
         data.put(USERNAME_KEY, user.getUsername());
@@ -403,6 +419,7 @@ public class TableReservationTests {
         assertFalse(response.isSuccess());
         assertInstanceOf(String.class, response.getData());
         assertEquals(INVALID_USER_ROLE, (String) response.getData());
+        assertEquals(reservationHandler.getReservations().getAllReservations().size(), 0);
     }
 
 }
