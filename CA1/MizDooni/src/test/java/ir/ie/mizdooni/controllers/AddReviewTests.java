@@ -30,7 +30,7 @@ import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class addReviewTests {
+public class AddReviewTests {
     private MizDooniController controller;
 
     @BeforeEach
