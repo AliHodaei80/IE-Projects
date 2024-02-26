@@ -1,9 +1,6 @@
 package ir.ie.mizdooni.services;
 
-import ir.ie.mizdooni.exceptions.InvalidUserRole;
-import ir.ie.mizdooni.exceptions.RestaurantManagerNotFound;
-import ir.ie.mizdooni.exceptions.RestaurantNotFound;
-import ir.ie.mizdooni.exceptions.TableAlreadyExists;
+import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.storage.RestaurantTables;
@@ -25,7 +22,7 @@ public class RestaurantTableHandler {
     }
 
     public void addRestaurantTable(String restName, Long tableNo, int seatsNo, String managerUsername)
-            throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists {
+            throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists, ManagerUsernameNotMatch {
         if (!restaurantsHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
         }
@@ -34,6 +31,9 @@ public class RestaurantTableHandler {
         }
         if (!(restaurantsHandler.isManager(managerUsername))) {
             throw new InvalidUserRole();
+        }
+        if (!restaurantsHandler.getRestaurant(restName).getManagerUsername().equals(managerUsername)) {
+            throw new ManagerUsernameNotMatch();
         }
         if (doesTableExist(restName, tableNo)) {
             throw new TableAlreadyExists();

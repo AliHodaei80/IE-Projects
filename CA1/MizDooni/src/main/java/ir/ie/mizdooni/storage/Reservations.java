@@ -3,7 +3,6 @@ package ir.ie.mizdooni.storage;
 import ir.ie.mizdooni.exceptions.RestaurantNotFound;
 import ir.ie.mizdooni.models.Reservation;
 
-import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,8 +47,8 @@ public class Reservations {
         if (reservations.get(restaurantName).get(tableNumber) == null) {
             reservations.get(restaurantName).put(tableNumber, new HashMap<>());
         }
-        Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime);
         long reservationId = generateReservationId();
+        Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId);
         reservations.get(restaurantName).get(tableNumber).put(dateTime, reservation);
         reservationsIdIndex.put(reservationId, reservation);
         return reservationId;
@@ -72,7 +71,7 @@ public class Reservations {
             return;
         }
         reservations.get(reservation.getRestaurantName()).get(reservation.getTableNumber())
-                .remove(reservation.getDate());
+                .remove(reservation.getDatetime());
         reservationsIdIndex.remove(reservationId);
     }
 

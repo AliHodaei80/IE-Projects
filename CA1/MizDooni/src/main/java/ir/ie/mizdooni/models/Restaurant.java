@@ -16,7 +16,7 @@ public class Restaurant {
     String type;
     @Expose()
     String description;
-    @Expose()
+    @Expose(serialize = false)
     String managerUsername;
     @Expose()
     Map<String, String> address;
