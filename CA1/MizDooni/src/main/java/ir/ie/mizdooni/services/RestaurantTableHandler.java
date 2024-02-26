@@ -39,7 +39,6 @@ public class RestaurantTableHandler {
             throw new TableAlreadyExists();
         }
         restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
-        System.out.println(restaurantTables.getAllTables());
     }
 
     public Collection<RestaurantTable> getRestTables(String restName) throws RestaurantNotFound {

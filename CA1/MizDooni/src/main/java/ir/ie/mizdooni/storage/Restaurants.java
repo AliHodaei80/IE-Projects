@@ -27,7 +27,7 @@ public class Restaurants {
     }
 
     public boolean nameSearchFilter(Restaurant rest, String type) {
-        return rest.getName().equals(type);
+        return rest.getName().contains(type);
     }
 
     public Restaurant getRestaurantByName(String restName) {

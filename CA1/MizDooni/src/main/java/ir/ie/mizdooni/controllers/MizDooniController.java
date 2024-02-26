@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static ir.ie.mizdooni.definitions.Commands.*;
+import static ir.ie.mizdooni.definitions.Errors.RESTUARANT_NOT_FOUND;
 import static ir.ie.mizdooni.definitions.Errors.UNSUPPORTED_COMMAND;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.ResponseKeys.*;
@@ -119,6 +120,9 @@ public class MizDooniController {
         try {
             List<Restaurant> results = restaurantHandler
                     .searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
+            if (results.isEmpty()){
+                return new Response(false, RESTUARANT_NOT_FOUND);
+            }
             HashMap<String, Object> responseBody = new HashMap<>();
             responseBody.put(RESTAURANTS_KEY, results);
             return new Response(true, responseBody);
