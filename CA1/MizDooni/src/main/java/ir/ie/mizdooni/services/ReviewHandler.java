@@ -6,6 +6,7 @@ import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.models.Review;
 import ir.ie.mizdooni.storage.Reviews;
 import ir.ie.mizdooni.utils.Parser;
+import ir.ie.mizdooni.definitions.Locations;
 
 
 public class ReviewHandler {
@@ -17,7 +18,7 @@ public class ReviewHandler {
     private ReviewHandler() {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
-        reviews = new Reviews();
+        reviews = new Reviews().loadFromFile(Locations.REVIEWS_LOCATION, Reviews.class);
     }
 
     public static ReviewHandler getInstance() {

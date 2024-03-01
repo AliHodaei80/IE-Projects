@@ -1,0 +1,4 @@
+searchRestaurantsByType {"type":"Iranian"}
+searchRestaurantsByName {"name":"r1"}
+searchRestaurantsByName {"name":"r2"}
+showAvailableTables {"restaurantName": "r1"}

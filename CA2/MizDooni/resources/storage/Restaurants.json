@@ -1,0 +1,142 @@
+{
+    "restaurants": {
+        "restaurant5": {
+            "name": "restaurant5",
+            "startTime": {
+                "hour": 8,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "endTime": {
+                "hour": 23,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "type": "Iranian",
+            "description": "Open seven days a week",
+            "managerUsername": "user2",
+            "address": {
+                "country": "Iran",
+                "city": "Tehran",
+                "street": "North Kargar"
+            }
+        },
+        "restaurant4": {
+            "name": "restaurant4",
+            "startTime": {
+                "hour": 8,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "endTime": {
+                "hour": 23,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "type": "Iranian",
+            "description": "Open seven days a week",
+            "managerUsername": "user2",
+            "address": {
+                "country": "Iran",
+                "city": "Tehran",
+                "street": "North Kargar"
+            }
+        },
+        "restaurant3": {
+            "name": "restaurant3",
+            "startTime": {
+                "hour": 8,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "endTime": {
+                "hour": 23,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "type": "Iranian",
+            "description": "Open seven days a week",
+            "managerUsername": "user2",
+            "address": {
+                "country": "Iran",
+                "city": "Tehran",
+                "street": "North Kargar"
+            }
+        },
+        "restaurant2": {
+            "name": "restaurant2",
+            "startTime": {
+                "hour": 8,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "endTime": {
+                "hour": 23,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "type": "Iranian",
+            "description": "Open seven days a week",
+            "managerUsername": "user2",
+            "address": {
+                "country": "Iran",
+                "city": "Tehran",
+                "street": "North Kargar"
+            }
+        },
+        "restaurant1": {
+            "name": "restaurant1",
+            "startTime": {
+                "hour": 8,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "endTime": {
+                "hour": 23,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "type": "Iranian",
+            "description": "Open seven days a week",
+            "managerUsername": "user2",
+            "address": {
+                "country": "Iran",
+                "city": "Tehran",
+                "street": "North Kargar"
+            }
+        },
+        "r1": {
+            "name": "r1",
+            "startTime": {
+                "hour": 8,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "endTime": {
+                "hour": 23,
+                "minute": 0,
+                "second": 0,
+                "nano": 0
+            },
+            "type": "Iranian",
+            "description": "Open seven days a week",
+            "managerUsername": "user2",
+            "address": {
+                "country": "Iran",
+                "city": "Tehran",
+                "street": "North Kargar"
+            }
+        }
+    }
+}

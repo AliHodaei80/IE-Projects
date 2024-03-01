@@ -1,13 +1,14 @@
 package ir.ie.mizdooni.storage;
-
+import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.exceptions.RestaurantNotFound;
 import ir.ie.mizdooni.models.Reservation;
+import ir.ie.mizdooni.storage.commons.Container;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Reservations {
+public class Reservations extends Container<Reservations>{
     // Outter 3 is restaurent name
     // Outter 2 is table id
     // OUter 1 is the reservation date
@@ -51,9 +52,9 @@ public class Reservations {
         Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId);
         reservations.get(restaurantName).get(tableNumber).put(dateTime, reservation);
         reservationsIdIndex.put(reservationId, reservation);
+        this.saveToFile(Locations.RESERVATIONS_LOCATION);
         return reservationId;
     }
-
     public Reservation getReservation(String restName, long tableNumber, LocalDateTime dateTime) {
         if (!reservations.containsKey(restName) || !reservations.get(restName).containsKey(tableNumber)) {
             return null;

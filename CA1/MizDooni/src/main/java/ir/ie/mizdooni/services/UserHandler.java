@@ -6,6 +6,7 @@ import ir.ie.mizdooni.exceptions.UserNameAlreadyTaken;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Users;
+import ir.ie.mizdooni.definitions.Locations;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +18,7 @@ public class UserHandler {
     private final List<String> usersRole;
 
     private UserHandler() {
-        users = new Users();
+        users = new Users().loadFromFile(Locations.USERS_LOCATION, Users.class);
         usersRole = Arrays.asList("manager", "client");
     }
 
