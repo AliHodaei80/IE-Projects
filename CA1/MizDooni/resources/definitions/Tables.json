@@ -1,0 +1,12 @@
+{
+    "restaurantTables": {
+        "r1": {
+            "1": {
+                "tableNumber": 1,
+                "restaurantName": "r1",
+                "managerUsername": "user2",
+                "seatsNumber": 4
+            }
+        }
+    }
+}

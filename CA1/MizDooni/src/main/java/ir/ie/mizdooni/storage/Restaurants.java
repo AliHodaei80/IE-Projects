@@ -1,9 +1,11 @@
 package ir.ie.mizdooni.storage;
 
+import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.services.UserHandler;
+import ir.ie.mizdooni.storage.commons.Container;
 
 import java.sql.Date;
 import java.time.LocalTime;
@@ -15,7 +17,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.List;
 
-public class Restaurants {
+public class Restaurants extends Container<Restaurants>{ 
     Map<String, Restaurant> restaurants;
 
     public Restaurants() {
@@ -51,6 +53,8 @@ public class Restaurants {
     public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
             String managerUsername, Map<String, String> address) {
         restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address));
+        this.saveToFile(Locations.RESTAURANTS_LOCATION);
+
     }
 
     public Map<String, Restaurant> getRestaurants() {
