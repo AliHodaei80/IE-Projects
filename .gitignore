@@ -1,3 +1,6 @@
 *.jar
 *.log
 ./target/*
+mvn*
+maven-wrapper*
+
