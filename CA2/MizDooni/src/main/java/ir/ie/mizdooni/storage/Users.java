@@ -30,7 +30,7 @@ public class Users extends Container<Users>{
     }
 
     public void addUser(String username, String email, UserRole role, String password, Map<String, String> address) {
-        this.saveToFile(Locations.USERS_STORAGE);
+        this.saveToFile(Locations.USERS_LOCATION);
         users.put(username, new User(username, password, email, address, role));
     }
 
