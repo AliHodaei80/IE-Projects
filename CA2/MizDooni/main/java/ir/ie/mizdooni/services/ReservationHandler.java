@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.services;
 
+import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.storage.Reservations;
@@ -24,7 +25,7 @@ public class ReservationHandler {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
         restaurantTableHandler = RestaurantTableHandler.getInstance();
-        reservations = new Reservations();
+        reservations = new Reservations().loadFromFile(Locations.RESERVATIONS_LOCATION, Reservations.class);
     }
 
     public static ReservationHandler getInstance() {

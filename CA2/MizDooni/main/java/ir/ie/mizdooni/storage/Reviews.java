@@ -1,6 +1,8 @@
 package ir.ie.mizdooni.storage;
 
+import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.models.*;
+import ir.ie.mizdooni.storage.commons.Container;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Reviews {
+public class Reviews extends Container<Reviews>{
     Map<String, Map<String, Review>> reviews; // first is restaurant second is user
 
     public Reviews() {
@@ -30,6 +32,7 @@ public class Reviews {
             Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
                     serviceRate, comment, LocalDateTime.now());
             reviews.get(restName).put(username, r);
+            this.saveToFile(Locations.REVIEWS_LOCATION);
             return r;
         }
     }

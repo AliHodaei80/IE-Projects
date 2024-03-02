@@ -1,13 +1,13 @@
-package ir.ie.mizdooni.services;
+package ir.ie.mizdooni.services; 
 
+import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.storage.RestaurantTables;
-
+import ir.ie.mizdooni.storage.commons.Container;
 import java.util.Collection;
 import java.util.List;
-
 public class RestaurantTableHandler {
 
     private static RestaurantTableHandler restaurantTableHandler;
@@ -18,7 +18,7 @@ public class RestaurantTableHandler {
     private RestaurantTableHandler() {
         restaurantsHandler = RestaurantHandler.getInstance();
         userHandler = UserHandler.getInstance();
-        restaurantTables = new RestaurantTables();
+        restaurantTables = new RestaurantTables().loadFromFile(Locations.RESTAURANT_TABLES_LOCATION,RestaurantTables.class);
     }
 
     public void addRestaurantTable(String restName, Long tableNo, int seatsNo, String managerUsername)

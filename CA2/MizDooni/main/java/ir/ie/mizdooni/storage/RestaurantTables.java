@@ -1,13 +1,14 @@
 package ir.ie.mizdooni.storage;
 
 import ir.ie.mizdooni.models.RestaurantTable;
-
+import ir.ie.mizdooni.storage.commons.Container;
+import ir.ie.mizdooni.definitions.Locations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RestaurantTables {
+public class RestaurantTables  extends Container<RestaurantTables>{
     Map<String, Map<Long, RestaurantTable>> restaurantTables;
 
     public Collection<RestaurantTable> getRestTables(String restName) {
@@ -34,6 +35,7 @@ public class RestaurantTables {
             restaurantTables.put(restName, new HashMap<>());
         }
         restaurantTables.get(restName).put(tableNo, new RestaurantTable(tableNo, restName, restManagerName, seatsNo));
+        this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
     }
 
     public Map<String, Map<Long, RestaurantTable>> getRestaurantTables() {

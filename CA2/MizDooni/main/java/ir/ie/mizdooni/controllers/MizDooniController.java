@@ -8,6 +8,7 @@ import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.Review;
 import ir.ie.mizdooni.services.*;
+import ir.ie.mizdooni.utils.Parser;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -37,11 +38,15 @@ public class MizDooniController {
         reservationHandler = ReservationHandler.getInstance();
         restaurantTableHandler = RestaurantTableHandler.getInstance();
         reviewHandler = ReviewHandler.getInstance();
+
+//        getInstance();
+
     }
 
     public static MizDooniController getInstance() {
-        if (mizDooniController == null)
+        if (mizDooniController == null) {
             mizDooniController = new MizDooniController();
+        }
         return mizDooniController;
     }
 
