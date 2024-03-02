@@ -46,17 +46,6 @@ public class MizDooniController {
     public static MizDooniController getInstance() {
         if (mizDooniController == null) {
             mizDooniController = new MizDooniController();
-            List<String> commands = List.of("addUser {\"role\": \"client\",\"username\": \"user11\",\"password\": \"1234\",\"email\": \"user1@gmail.com\",\"address\": {\"country\": \"Iran\",\"city\": \"Tehran\"}}",
-                    "addUser {\"role\": \"manager\",\"username\": \"user12\",\"password\": \"1234\",\"email\": \"user2@gmail.com\",\"address\": {\"country\": \"Iran\",\"city\": \"Tehran\"}}");
-            for (String c : commands) {
-                try {
-                    Request request = Parser.parseCommand(c);
-                    System.out.println(mizDooniController.handleRequest(request));
-                } catch (Exception e) {
-                    System.out.println("Error Happened! message: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
         }
         return mizDooniController;
     }
