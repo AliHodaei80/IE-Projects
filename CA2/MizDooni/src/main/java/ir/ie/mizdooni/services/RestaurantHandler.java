@@ -22,7 +22,8 @@ public class RestaurantHandler {
 
     private RestaurantHandler() {
         userHandler = UserHandler.getInstance();
-        restaurants = new Restaurants().loadFromFile(Locations.RESTAURANT_TABLES_LOCATION, Restaurants.class);        
+        restaurants = new Restaurants().loadFromFile(Locations.RESTAURANTS_LOCATION, Restaurants.class);      
+        System.out.println(restaurants.getRestaurants());  
     }
 
     public boolean isManager(String managerUsername) {
