@@ -15,6 +15,7 @@ public class UserHandler {
     private static UserHandler userHandler;
     private final Users users;
     private final List<String> usersRole;
+    private User currentUser;
 
     private UserHandler() {
         users = new Users();
@@ -69,5 +70,30 @@ public class UserHandler {
 
     public Users getUsers() {
         return users;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public boolean isUserLoggedIn() {
+        return currentUser != null;
+    }
+
+    public void logout() {
+        currentUser = null;
+    }
+
+    public boolean isPasswordCorrect(String username, String password) {
+        User user = users.getUserByUsername(username);
+        return user != null && user.getPassword().equals(password);
+    }
+
+    public void loginUser(String username) {
+        currentUser = users.getUserByUsername(username);
     }
 }

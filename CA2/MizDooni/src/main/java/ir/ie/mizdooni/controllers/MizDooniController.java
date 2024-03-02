@@ -8,6 +8,7 @@ import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.Review;
 import ir.ie.mizdooni.services.*;
+import ir.ie.mizdooni.utils.Parser;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -37,11 +38,26 @@ public class MizDooniController {
         reservationHandler = ReservationHandler.getInstance();
         restaurantTableHandler = RestaurantTableHandler.getInstance();
         reviewHandler = ReviewHandler.getInstance();
+
+//        getInstance();
+
     }
 
     public static MizDooniController getInstance() {
-        if (mizDooniController == null)
+        if (mizDooniController == null) {
             mizDooniController = new MizDooniController();
+            List<String> commands = List.of("addUser {\"role\": \"client\",\"username\": \"user11\",\"password\": \"1234\",\"email\": \"user1@gmail.com\",\"address\": {\"country\": \"Iran\",\"city\": \"Tehran\"}}",
+                    "addUser {\"role\": \"manager\",\"username\": \"user12\",\"password\": \"1234\",\"email\": \"user2@gmail.com\",\"address\": {\"country\": \"Iran\",\"city\": \"Tehran\"}}");
+            for (String c : commands) {
+                try {
+                    Request request = Parser.parseCommand(c);
+                    System.out.println(mizDooniController.handleRequest(request));
+                } catch (Exception e) {
+                    System.out.println("Error Happened! message: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
         return mizDooniController;
     }
 
