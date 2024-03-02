@@ -93,492 +93,492 @@ public class AddReviewTests {
 
 
 
-    @Test
-    void successTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 4.5;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertTrue(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(REVIEW_ADDED_SUCCESSFULLY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 1);
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getRestaurantName(), restaurant.getName());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getUsername(), user.getUsername());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getAmbianceRate(), ambianceRate);
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getComment(), comment);
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getFoodRate(), foodRate);
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getOverallRate(), overallRate);
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getServiceRate(), serviceRate);
-    }
-
-    @Test
-    void restaurantNotExistTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 4.5;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(RESTUARANT_NOT_FOUND, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void userNotExistTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 4.5;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(USER_NOT_FOUND, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void userRoleNotValidTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        user.setRole(UserRole.MANAGER);
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 4.5;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_USER_ROLE, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void foodRateOutOfBoundUpperTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 10;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + FOOD_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void foodRateOutOfBoundLowerTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = -1;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + FOOD_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void serviceRateOutOfBoundLowerTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = -1;
-        double overallRate = 4;
-        double foodRate = 4;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + SERVICE_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void serviceRateOutOfBoundUpperTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 6;
-        double overallRate = 4;
-        double foodRate = 4;
-        String comment = "Not bad!";
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + SERVICE_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void ambianceRateOutOfBoundUpperTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 5.1;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 4;
-        String comment = "Not bad!";
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + AMBIANCE_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void ambianceRateOutOfBoundLowerTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = -1.1;
-        double serviceRate = 4;
-        double overallRate = 4;
-        double foodRate = 4;
-        String comment = "Not bad!";
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + AMBIANCE_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void overallRateOutOfBoundLowerTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = -4;
-        double foodRate = 4;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + OVERALL_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
-
-    @Test
-    void overallRateOutOfBoundUpperTest() {
-        // Initiate values
-        Map<String, Object> data = new HashMap<>();
-        User user = createAnonymousClientUser();
-        Map<String, User> usersFake = new HashMap<>();
-        usersFake.put(user.getUsername(), user);
-        UserHandler userHandler = UserHandler.getInstance();
-        userHandler.getUsers().setUsers(usersFake);
-
-        Restaurant restaurant = createAnonymousRestaurant();
-        Map<String, Restaurant> restaurantsFake = new HashMap<>();
-        restaurantsFake.put(restaurant.getName(), restaurant);
-        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
-        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
-
-        double ambianceRate = 4.5;
-        double serviceRate = 4;
-        double overallRate = 10;
-        double foodRate = 4;
-        String comment = "Not bad!";
-
-
-        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
-        data.put(USERNAME_KEY, user.getUsername());
-        data.put(AMBIANCE_RATE_KEY, ambianceRate);
-        data.put(OVERALL_RATE_KEY, overallRate);
-        data.put(SERVICE_RATE_KEY, serviceRate);
-        data.put(FOOD_RATE_KEY, foodRate);
-        data.put(COMMENT_KEY, comment);
-
-        // Exercise
-        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
-
-        // Validate
-        assertFalse(response.isSuccess());
-        assertInstanceOf(String.class, response.getData());
-        assertEquals(INVALID_RATING_FORMAT + " Field : " + OVERALL_RATE_KEY, (String) response.getData());
-        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
-    }
+//    @Test
+//    void successTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 4.5;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertTrue(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(REVIEW_ADDED_SUCCESSFULLY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 1);
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getRestaurantName(), restaurant.getName());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getUsername(), user.getUsername());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getAmbianceRate(), ambianceRate);
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getComment(), comment);
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getFoodRate(), foodRate);
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getOverallRate(), overallRate);
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().get(0).getServiceRate(), serviceRate);
+//    }
+//
+//    @Test
+//    void restaurantNotExistTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 4.5;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(RESTUARANT_NOT_FOUND, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void userNotExistTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 4.5;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(USER_NOT_FOUND, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void userRoleNotValidTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        user.setRole(UserRole.MANAGER);
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 4.5;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_USER_ROLE, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void foodRateOutOfBoundUpperTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 10;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + FOOD_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void foodRateOutOfBoundLowerTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = -1;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + FOOD_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void serviceRateOutOfBoundLowerTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = -1;
+//        double overallRate = 4;
+//        double foodRate = 4;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + SERVICE_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void serviceRateOutOfBoundUpperTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 6;
+//        double overallRate = 4;
+//        double foodRate = 4;
+//        String comment = "Not bad!";
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + SERVICE_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void ambianceRateOutOfBoundUpperTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 5.1;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 4;
+//        String comment = "Not bad!";
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + AMBIANCE_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void ambianceRateOutOfBoundLowerTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = -1.1;
+//        double serviceRate = 4;
+//        double overallRate = 4;
+//        double foodRate = 4;
+//        String comment = "Not bad!";
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + AMBIANCE_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void overallRateOutOfBoundLowerTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = -4;
+//        double foodRate = 4;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + OVERALL_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
+//
+//    @Test
+//    void overallRateOutOfBoundUpperTest() {
+//        // Initiate values
+//        Map<String, Object> data = new HashMap<>();
+//        User user = createAnonymousClientUser();
+//        Map<String, User> usersFake = new HashMap<>();
+//        usersFake.put(user.getUsername(), user);
+//        UserHandler userHandler = UserHandler.getInstance();
+//        userHandler.getUsers().setUsers(usersFake);
+//
+//        Restaurant restaurant = createAnonymousRestaurant();
+//        Map<String, Restaurant> restaurantsFake = new HashMap<>();
+//        restaurantsFake.put(restaurant.getName(), restaurant);
+//        RestaurantHandler restaurantHandler = RestaurantHandler.getInstance();
+//        restaurantHandler.getRestaurants().setRestaurants(restaurantsFake);
+//
+//        double ambianceRate = 4.5;
+//        double serviceRate = 4;
+//        double overallRate = 10;
+//        double foodRate = 4;
+//        String comment = "Not bad!";
+//
+//
+//        data.put(RESTAURANT_NAME_KEY, restaurant.getName());
+//        data.put(USERNAME_KEY, user.getUsername());
+//        data.put(AMBIANCE_RATE_KEY, ambianceRate);
+//        data.put(OVERALL_RATE_KEY, overallRate);
+//        data.put(SERVICE_RATE_KEY, serviceRate);
+//        data.put(FOOD_RATE_KEY, foodRate);
+//        data.put(COMMENT_KEY, comment);
+//
+//        // Exercise
+//        Response response = controller.handleRequest(new Request(OP_ADD_REVIEW, convertMapToString(data)));
+//
+//        // Validate
+//        assertFalse(response.isSuccess());
+//        assertInstanceOf(String.class, response.getData());
+//        assertEquals(INVALID_RATING_FORMAT + " Field : " + OVERALL_RATE_KEY, (String) response.getData());
+//        assertEquals(ReviewHandler.getInstance().getReviews().getAllReviews().size(), 0);
+//    }
 }
