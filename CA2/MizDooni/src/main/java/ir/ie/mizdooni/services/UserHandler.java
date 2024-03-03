@@ -83,7 +83,7 @@ public class UserHandler {
         return currentUser != null;
     }
 
-    public void logout() {
+    public void logoutUser() {
         currentUser = null;
     }
 
