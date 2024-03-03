@@ -8,17 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static ir.ie.mizdooni.definitions.Paths.LOGIN_JSP_PAGE;
 import static ir.ie.mizdooni.definitions.Paths.LOGIN_PAGE;
 
 @WebFilter("/*")
 public class LogginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        MizDooniController.getInstance();
         System.out.println("LogginFilter");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        if (req.getRequestURI().endsWith(LOGIN_JSP_PAGE) || req.getRequestURI().endsWith(LOGIN_PAGE)) {
+        if (req.getRequestURI().equals(LOGIN_PAGE)) {
             chain.doFilter(request, response);
             return;
         }
@@ -27,7 +25,7 @@ public class LogginFilter implements Filter {
         if (loggedIn) {
             chain.doFilter(request, response);
         } else {
-            res.sendRedirect(LOGIN_JSP_PAGE);
+            res.sendRedirect(LOGIN_PAGE);
         }
     }
 }

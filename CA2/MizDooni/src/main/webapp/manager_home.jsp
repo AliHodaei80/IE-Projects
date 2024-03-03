@@ -1,11 +1,12 @@
 <jsp:include page="header.jsp" />
+<%@page import="ir.ie.mizdooni.services.*"%>
 <head>
     <meta charset="UTF-8" />
     <title>Manager Home</title>
   </head>
   <body>
     <h1>
-      Welcome ${username} <a href="/logout" style="color: red">Log Out</a>
+      Welcome <%= UserHandler.getInstance().getCurrentUser().getUsername() %> <a href="/logout" style="color: red">Log Out</a>
     </h1>
 
     <h2>Your Restaurant Information:</h2>

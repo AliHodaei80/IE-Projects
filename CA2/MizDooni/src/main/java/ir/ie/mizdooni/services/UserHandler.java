@@ -1,8 +1,6 @@
 package ir.ie.mizdooni.services;
 
-import ir.ie.mizdooni.exceptions.EmailAlreadyTaken;
-import ir.ie.mizdooni.exceptions.InvalidUserRole;
-import ir.ie.mizdooni.exceptions.UserNameAlreadyTaken;
+import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Users;
@@ -94,7 +92,14 @@ public class UserHandler {
         return user != null && user.getPassword().equals(password);
     }
 
-    public void loginUser(String username) {
-        currentUser = users.getUserByUsername(username);
+    public void loginUser(String username, String password) throws UserNotExists, AuthenticationFailed {
+        User user = users.getUserByUsername(username);
+        if (user == null) {
+            throw new UserNotExists();
+        }
+        if (!user.getPassword().equals(password)) {
+            throw new AuthenticationFailed();
+        }
+        currentUser = user;
     }
 }
