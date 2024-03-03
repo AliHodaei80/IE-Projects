@@ -9,20 +9,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static ir.ie.mizdooni.definitions.Paths.CLIENT_HOME_JSP_PAGE;
-import static ir.ie.mizdooni.definitions.Paths.MANAGER_HOME_JSP_PAGE;
+import static ir.ie.mizdooni.definitions.Paths.*;
 
 @WebServlet("")
 public class HomePageController  extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(HomePageController.class);
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("HomePageController");
+        logger.info("HomePageController: get request");
         User currentUser = UserHandler.getInstance().getCurrentUser();
         RequestDispatcher requestDispatcher;
         if (currentUser == null) {
-            response.sendRedirect("/Login");
+            response.sendRedirect(LOGIN_PAGE);
             return;
         }
         if (currentUser.getRole().equals(UserRole.MANAGER)) {
