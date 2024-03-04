@@ -15,6 +15,14 @@ public class Restaurant {
     @Expose()
     String name;
     @Expose()
+    Double ambianceScore;
+    @Expose()
+    Double overallScore;
+    @Expose()
+    Double serviceScore;
+    @Expose()
+    Double foodScore;
+    @Expose()
     LocalTime startTime;
     @Expose()
     LocalTime endTime;
@@ -37,6 +45,10 @@ public class Restaurant {
         this.managerUsername = managerUsername;
         this.address = address;
         this.id = id;
+        this.overallScore=0.0;
+        this.serviceScore=0.0;
+        this.foodScore=0.0;
+        this.ambianceScore=0.0;
     }
 
     public String getName() {
@@ -75,6 +87,19 @@ public class Restaurant {
         return type;
     }
 
+    public Double getOverallScore() {
+        return overallScore;
+    }
+    public Double getServiceScore() {
+        return serviceScore;
+    }
+    public Double getAmbianceScore() {
+        return ambianceScore;
+    }
+    public Double getFoodScore() {
+        return foodScore;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
@@ -96,6 +121,22 @@ public class Restaurant {
     }
 
 
+    public String getCity() {
+        return address.get("city");
+    }
+
+    public String getCountry() {
+        return address.get("country");
+    }
+    public String getActivityPeriod(){
+        return startTime.toString() + "-" +  endTime.toString();
+    }
+    public void setScores(Double avgFoodScore,Double avgAmbianceScore,Double avgServiceScore){
+        this.overallScore = (avgAmbianceScore + avgFoodScore + avgServiceScore) / 3;
+        this.ambianceScore=avgAmbianceScore;
+        this.foodScore = avgFoodScore;
+        this.serviceScore = avgServiceScore;
+    }
     public void setAddress(Map<String, String> address) {
         this.address = address;
     }

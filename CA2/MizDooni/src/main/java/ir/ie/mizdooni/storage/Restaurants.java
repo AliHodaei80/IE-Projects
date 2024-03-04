@@ -10,6 +10,7 @@ import ir.ie.mizdooni.storage.commons.Container;
 import java.sql.Date;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,10 @@ public class Restaurants extends Container<Restaurants> {
         return rest.getType().equals(type);
     }
 
+    public boolean citySearchFilter(Restaurant rest, String city) {
+        return rest.getCity().equals(city);
+    }
+
     public boolean nameSearchFilter(Restaurant rest, String type) {
         return rest.getName().contains(type);
     }
@@ -42,6 +47,13 @@ public class Restaurants extends Container<Restaurants> {
         return new ArrayList<>(restaurants.values())
                 .stream()
                 .filter(rest -> typeSearchFilter(rest, type))
+                .collect(Collectors.toList());
+    }
+
+    public List<Restaurant> searchByCity(String city) {
+        return new ArrayList<>(restaurants.values())
+                .stream()
+                .filter(rest -> citySearchFilter(rest, city))
                 .collect(Collectors.toList());
     }
 
@@ -68,6 +80,17 @@ public class Restaurants extends Container<Restaurants> {
 
     public Map<String, Restaurant> getRestaurants() {
         return restaurants;
+    }
+
+    public ArrayList<Restaurant> getRestaurantList(boolean sorted) {
+        if (!sorted) {
+            return new ArrayList<Restaurant>(restaurants.values());
+        } else {
+            Comparator<Restaurant> c = (s1, s2) -> s1.getOverallScore().compareTo(s2.getOverallScore());
+            ArrayList<Restaurant> rests = new ArrayList<Restaurant>(restaurants.values());
+            rests.sort(c);
+            return rests;
+        }
     }
 
     public void setRestaurants(Map<String, Restaurant> restaurants) {
