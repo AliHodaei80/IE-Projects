@@ -8,6 +8,8 @@ import ir.ie.mizdooni.storage.RestaurantTables;
 import ir.ie.mizdooni.storage.commons.Container;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 public class RestaurantTableHandler {
 
     private static RestaurantTableHandler restaurantTableHandler;
@@ -39,6 +41,14 @@ public class RestaurantTableHandler {
             throw new TableAlreadyExists();
         }
         restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
+    }
+
+    public List<RestaurantTable> getRestaurantTables(String restName) {
+        return restaurantTables.getRestaurantTables(restName);
+    }
+
+    public Map<String, Map<Long, RestaurantTable>> getRestaurantTables(List<String> restNames) {
+        return restaurantTables.getRestaurantTables(restNames);
     }
 
     public Collection<RestaurantTable> getRestTables(String restName) throws RestaurantNotFound {

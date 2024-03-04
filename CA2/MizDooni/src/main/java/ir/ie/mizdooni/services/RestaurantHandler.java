@@ -44,6 +44,10 @@ public class RestaurantHandler {
         return restaurants.searchByName(restName);
     }
 
+    public List<Restaurant> searchRestaurantByManagerName(String managerName) {
+        return restaurants.searchByManagerName(managerName);
+    }
+
     public boolean restaurantExists(String restName) {
         return getRestaurant(restName) != null;
     }

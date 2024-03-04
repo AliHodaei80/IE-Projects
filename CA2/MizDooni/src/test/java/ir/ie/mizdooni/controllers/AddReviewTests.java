@@ -88,7 +88,7 @@ public class AddReviewTests {
         LocalTime startTime = LocalTime.parse("08:00", formatter);
         LocalTime endTime = LocalTime.parse("23:00", formatter);
 
-        return new Restaurant("r1", startTime, endTime, "Iranian", "Nothing", "m1", address);
+        return new Restaurant("r1", startTime, endTime, "Iranian", "Nothing", "m1", address, 1L);
     }
 
 

@@ -3,10 +3,9 @@ package ir.ie.mizdooni.storage;
 import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.storage.commons.Container;
 import ir.ie.mizdooni.definitions.Locations;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RestaurantTables  extends Container<RestaurantTables>{
     Map<String, Map<Long, RestaurantTable>> restaurantTables;
@@ -44,5 +43,15 @@ public class RestaurantTables  extends Container<RestaurantTables>{
 
     public void setRestaurantTables(Map<String, Map<Long, RestaurantTable>> restaurantTables) {
         this.restaurantTables = restaurantTables;
+    }
+
+    public List<RestaurantTable> getRestaurantTables(String restName) {
+        return restaurantTables.get(restName) !=null ? new ArrayList<>(restaurantTables.get(restName).values()) : new ArrayList<>();
+    }
+
+    public Map<String, Map<Long, RestaurantTable>> getRestaurantTables(List<String> restaurantNames) {
+        return restaurantTables.entrySet().stream()
+                .filter(entry -> restaurantNames.contains(entry.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

@@ -3,9 +3,15 @@ package ir.ie.mizdooni.models;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
+import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
+
 public class Restaurant {
+    @Expose()
+    Long id;
     @Expose()
     String name;
     @Expose()
@@ -22,7 +28,7 @@ public class Restaurant {
     Map<String, String> address;
 
     public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,
-                      String managerUsername, Map<String, String> address) {
+                      String managerUsername, Map<String, String> address, Long id) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -30,6 +36,7 @@ public class Restaurant {
         this.description = description;
         this.managerUsername = managerUsername;
         this.address = address;
+        this.id = id;
     }
 
     public String getName() {
@@ -44,12 +51,20 @@ public class Restaurant {
         return startTime;
     }
 
+    public String getStartTimeString() {
+        return DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT).format(startTime);
+    }
+
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
     public LocalTime getEndTime() {
         return endTime;
+    }
+
+    public String getEndTimeString() {
+        return DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT).format(endTime);
     }
 
     public void setEndTime(LocalTime endTime) {
@@ -76,7 +91,28 @@ public class Restaurant {
         return address;
     }
 
+    public String getAddressString() {
+        return address.get(STREET_KEY) +", " + address.get(CITY_KEY) + ", " + address.get(COUNTRY_KEY);
+    }
+
+
     public void setAddress(Map<String, String> address) {
         this.address = address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

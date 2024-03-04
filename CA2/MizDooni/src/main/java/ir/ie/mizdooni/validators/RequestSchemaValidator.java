@@ -47,7 +47,7 @@ public class RequestSchemaValidator {
 
     public static void checkKeyInclusion(Map<String, Object> data, Set<String> keys) throws InvalidRequestFormat, InvalidRequestTypeFormat {
         for (String key : keys) {
-            if (!data.containsKey(key)) {
+            if (!data.containsKey(key) || data.get(key) == null) {
                 throw new InvalidRequestFormat(key);
             }
             if (mapTypesKeyName.contains(key) && !(data.get(key) instanceof Map)) {
@@ -65,6 +65,11 @@ public class RequestSchemaValidator {
 
     public static void checkIsNatural(double num) throws InvalidNumType {
         if (num != (int) num || num < 1)
+            throw new InvalidNumType();
+    }
+
+    public static void checkIsNatural(int num) throws InvalidNumType {
+        if (num < 1)
             throw new InvalidNumType();
     }
 
@@ -121,9 +126,13 @@ public class RequestSchemaValidator {
     }
 
     public static void validateAddTable(Map<String, Object> data)
-            throws InvalidTimeFormat, InvalidRequestFormat, InvalidNumType, InvalidRequestTypeFormat {
+            throws InvalidRequestFormat, InvalidNumType, InvalidRequestTypeFormat {
         checkKeyInclusion(data, tableAdditionKeys);
-        checkIsNatural((double) data.get(SEATS_NUM_KEY));
+        try {
+            checkIsNatural((double) data.get(SEATS_NUM_KEY));
+        } catch (ClassCastException e) {
+            checkIsNatural((int) data.get(SEATS_NUM_KEY));
+        }
     }
 
     public static void validateReserveTable(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat, InvalidRequestTypeFormat {

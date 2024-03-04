@@ -17,11 +17,13 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.List;
 
-public class Restaurants extends Container<Restaurants>{ 
+public class Restaurants extends Container<Restaurants> {
     Map<String, Restaurant> restaurants;
+    long restaurantCount;
 
     public Restaurants() {
         restaurants = new HashMap<>();
+        restaurantCount = 0;
     }
 
     public boolean typeSearchFilter(Restaurant rest, String type) {
@@ -50,11 +52,18 @@ public class Restaurants extends Container<Restaurants>{
                 .collect(Collectors.toList());
     }
 
-    public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
-            String managerUsername, Map<String, String> address) {
-        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address));
-        this.saveToFile(Locations.RESTAURANTS_LOCATION);
+    public List<Restaurant> searchByManagerName(String managerName) {
+        return new ArrayList<>(restaurants.values())
+                .stream()
+                .filter(rest -> managerName.equals(rest.getManagerUsername()))
+                .collect(Collectors.toList());
+    }
 
+    public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
+                              String managerUsername, Map<String, String> address) {
+        restaurantCount++;
+        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address, restaurantCount));
+        this.saveToFile(Locations.RESTAURANTS_LOCATION);
     }
 
     public Map<String, Restaurant> getRestaurants() {
