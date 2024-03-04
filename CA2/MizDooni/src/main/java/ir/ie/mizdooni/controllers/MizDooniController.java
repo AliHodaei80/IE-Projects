@@ -39,7 +39,7 @@ public class MizDooniController {
         restaurantTableHandler = RestaurantTableHandler.getInstance();
         reviewHandler = ReviewHandler.getInstance();
 
-//        getInstance();
+        // getInstance();
 
     }
 
@@ -122,18 +122,14 @@ public class MizDooniController {
     }
 
     public Response searchRestaurantByName(Map<String, Object> data) {
-        try {
-            List<Restaurant> results = restaurantHandler
-                    .searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
-            if (results.isEmpty()){
-                return new Response(false, RESTUARANT_NOT_FOUND);
-            }
-            HashMap<String, Object> responseBody = new HashMap<>();
-            responseBody.put(RESTAURANTS_KEY, results);
-            return new Response(true, responseBody);
-        } catch (RestaurantNotFound e) {
-            return new Response(false, e.getMessage());
+        List<Restaurant> results = restaurantHandler
+                .searchRestaurantByName((String) data.get(RESTAURANT_SEARCH_NAME_KEY));
+        if (results.isEmpty()) {
+            return new Response(false, RESTUARANT_NOT_FOUND);
         }
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put(RESTAURANTS_KEY, results);
+        return new Response(true, responseBody);
     }
 
     public Response cancelReservation(Map<String, Object> data) {
@@ -188,7 +184,7 @@ public class MizDooniController {
         try {
             validate(request);
         } catch (InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | InvalidTimeFormat
-                 | InvalidRatingFormat | InvalidNumType | InvalidRequestTypeFormat e) {
+                | InvalidRatingFormat | InvalidNumType | InvalidRequestTypeFormat e) {
             return new Response(false, e.getMessage());
         }
         switch (op) {

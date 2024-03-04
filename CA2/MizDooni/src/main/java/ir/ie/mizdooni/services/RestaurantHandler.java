@@ -22,8 +22,7 @@ public class RestaurantHandler {
 
     private RestaurantHandler() {
         userHandler = UserHandler.getInstance();
-        restaurants = new Restaurants().loadFromFile(Locations.RESTAURANTS_LOCATION, Restaurants.class);      
-        System.out.println(restaurants.getRestaurants());  
+        restaurants = new Restaurants().loadFromFile(Locations.RESTAURANTS_LOCATION, Restaurants.class);
     }
 
     public boolean isManager(String managerUsername) {
@@ -40,7 +39,11 @@ public class RestaurantHandler {
         return restaurants.searchByType(restType);
     }
 
-    public List<Restaurant> searchRestaurantByName(String restName) throws RestaurantNotFound {
+    public List<Restaurant> searchRestaurantByCity(String city) {
+        return restaurants.searchByCity(city);
+    }
+
+    public List<Restaurant> searchRestaurantByName(String restName) {
         return restaurants.searchByName(restName);
     }
 
