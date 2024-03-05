@@ -35,6 +35,10 @@ public class RestaurantHandler {
         return res;
     }
 
+    public Restaurant getRestaurant(Long id) {
+        return restaurants.getRestaurantById(id);
+    }
+
     public List<Restaurant> searchRestaurantByType(String restType) {
         return restaurants.searchByType(restType);
     }

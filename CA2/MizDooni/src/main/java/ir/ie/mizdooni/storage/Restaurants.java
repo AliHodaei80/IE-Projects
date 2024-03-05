@@ -9,11 +9,7 @@ import ir.ie.mizdooni.storage.commons.Container;
 
 import java.sql.Date;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -42,6 +38,14 @@ public class Restaurants extends Container<Restaurants> {
     public Restaurant getRestaurantByName(String restName) {
         return restaurants.get(restName);
     }
+
+    public Restaurant getRestaurantById(Long desiredId) {
+        Optional<Restaurant> optionalRestaurant = restaurants.values().stream()
+                .filter(restaurant -> restaurant.getId().equals(desiredId))
+                .findFirst();
+        return optionalRestaurant.orElse(null);
+    }
+
 
     public List<Restaurant> searchByType(String type) {
         return new ArrayList<>(restaurants.values())

@@ -42,8 +42,8 @@
         for(Restaurant restaurant : restaurants) {
         %>
             <tr>
-                <td><%= restaurant.getName() %></td>
-                <td><a href="/restaurants/<%= restaurant.getName() %>"><%= restaurant.getName() %></a></td>
+                <td><%= restaurant.getId() %></td>
+                <td><a href="/restaurants/<%= restaurant.getId() %>"><%= restaurant.getName() %></a></td>
                 <td><%= restaurant.getCity() %></td>
                 <td><%= restaurant.getType() %></td>
                 <td><%= restaurant.getActivityPeriod() %></td>

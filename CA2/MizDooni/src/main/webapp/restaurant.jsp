@@ -1,31 +1,36 @@
 <jsp:include page="header.jsp" />
 <%@page import="ir.ie.mizdooni.services.*"%>
 <%@ page import="java.util.*" %>
-<%@ page import="ir.ie.mizdooni.models.Restaurant" %>
+<%@ page import="ir.ie.mizdooni.models.*" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Restaurant</title>
   </head>
+         <%
+                String clientName = (String) request.getAttribute("username");
+              Restaurant restaurant = (Restaurant) request.getAttribute("restaurant");
+              List<RestaurantTable> tables = (List<RestaurantTable>) request.getAttribute("restaurantTables");
+          %>
   <body>
-    <p id="username">username: ali <a href="/">Home</a> <a href="/logout" style="color: red">Log Out</a></p>
+    <p id="username">username: <%= clientName %> <a href="/">Home</a> <a href="/logout" style="color: red">Log Out</a></p>
     <br>
     <h2>Restaurant Info:</h2>
     <ul>
-      <li id="id">Id: 1</li>
-        <li id="name">Name: Fast Food</li>
-        <li id="type">Type: Italian</li>
-        <li id="time">Time: 08:00 - 23:00</li>
+      <li id="id">Id: <%= restaurant.getId() %></li>
+        <li id="name">Name: <%= restaurant.getName() %></li>
+        <li id="type">Type: <%= restaurant.getType() %></li>
+        <li id="time">Time: <%= restaurant.getStartTimeString() %> - <%= restaurant.getEndTimeString() %></li>
         <li id="rate">Scores:</li>
         <ul>
-          <li>Food: 3.45</li>
-          <li>Service: 2.5</li>
-          <li>Ambiance: 4.59</li>
-          <li>Overall: 4.1</li>
+          <li>Food: <%= restaurant.getFoodScore() %></li>
+          <li>Service: <%= restaurant.getServiceScore() %></li>
+          <li>Ambiance: <%= restaurant.getAmbianceScore() %></li>
+          <li>Overall: <%= restaurant.getOverallScore() %></li>
         </ul>
-        <li id="address">Address: North Kargar, Tehran, Iran</li>
-        <li id="description">Description: Best food you can eat. Best Italian food</li>
+        <li id="address">Address:<%= restaurant.getAddressString() %></li>
+        <li id="description">Description: <%= restaurant.getDescription() %></li>
     </ul>
 
 
@@ -36,9 +41,13 @@
               <form action="" method="post">
                 <label>Table:</label>
                 <select id="table_number" name="table_number">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                    <%
+                        for (RestaurantTable table : tables) {
+                    %>
+                  <option value=<%= table.getTableNumber() %> ><%= table.getTableNumber() %></option>
+                    <%
+                        }
+                    %>
                 </select>
                 <label>Date & Time:</label>
                 <input type="datetime-local" id="date_time" name="date_time">

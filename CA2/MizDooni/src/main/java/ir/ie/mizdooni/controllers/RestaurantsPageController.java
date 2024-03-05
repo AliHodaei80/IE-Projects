@@ -22,7 +22,7 @@ import static ir.ie.mizdooni.definitions.Parameters.*;
 
 @WebServlet(RESTAURANTS_PAGE)
 public class RestaurantsPageController extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(LoginPageController.class);
+    private static final Logger logger = LogManager.getLogger(RestaurantsPageController.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("restaurants",
