@@ -7,8 +7,7 @@ import ir.ie.mizdooni.models.Review;
 import ir.ie.mizdooni.storage.Reviews;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.definitions.Locations;
-
-
+import java.util.List;
 public class ReviewHandler {
     private final UserHandler userHandler;
     private final RestaurantHandler restaurantHandler;
@@ -62,7 +61,9 @@ public class ReviewHandler {
     // //TODO Implement int he future
     // return reservations.getUserReservations(username);
     // }
-
+    public List<Review> getRestReviews(String restName) {
+        return reviews.getRestaurantReviews(restName);
+    }
 
     public Reviews getReviews() {
         return reviews;

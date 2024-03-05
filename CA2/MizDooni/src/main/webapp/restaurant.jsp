@@ -9,9 +9,10 @@
     <title>Restaurant</title>
   </head>
          <%
-                String clientName = (String) request.getAttribute("username");
+              String clientName = (String) request.getAttribute("username");
               Restaurant restaurant = (Restaurant) request.getAttribute("restaurant");
               List<RestaurantTable> tables = (List<RestaurantTable>) request.getAttribute("restaurantTables");
+              List<Review> reviews = (List<Review>) request.getAttribute("reviews");
           %>
   <body>
     <p id="username">username: <%= clientName %> <a href="/">Home</a> <a href="/logout" style="color: red">Log Out</a></p>
@@ -62,7 +63,7 @@
       <tr>
           <td>
               <label>Feedback:</label>
-              <form action="" method="post">                
+              <form action="submit_review/<%= restaurant.getId()%>" method="post">
                 <label>Food Rate:</label>
                 <input type="number" id="food_rate" name="food_rate" step="0.1" min="0" max="5">
                 <label>Service Rate:</label>
@@ -99,15 +100,17 @@
         <th>Ambiance Rate</th>
         <th>Overall Rate</th>
       </tr>
+      <%for (Review r : reviews) { %>
       <tr>
-        <td>user1</td>
-        <td>Food was not bad</td>
-        <td>2022-07-25</td>
-        <td>4.5</td>
-        <td>3</td>
-        <td>4.5</td>
-        <td>4</td>
+        <td><%= r.getUsername()%></td>
+        <td><%= r.getComment()%></td>
+        <td><%= r.getSubmitDateString()%></td>
+        <td><%= r.getFoodRate()%></td>
+        <td><%= r.getServiceRate()%></td>
+        <td><%= r.getAmbianceRate()%></td>
+        <td><%= r.getOverallRate()%></td>
       </tr>
+      <%}%>
     </table>
     <br><br>
     

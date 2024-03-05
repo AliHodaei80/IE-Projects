@@ -5,12 +5,15 @@ import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.storage.commons.Container;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Reviews extends Container<Reviews>{
+import org.apache.logging.log4j.core.util.ArrayUtils;
+
+public class Reviews extends Container<Reviews> {
     Map<String, Map<String, Review>> reviews; // first is restaurant second is user
 
     public Reviews() {
@@ -42,8 +45,17 @@ public class Reviews extends Container<Reviews>{
                 .flatMap(innerMap -> innerMap.values().stream())
                 .collect(Collectors.toList());
     }
+
     public Map<String, Map<String, Review>> getReviews() {
         return reviews;
+    }
+
+    public List<Review> getRestaurantReviews(String restName) {
+        if (reviews.get(restName) != null) {
+            return new ArrayList<>(reviews.get(restName).values());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public void setReviews(Map<String, Map<String, Review>> reviews) {

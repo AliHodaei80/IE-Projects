@@ -59,6 +59,9 @@ public class RestaurantHandler {
         return getRestaurant(restName) != null;
     }
 
+    public boolean restaurantExistsId(Long id) {
+        return getRestaurant(id) != null;
+    }
     public void addRestaurant(String restName, String type, String startTime, String endTime, String managerUsername,
             String description, Map<String, String> address)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {

@@ -1,6 +1,7 @@
 package ir.ie.mizdooni.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Review {
     String username;
@@ -14,8 +15,8 @@ public class Review {
     LocalDateTime submitDate;
 
     public Review(String username, String restaurantName, Double ambianceRate, Double foodRate, Double overallRate,
-                  Double serviceRate,
-                  String comment, LocalDateTime submitDate) {
+            Double serviceRate,
+            String comment, LocalDateTime submitDate) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.ambianceRate = ambianceRate;
@@ -56,5 +57,9 @@ public class Review {
 
     public LocalDateTime getSubmitDate() {
         return submitDate;
+    }
+
+    public String getSubmitDateString() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(submitDate);
     }
 }
