@@ -25,10 +25,10 @@
         <li id="time">Time: <%= restaurant.getStartTimeString() %> - <%= restaurant.getEndTimeString() %></li>
         <li id="rate">Scores:</li>
         <ul>
-          <li>Food: <%= restaurant.getFoodScore() %></li>
-          <li>Service: <%= restaurant.getServiceScore() %></li>
-          <li>Ambiance: <%= restaurant.getAmbianceScore() %></li>
-          <li>Overall: <%= restaurant.getOverallScore() %></li>
+          <li>Food: <%= restaurant.getAvgFoodScore() %></li>
+          <li>Service: <%= restaurant.getAvgServiceScore() %></li>
+          <li>Ambiance: <%= restaurant.getAvgAmbianceScore() %></li>
+          <li>Overall: <%= restaurant.getAvgOverallScore() %></li>
         </ul>
         <li id="address">Address:<%= restaurant.getAddressString() %></li>
         <li id="description">Description: <%= restaurant.getDescription() %></li>

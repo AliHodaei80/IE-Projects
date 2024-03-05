@@ -62,6 +62,7 @@ public class RestaurantHandler {
     public boolean restaurantExistsId(Long id) {
         return getRestaurant(id) != null;
     }
+
     public void addRestaurant(String restName, String type, String startTime, String endTime, String managerUsername,
             String description, Map<String, String> address)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {
@@ -95,6 +96,13 @@ public class RestaurantHandler {
         if (restaurantHandler == null)
             restaurantHandler = new RestaurantHandler();
         return restaurantHandler;
+    }
+
+    public void updateScores(String restName, Double foodScore, Double serviceScore, Double overallScore,
+            Double ambianceScore) {
+        restaurants.getRestaurantByName(restName).updateScores(foodScore, ambianceScore, serviceScore, overallScore);
+        restaurants.saveToFile(Locations.RESTAURANTS_LOCATION);
+        restaurants.saveToFile(Locations.REVIEWS_LOCATION);
     }
 
     public Restaurants getRestaurants() {

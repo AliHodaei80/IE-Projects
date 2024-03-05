@@ -10,18 +10,19 @@ import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class Restaurant {
+    Integer scoreCount;
     @Expose()
     Long id;
     @Expose()
     String name;
     @Expose()
-    Double ambianceScore;
+    Double avgAmbianceScore;
     @Expose()
-    Double overallScore;
+    Double avgOverallScore;
     @Expose()
-    Double serviceScore;
+    Double avgServiceScore;
     @Expose()
-    Double foodScore;
+    Double avgFoodScore;
     @Expose()
     LocalTime startTime;
     @Expose()
@@ -36,7 +37,7 @@ public class Restaurant {
     Map<String, String> address;
 
     public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,
-                      String managerUsername, Map<String, String> address, Long id) {
+            Integer scoreCount, String managerUsername, Map<String, String> address, Long id) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -45,10 +46,11 @@ public class Restaurant {
         this.managerUsername = managerUsername;
         this.address = address;
         this.id = id;
-        this.overallScore=0.0;
-        this.serviceScore=0.0;
-        this.foodScore=0.0;
-        this.ambianceScore=0.0;
+        this.avgOverallScore = 0.0;
+        this.avgServiceScore = 0.0;
+        this.avgFoodScore = 0.0;
+        this.scoreCount = 0;
+        this.avgAmbianceScore = 0.0;
     }
 
     public String getName() {
@@ -87,17 +89,20 @@ public class Restaurant {
         return type;
     }
 
-    public Double getOverallScore() {
-        return overallScore;
+    public Double getAvgOverallScore() {
+        return avgOverallScore;
     }
-    public Double getServiceScore() {
-        return serviceScore;
+
+    public Double getAvgServiceScore() {
+        return avgServiceScore;
     }
-    public Double getAmbianceScore() {
-        return ambianceScore;
+
+    public Double getAvgAmbianceScore() {
+        return avgAmbianceScore;
     }
-    public Double getFoodScore() {
-        return foodScore;
+
+    public Double getAvgFoodScore() {
+        return avgFoodScore;
     }
 
     public void setType(String type) {
@@ -117,9 +122,8 @@ public class Restaurant {
     }
 
     public String getAddressString() {
-        return address.get(STREET_KEY) +", " + address.get(CITY_KEY) + ", " + address.get(COUNTRY_KEY);
+        return address.get(STREET_KEY) + ", " + address.get(CITY_KEY) + ", " + address.get(COUNTRY_KEY);
     }
-
 
     public String getCity() {
         return address.get("city");
@@ -128,15 +132,24 @@ public class Restaurant {
     public String getCountry() {
         return address.get("country");
     }
-    public String getActivityPeriod(){
-        return startTime.toString() + "-" +  endTime.toString();
+
+    public String getActivityPeriod() {
+        return startTime.toString() + "-" + endTime.toString();
     }
-    public void setScores(Double avgFoodScore,Double avgAmbianceScore,Double avgServiceScore){
-        this.overallScore = (avgAmbianceScore + avgFoodScore + avgServiceScore) / 3;
-        this.ambianceScore=avgAmbianceScore;
-        this.foodScore = avgFoodScore;
-        this.serviceScore = avgServiceScore;
+
+    public Double avgUpdate(Double lastAverage, Double newValue, Integer lastCount) {
+        return ((lastAverage * lastCount) + newValue) / (lastCount + 1);
     }
+
+    public void updateScores(Double newFoodScore, Double newAmbianceScore, Double newServiceScore,
+            Double newOverallRate) {
+        this.avgOverallScore = avgUpdate(avgOverallScore, newOverallRate, scoreCount);
+        this.avgAmbianceScore = avgUpdate(avgAmbianceScore, newAmbianceScore, scoreCount);
+        this.avgFoodScore = avgUpdate(avgFoodScore, newFoodScore, scoreCount);
+        this.avgServiceScore = avgUpdate(avgServiceScore, newServiceScore, scoreCount);
+        this.scoreCount += 1;
+    }
+
     public void setAddress(Map<String, String> address) {
         this.address = address;
     }

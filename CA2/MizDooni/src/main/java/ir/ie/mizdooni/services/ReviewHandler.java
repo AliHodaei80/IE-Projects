@@ -2,12 +2,14 @@ package ir.ie.mizdooni.services;
 
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Reservation;
+import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.models.Review;
 import ir.ie.mizdooni.storage.Reviews;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.definitions.Locations;
 import java.util.List;
+
 public class ReviewHandler {
     private final UserHandler userHandler;
     private final RestaurantHandler restaurantHandler;
@@ -48,6 +50,7 @@ public class ReviewHandler {
         if (!(restaurantHandler.restaurantExists(restName))) {
             throw new RestaurantNotFound();
         }
+        restaurantHandler.updateScores(restName, foodRate, ambianceRate, serviceRate, overallRate);
         return reviews.addReview(restName,
                 username,
                 ambianceRate,
@@ -57,10 +60,6 @@ public class ReviewHandler {
                 comment);
     }
 
-    // public List<Reservation> showReviewsForRestaurant(String restName) {
-    // //TODO Implement int he future
-    // return reservations.getUserReservations(username);
-    // }
     public List<Review> getRestReviews(String restName) {
         return reviews.getRestaurantReviews(restName);
     }

@@ -47,10 +47,10 @@
                 <td><%= restaurant.getCity() %></td>
                 <td><%= restaurant.getType() %></td>
                 <td><%= restaurant.getActivityPeriod() %></td>
-                <td><%= restaurant.getServiceScore() %></td>
-                <td><%= restaurant.getFoodScore() %></td>
-                <td><%= restaurant.getAmbianceScore() %></td>
-                <td><%= restaurant.getOverallScore() %></td>
+                <td><%= restaurant.getAvgServiceScore() %></td>
+                <td><%= restaurant.getAvgFoodScore() %></td>
+                <td><%= restaurant.getAvgAmbianceScore() %></td>
+                <td><%= restaurant.getAvgOverallScore() %></td>
             </tr>
         <% } %>
     </table>
