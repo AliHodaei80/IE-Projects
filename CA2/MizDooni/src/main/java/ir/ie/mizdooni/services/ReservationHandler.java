@@ -48,7 +48,7 @@ public class ReservationHandler {
         return reservations.getReservation(restName, tableNumber, dateTime) == null;
     }
 
-    private boolean tableDateIsValid(LocalDateTime dateTime) {
+    private boolean currentDateTimeIsBefore(LocalDateTime dateTime) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         return dateTime.isAfter(currentDateTime);
     }
@@ -126,7 +126,7 @@ public class ReservationHandler {
         if (!tableIsAvailable(restName, tableNumber, Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT))) {
             throw new TableAlreadyReserved();
         }
-        if (!tableDateIsValid(Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT))) {
+        if (!currentDateTimeIsBefore(Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT))) {
             throw new InvalidDateTime();
         }
         if (!restaurantHandler.dateIsInRestaurantRange(restName,
