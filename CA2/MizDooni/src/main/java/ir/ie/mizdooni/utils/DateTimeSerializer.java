@@ -11,17 +11,15 @@ import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 
 public class DateTimeSerializer implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESERVE_DATETIME_FORMAT);
-
     @Override
     public JsonElement serialize(final LocalDateTime date, final Type typeOfSrc,
                                  final JsonSerializationContext context) {
-        return new JsonPrimitive(date.format(formatter));
+        return new JsonPrimitive(date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
 
     @Override
     public LocalDateTime deserialize(final JsonElement json, final Type typeOfT,
                                  final JsonDeserializationContext context) throws JsonParseException {
-        return LocalDateTime.parse(json.getAsString(), formatter);
+        return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 }

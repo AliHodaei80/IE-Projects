@@ -10,17 +10,16 @@ import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class TimeSerializer implements JsonSerializer<LocalTime>, JsonDeserializer<LocalTime> {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT);
 
     @Override
     public JsonElement serialize(final LocalTime date, final Type typeOfSrc,
                                  final JsonSerializationContext context) {
-        return new JsonPrimitive(date.format(formatter));
+        return new JsonPrimitive(date.format(DateTimeFormatter.ISO_LOCAL_TIME));
     }
 
     @Override
     public LocalTime deserialize(final JsonElement json, final Type typeOfT,
                                  final JsonDeserializationContext context) throws JsonParseException {
-        return LocalTime.parse(json.getAsString(), formatter);
+        return LocalTime.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_TIME);
     }
 }
