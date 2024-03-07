@@ -44,7 +44,7 @@ public class ReservationHandler {
         return (u != null);
     }
 
-    private boolean tableIsAvailable(String restName, int tableNumber, LocalDateTime dateTime) {
+    private boolean tableIsAvailable(String restName, long tableNumber, LocalDateTime dateTime) {
         return reservations.getReservation(restName, tableNumber, dateTime) == null;
     }
 
@@ -108,7 +108,7 @@ public class ReservationHandler {
         return resultOpenings;
     }
 
-    public long addReservation(String restName, String username, int tableNumber, String dateTime)
+    public long addReservation(String restName, String username, long tableNumber, String dateTime)
             throws InvalidUserRole, RestaurantNotFound, TableDoesntExist,
             TableAlreadyReserved, InvalidDateTime, DateTimeNotInRange, UserNotExists {
         if (!userExists(username)) {

@@ -36,8 +36,7 @@ public class Restaurant {
     @Expose()
     Map<String, String> address;
 
-    public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,
-            Integer scoreCount, String managerUsername, Map<String, String> address, Long id) {
+    public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description, String managerUsername, Map<String, String> address, Long id) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
+import org.apache.commons.lang3.math.NumberUtils;
 import static ir.ie.mizdooni.definitions.Commands.*;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
@@ -53,7 +53,8 @@ public class RequestSchemaValidator {
             if (mapTypesKeyName.contains(key) && !(data.get(key) instanceof Map)) {
                 throw new InvalidRequestTypeFormat(key);
             }
-            if (numTypesKeyName.contains(key) && !(data.get(key) instanceof Number)) {
+            if (numTypesKeyName.contains(key) && !(data.get(key) instanceof Number) &&
+                    !(data.get(key) instanceof String && NumberUtils.isParsable((String) data.get(key)))) {
                 throw new InvalidRequestTypeFormat(key);
             }
             if (stringTypesKeyName.contains(key) && !(data.get(key) instanceof String)) {
@@ -161,8 +162,13 @@ public class RequestSchemaValidator {
     }
 
     public static void checkRatingFieldRange(Map<String, Object> data, String field)  throws InvalidRatingFormat{
-
-        if (!NumberRange.isInRange((Double) data.get(field))) {
+        Double number;
+        if (data.get(field) instanceof String) {
+            number = Double.parseDouble((String) data.get(field));
+        } else {
+            number = (Double) data.get(field);
+        }
+        if (!NumberRange.isInRange(number)) {
             throw new InvalidRatingFormat(field);
         }
     }

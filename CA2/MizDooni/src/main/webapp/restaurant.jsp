@@ -52,6 +52,8 @@
                 </select>
                 <label>Date & Time:</label>
                 <input type="datetime-local" id="date_time" name="date_time">
+                <input type="hidden" name="username" value=<%= clientName %>>
+                <input type="hidden" name="restaurant_id" value=<%= restaurant.getId() %>>
                 <br>
                 <button type="submit" name="action" value="reserve">Reserve</button>
               </form>
@@ -63,7 +65,7 @@
       <tr>
           <td>
               <label>Feedback:</label>
-              <form action="submit_review/<%= restaurant.getId()%>" method="post">
+              <form action="" method="post">
                 <label>Food Rate:</label>
                 <input type="number" id="food_rate" name="food_rate" step="0.1" min="0" max="5">
                 <label>Service Rate:</label>
@@ -77,6 +79,7 @@
                 <textarea name="comment"  id="" cols="30" rows="5" placeholder="Enter your comment"></textarea>
                 <!-- <input type="textarea" name="comment" value="" /> -->
                 <br>
+                <input type="hidden" name="username" value=<%= clientName %>>
                 <button type="submit" name="action" value="feedback">Submit</button>
               </form>
           </td>
