@@ -10,7 +10,6 @@ import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class Restaurant {
-    Integer scoreCount;
     @Expose()
     Long id;
     @Expose()
@@ -48,7 +47,6 @@ public class Restaurant {
         this.avgOverallScore = 0.0;
         this.avgServiceScore = 0.0;
         this.avgFoodScore = 0.0;
-        this.scoreCount = 0;
         this.avgAmbianceScore = 0.0;
     }
 
@@ -142,11 +140,10 @@ public class Restaurant {
 
     public void updateScores(Double newFoodScore, Double newAmbianceScore, Double newServiceScore,
             Double newOverallRate) {
-        this.avgOverallScore = avgUpdate(avgOverallScore, newOverallRate, scoreCount);
-        this.avgAmbianceScore = avgUpdate(avgAmbianceScore, newAmbianceScore, scoreCount);
-        this.avgFoodScore = avgUpdate(avgFoodScore, newFoodScore, scoreCount);
-        this.avgServiceScore = avgUpdate(avgServiceScore, newServiceScore, scoreCount);
-        this.scoreCount += 1;
+        this.avgOverallScore = newOverallRate;
+        this.avgAmbianceScore = newAmbianceScore;
+        this.avgFoodScore = newFoodScore;
+        this.avgServiceScore = newServiceScore;
     }
 
     public void setAddress(Map<String, String> address) {

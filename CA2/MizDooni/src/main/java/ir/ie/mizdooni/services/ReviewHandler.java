@@ -5,11 +5,13 @@ import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.models.Review;
+import java.util.function.Function;
 import ir.ie.mizdooni.storage.Reviews;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.definitions.Locations;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public class ReviewHandler {
     private final UserHandler userHandler;
@@ -42,7 +44,17 @@ public class ReviewHandler {
                 .findFirst().orElse(null);
         return reservation != null;
     }
+    public Double scoreAverage(String restName, Function<Review, Double> scoreGetter) {
+        List<Review> reviewList = reviews.getRestaurantReviews(restName);
+        if (reviewList.isEmpty()) {
+            return 0.0;
+        }
 
+        return reviewList.stream()
+                .mapToDouble(scoreGetter::apply)
+                .average()
+                .orElse(0.0);
+    }
     public Review addReview(String restName,
             String username,
             Double ambianceRate,
@@ -63,14 +75,19 @@ public class ReviewHandler {
         if (!hadReservationBefore(username, restName)) {
             throw new NoReservationBefore();
         }
-        restaurantHandler.updateScores(restName, foodRate, ambianceRate, serviceRate, overallRate);
-        return reviews.addReview(restName,
+        Review r = reviews.addReview(restName,
                 username,
                 ambianceRate,
                 overallRate,
                 serviceRate,
                 foodRate,
                 comment);
+        restaurantHandler.updateScores(restName,
+                scoreAverage(restName,Review::getFoodRate)
+                ,scoreAverage(restName,Review::getServiceRate)
+                ,scoreAverage(restName,Review::getOverallRate)
+                ,scoreAverage(restName,Review::getAmbianceRate));
+        return r;
     }
 
     public List<Review> getRestReviews(String restName) {
