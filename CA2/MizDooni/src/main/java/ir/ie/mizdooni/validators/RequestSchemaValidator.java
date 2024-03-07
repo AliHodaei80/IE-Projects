@@ -132,7 +132,11 @@ public class RequestSchemaValidator {
         try {
             checkIsNatural((double) data.get(SEATS_NUM_KEY));
         } catch (ClassCastException e) {
-            checkIsNatural((int) data.get(SEATS_NUM_KEY));
+            try {
+                checkIsNatural((int) data.get(SEATS_NUM_KEY));
+            } catch (ClassCastException e2) {
+                checkIsNatural(Double.parseDouble((String) data.get(SEATS_NUM_KEY)));
+            }
         }
     }
 

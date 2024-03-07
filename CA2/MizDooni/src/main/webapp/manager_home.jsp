@@ -48,7 +48,7 @@
             <tr>
               <td>
                 <h3>Add Table:</h3>
-                <form method="post" action="/addtable">
+                <form method="post" action="">
                   <label>Table Number:</label>
                   <input type="hidden" name="restaurant_name" value=<%= restaurant.getName() %>>
                   <input type="hidden" name="manager_name" value=<%= managerName %>>
