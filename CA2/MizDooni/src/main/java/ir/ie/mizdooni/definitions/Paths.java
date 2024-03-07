@@ -8,5 +8,6 @@ public class Paths {
     public static final String LOGOUT_PAGE = "/logout";
     public static final String RESTAURANTS_PAGE = "/restaurants";
     public static final String RESTAURANT_PAGE = "/restaurants/*";
+    public static final String RESERVATIONS_PAGE = "/reservations";
 
 }

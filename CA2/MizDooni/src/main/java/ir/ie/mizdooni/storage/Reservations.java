@@ -84,8 +84,9 @@ public class Reservations extends Container<Reservations>{
     }
 
     public List<Reservation> getUserReservations(String username) {
-        List<Reservation> allReservations = getAllReservations();
-        return allReservations.stream()
+        return reservations.values().stream()
+                .flatMap(innerMap -> innerMap.values().stream())
+                .flatMap(innerMap2 -> innerMap2.values().stream())
                 .filter(reservation -> username.equals(reservation.getUsername()))
                 .collect(Collectors.toList());
     }

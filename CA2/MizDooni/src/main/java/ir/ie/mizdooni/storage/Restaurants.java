@@ -100,4 +100,12 @@ public class Restaurants extends Container<Restaurants> {
     public void setRestaurants(Map<String, Restaurant> restaurants) {
         this.restaurants = restaurants;
     }
+
+    public Map<String, Long> getRestaurantsId() {
+        Map<String, Long> res = new HashMap<>();
+        for (Restaurant rest : restaurants.values()) {
+            res.put(rest.getName(), rest.getId());
+        }
+        return res;
+    }
 }

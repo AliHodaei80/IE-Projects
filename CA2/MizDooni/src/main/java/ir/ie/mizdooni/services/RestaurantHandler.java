@@ -108,4 +108,8 @@ public class RestaurantHandler {
     public Restaurants getRestaurants() {
         return restaurants;
     }
+
+    public Map<String, Long> getRestaurantsIds() {
+        return restaurants.getRestaurantsId();
+    }
 }

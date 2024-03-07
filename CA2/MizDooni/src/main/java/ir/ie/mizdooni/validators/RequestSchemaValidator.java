@@ -36,13 +36,14 @@ public class RequestSchemaValidator {
     final static Set<String> showReservationHistoryKeys = Set.of(USERNAME_KEY);
     final static Set<String> addReviewKeys = Set.of(AMBIANCE_RATE_KEY, OVERALL_RATE_KEY, FOOD_RATE_KEY,
             SERVICE_RATE_KEY, COMMENT_KEY, RESTAURANT_NAME_KEY, USERNAME_KEY);
+    final static Set<String> cancelReservationKeys = Set.of(USERNAME_KEY, RESERVATION_NUM_KEY);
     final static Set<String> mapTypesKeyName = Set.of(USER_ADDRESS_KEY);
     final static Set<String> stringTypesKeyName = Set.of(USERNAME_KEY, PASSWORD_KEY,
             RESTAURANT_NAME_KEY, USER_ROLE_KEY, EMAIL_KEY, ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
             START_TIME_KEY, END_TIME_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY, DATETIME_KEY, CITY_KEY, COUNTRY_KEY,
             STREET_KEY, COMMENT_KEY);
     final static Set<String> numTypesKeyName = Set.of(TABLE_NUM_KEY, SEATS_NUM_KEY, AMBIANCE_RATE_KEY, OVERALL_RATE_KEY,
-            FOOD_RATE_KEY, SERVICE_RATE_KEY);
+            FOOD_RATE_KEY, SERVICE_RATE_KEY, RESERVATION_NUM_KEY);
 
 
     public static void checkKeyInclusion(Map<String, Object> data, Set<String> keys) throws InvalidRequestFormat, InvalidRequestTypeFormat {
@@ -54,7 +55,7 @@ public class RequestSchemaValidator {
                 throw new InvalidRequestTypeFormat(key);
             }
             if (numTypesKeyName.contains(key) && !(data.get(key) instanceof Number) &&
-                    !(data.get(key) instanceof String && NumberUtils.isParsable((String) data.get(key)))) {
+                    !((data.get(key) instanceof String && NumberUtils.isParsable((String) data.get(key))))) {
                 throw new InvalidRequestTypeFormat(key);
             }
             if (stringTypesKeyName.contains(key) && !(data.get(key) instanceof String)) {
@@ -185,6 +186,9 @@ public class RequestSchemaValidator {
         checkRatingFieldRange(data, AMBIANCE_RATE_KEY);
 
     }
+    public static void validateCancelReservation(Map<String, Object> data) throws InvalidRequestFormat, InvalidRequestTypeFormat {
+        checkKeyInclusion(data, cancelReservationKeys);
+    }
 
     public static void validate(Request r)
             throws InvalidTimeFormat, InvalidUsernameFormat, InvalidRequestFormat, InvalidEmailFormat, InvalidNumType, InvalidRatingFormat, InvalidRequestTypeFormat {
@@ -215,6 +219,10 @@ public class RequestSchemaValidator {
             case OP_SHOW_RESERVATION_HISTORY:
                 validateShowReservationHistory(data);
                 break;
+            case OP_CANCEL_RESERVATION:
+                validateCancelReservation(data);
+                break;
+
         }
     }
 }
