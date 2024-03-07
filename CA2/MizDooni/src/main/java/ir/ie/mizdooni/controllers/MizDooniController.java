@@ -172,7 +172,7 @@ public class MizDooniController {
                     (Double) data.get(FOOD_RATE_KEY),
                     (String) data.get(COMMENT_KEY));
             return new Response(true, REVIEW_ADDED_SUCCESSFULLY);
-        } catch (InvalidUserRole | UserNotFound | RestaurantNotFound e) {
+        } catch (InvalidUserRole | UserNotFound | RestaurantNotFound | NoReservationBefore e) {
             return new Response(false, e.getMessage());
 
         }

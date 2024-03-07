@@ -73,7 +73,7 @@ public class RestaurantPageController extends HttpServlet {
     }
 
     void addReview(HttpServletRequest request) throws UserNotFound, InvalidUserRole, RestaurantNotFound,
-            InvalidRequestTypeFormat, InvalidTimeFormat, InvalidRequestFormat, InvalidRatingFormat {
+            InvalidRequestTypeFormat, InvalidTimeFormat, InvalidRequestFormat, InvalidRatingFormat, NoReservationBefore {
         String restaurantId = request.getPathInfo().split("/")[1];
         Restaurant restaurant = RestaurantHandler.getInstance().getRestaurant(Long.parseLong(restaurantId));
         Map<String, Object> data = Map.of(
@@ -119,7 +119,7 @@ public class RestaurantPageController extends HttpServlet {
             }
         } catch (InvalidUserRole | UserNotExists | TableAlreadyReserved | RestaurantNotFound | TableDoesntExist |
                  InvalidDateTime | DateTimeNotInRange | InvalidRequestTypeFormat | InvalidTimeFormat |
-                 InvalidRequestFormat | UserNotFound | InvalidRatingFormat e) {
+                 InvalidRequestFormat | UserNotFound | InvalidRatingFormat | NoReservationBefore e) {
             logger.error(action + " failed: error: " + e.getMessage(), e);
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher(ERROR_JSP_PAGE).forward(request, response);

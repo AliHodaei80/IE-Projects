@@ -48,7 +48,7 @@ public class ReservationHandler {
         return reservations.getReservation(restName, tableNumber, dateTime) == null;
     }
 
-    private boolean currentDateTimeIsBefore(LocalDateTime dateTime) {
+    public boolean currentDateTimeIsBefore(LocalDateTime dateTime) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         return dateTime.isAfter(currentDateTime);
     }

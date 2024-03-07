@@ -26,6 +26,7 @@ public class Errors {
     public static final String USER_NOT_EXISTS = "User not exists";
     public static final String MANAGER_USERNAME_NOT_MATCH = "Username of manager not match with restaurant manager";
     public static final String AUTHENTICATION_FAILED = "Authentication failed";
+    public static final String NO_RESERVATION_BEFORE = "You had no reservation before to add review";
 
 
 }

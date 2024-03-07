@@ -9,6 +9,7 @@ import ir.ie.mizdooni.storage.Reviews;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.definitions.Locations;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReviewHandler {
     private final UserHandler userHandler;
@@ -33,6 +34,15 @@ public class ReviewHandler {
         return (u != null && u.equals(UserRole.CLIENT));
     }
 
+    public boolean hadReservationBefore(String username, String restName) {
+        List<Reservation> reservations = ReservationHandler.getInstance().showHistoryReservation(username);
+        Reservation reservation = reservations.stream()
+                .filter(reserve -> reserve.getRestaurantName().equals(restName))
+                .filter(reserve -> (!ReservationHandler.getInstance().currentDateTimeIsBefore(reserve.getDatetime())))
+                .findFirst().orElse(null);
+        return reservation != null;
+    }
+
     public Review addReview(String restName,
             String username,
             Double ambianceRate,
@@ -40,7 +50,7 @@ public class ReviewHandler {
             Double serviceRate,
             Double foodRate,
             String comment)
-            throws InvalidUserRole, UserNotFound, RestaurantNotFound {
+            throws InvalidUserRole, UserNotFound, RestaurantNotFound, NoReservationBefore {
         if (!(userHandler.doesUserExist(username))) {
             throw new UserNotFound();
         }
@@ -49,6 +59,9 @@ public class ReviewHandler {
         }
         if (!(restaurantHandler.restaurantExists(restName))) {
             throw new RestaurantNotFound();
+        }
+        if (!hadReservationBefore(username, restName)) {
+            throw new NoReservationBefore();
         }
         restaurantHandler.updateScores(restName, foodRate, ambianceRate, serviceRate, overallRate);
         return reviews.addReview(restName,
