@@ -27,6 +27,7 @@ public class RestaurantsPageController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("restaurants",
                 (RestaurantHandler.getInstance().getRestaurants().getRestaurantList(false)));
+        request.setAttribute("username", UserHandler.getInstance().getCurrentUser().getUsername());
         logger.info(request.getAttribute("restaurants"));
         request.getRequestDispatcher("restaurants.jsp").forward(request, response);
     }

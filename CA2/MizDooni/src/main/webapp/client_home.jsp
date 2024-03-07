@@ -5,8 +5,11 @@
     <title>Client Home</title>
   </head>
   <body>
+      <%
+          String clientName = (String) request.getAttribute("username");
+      %>
     <h1>
-      Welcome <%= UserHandler.getInstance().getCurrentUser().getUsername() %> <a href="/logout" style="color: red">Log Out</a>
+      Welcome <%= clientName %> <a href="/logout" style="color: red">Log Out</a>
     </h1>
 
     <ul type="square">

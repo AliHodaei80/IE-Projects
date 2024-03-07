@@ -9,7 +9,10 @@
     <title>Restaurants</title>
 </head>
 <body>
-    <p id="username">username: ali <a href="/">Home</a> <a href="/logout" style="color: red">Log Out</a></p>
+      <%
+          String clientName = (String) request.getAttribute("username");
+      %>
+    <p id="username">username: <%= clientName %> <a href="/">Home</a> <a href="/logout" style="color: red">Log Out</a></p>
     <br><br>
     <form action="" method="POST">
         <label>Search:</label>

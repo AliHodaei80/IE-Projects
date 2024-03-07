@@ -11,7 +11,7 @@
   </head>
   <body>
     <%
-        String managerName = UserHandler.getInstance().getCurrentUser().getUsername();
+        String managerName = (String) request.getAttribute("username");
     %>
     <h1>
       Welcome <%= managerName %> <a href="/logout" style="color: red">Log Out</a>
