@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static ir.ie.mizdooni.definitions.Paths.ERROR_JSP_PAGE;
-import static ir.ie.mizdooni.definitions.Paths.RESTAURANT_PAGE;
+import static ir.ie.mizdooni.definitions.Paths.*;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddReview;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateReserveTable;
@@ -103,7 +102,7 @@ public class RestaurantPageController extends HttpServlet {
             switch (action) {
                 case "reserve" -> {
                     reserve(request);
-                    response.sendRedirect("/restaurants/" + restaurantId);
+                    response.sendRedirect(RESERVATIONS_PAGE);
                     return;
                 }
                 case "feedback" -> {
