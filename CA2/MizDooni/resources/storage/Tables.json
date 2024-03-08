@@ -1,1 +1,58 @@
-{"restaurantTables":{"r1":{"1":{"tableNumber":1,"restaurantName":"r1","managerUsername":"user2","seatsNumber":4}}}}
+{
+  "restaurantTables": {
+    "Morshed": {
+      "1": {
+        "tableNumber": 1,
+        "restaurantName": "Morshed",
+        "managerUsername": "user2",
+        "seatsNumber": 3
+      },
+      "2": {
+        "tableNumber": 2,
+        "restaurantName": "Morshed",
+        "managerUsername": "user2",
+        "seatsNumber": 3
+      }
+    },
+    "Atavich": {
+      "1": {
+        "tableNumber": 1,
+        "restaurantName": "Atavich",
+        "managerUsername": "user4",
+        "seatsNumber": 3
+      }
+    },
+    "Baradaran": {
+      "1": {
+        "tableNumber": 1,
+        "restaurantName": "Baradaran",
+        "managerUsername": "user4",
+        "seatsNumber": 5
+      }
+    },
+    "ShirazFood": {
+      "1": {
+        "tableNumber": 1,
+        "restaurantName": "ShirazFood",
+        "managerUsername": "user4",
+        "seatsNumber": 4
+      }
+    },
+    "Perperook": {
+      "2": {
+        "tableNumber": 2,
+        "restaurantName": "Perperook",
+        "managerUsername": "user2",
+        "seatsNumber": 4
+      }
+    },
+    "Orkideh": {
+      "1": {
+        "tableNumber": 1,
+        "restaurantName": "Orkideh",
+        "managerUsername": "user2",
+        "seatsNumber": 2
+      }
+    }
+  }
+}

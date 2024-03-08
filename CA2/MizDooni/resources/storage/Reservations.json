@@ -1,1 +1,1 @@
-{"reservations":{"r1":{"1":{"2024-03-07T21:00":{"username":"user1","restaurantName":"r1","tableNumber":1,"datetime":"2024-03-07T21:00:00","reservationNumber":1}}}},"reservationsIdIndex":{"1":{"username":"user1","restaurantName":"r1","tableNumber":1,"datetime":"2024-03-07T21:00:00","reservationNumber":1}},"reservationCounts":1}
+{}
