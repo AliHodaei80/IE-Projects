@@ -90,7 +90,7 @@ public class Restaurants extends Container<Restaurants> {
         if (!sorted) {
             return new ArrayList<Restaurant>(restaurants.values());
         } else {
-            Comparator<Restaurant> c = (s1, s2) -> s1.getAvgOverallScore().compareTo(s2.getAvgOverallScore());
+            Comparator<Restaurant> c = (s1, s2) -> -1 * s1.getAvgOverallScore().compareTo(s2.getAvgOverallScore());
             ArrayList<Restaurant> rests = new ArrayList<Restaurant>(restaurants.values());
             rests.sort(c);
             return rests;

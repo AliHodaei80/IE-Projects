@@ -67,13 +67,13 @@
               <label>Feedback:</label>
               <form action="" method="post">
                 <label>Food Rate:</label>
-                <input type="number" id="food_rate" name="food_rate" step="0.1" min="0" max="5">
+                <input type="number" id="food_rate" name="food_rate" step="0.5" min="0" max="5">
                 <label>Service Rate:</label>
-                <input type="number" id="service_rate" name="service_rate" step="0.1" min="0" max="5">
+                <input type="number" id="service_rate" name="service_rate" step="0.5" min="0" max="5">
                 <label>Ambiance Rate:</label>
-                <input type="number" id="ambiance_rate" name="ambiance_rate" step="0.1" min="0" max="5">
+                <input type="number" id="ambiance_rate" name="ambiance_rate" step="0.5" min="0" max="5">
                 <label>Overall Rate:</label>
-                <input type="number" id="overall_rate" name="overall_rate" step="0.1" min="0" max="5">
+                <input type="number" id="overall_rate" name="overall_rate" step="0.5" min="0" max="5">
                 <br>
                 <label>Comment:</label>
                 <textarea name="comment"  id="" cols="30" rows="5" placeholder="Enter your comment"></textarea>
