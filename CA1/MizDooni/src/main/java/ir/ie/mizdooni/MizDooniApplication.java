@@ -11,6 +11,7 @@ public class MizDooniApplication {
     public static void main(String[] args) {
      
         MizDooniController controller = MizDooniController.getInstance();
+        
         Request request;
         Scanner in = new Scanner(System.in);
         String command = "";
@@ -21,7 +22,7 @@ public class MizDooniApplication {
             try {
                 request = Parser.parseCommand(command);
                 System.out.println(controller.handleRequest(request));
-            } catch (Exception e) {
+        } catch (Exception e) {
                 System.out.println("Error Happened! message: " + e.getMessage());
                 e.printStackTrace();
             }
