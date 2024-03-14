@@ -1,0 +1,11 @@
+.footer {
+  background-color: var(--red);
+  /* bottom: 100px; */
+  width: 100%;
+  color: var(--white);
+  font-family: "SplineSans", serif;
+  font-weight: 600;
+  font-size: 16px;
+
+  box-shadow: 0px 0px 4px 0px var(--black);
+}

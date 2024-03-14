@@ -1,0 +1,15 @@
+@import "normalize.css";
+
+:root {
+  --white: #ffffff;
+  --cream: #fffcfc;
+  --red: #ed3545;
+}
+
+body {
+  background-color: var(--cream);
+}
+
+.restaurant {
+  background-color: #ed3545;
+}
