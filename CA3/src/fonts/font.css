@@ -1,8 +1,0 @@
-@font-face {
-  font-family: "SplineSans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 300 700;
-  src: url("SplineSans_Variable.woff2") format("woff2 supports variations"),
-    url("SplineSans_Variable.woff2") format("woff2-variations");
-}
