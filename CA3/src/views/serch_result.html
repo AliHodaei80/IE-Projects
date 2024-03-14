@@ -6,122 +6,766 @@
     <link href="../styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../styles/normalize.css" rel="stylesheet" type="text/css" />
     <link href="../fonts/font.css" rel="stylesheet" type="text/css" />
+    <link href="../styles/colors.css" rel="stylesheet" type="text/css" />
     <link href="../styles/header.css" rel="stylesheet" type="text/css" />
     <link href="../styles/search_result.css" rel="stylesheet" type="text/css" />
     <link href="../styles/footer.css" rel="stylesheet" type="text/css" />
 
     <title>Document</title>
   </head>
-  <body>
-    <div class="header d-flex sticky-top container-fluid">
+  <body class="d-flex flex-column">
+    <header class="d-flex sticky-top container-fluid" id="header">
       <img src="../images/logo.png" alt="logo" class="logo" />
       <span class="header-text">Reserve Table From Anywhere!</span>
       <button class="reserve-button rounded-3 border-0 ms-auto">
         Reserve Now!
       </button>
-    </div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea suscipit ducimus
-    c
-    <p>Restaurants</p>
+    </header>
+    <main class="flex-grow-1">
+      <div class="p-3 container">
+        <div class="search-result-title">Results for # Restaurant Name</div>
+        <div
+          class="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4"
+        >
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest1.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest1_picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">The Ivy Brasserie</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Contemporary British</div>
 
-    <div class="restaurants row row-cols-1 row-cols-md-5 g-4 p-5">
-      <div class="col">
-        <div class="restaurant card rounded-4 h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Tehran
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">This is a short card.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="../images/rest1.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <small class="text-muted">Last updated 3 mins ago</small>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest2.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest2_picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Halia Restaurant</div>
+                <div class="review-count card-text">12096 reviews</div>
+                <div class="type card-text">Fast Food</div>
 
-    <div class="footer text-center p-2 m-0">
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  tehran
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="closed">Closed</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Opens at 10 AM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest3.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest3_picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">The Ivy Brasserie</div>
+                <div class="review-count card-text">0 reviews</div>
+                <div class="type card-text">Sea Food</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Rasht
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 12 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest4.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest4-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Cecconi’s</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Healthy Food</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Ahvaz
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest5.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest5-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Hard Rock Cafe</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Vegetarian Food</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Tabriz
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest6.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest6-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">28 - 50 Marylebone</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Kebab</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  tehran
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest7.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest7-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Maman Joon Felafel</div>
+                <div class="review-count card-text">10000000 reviews</div>
+                <div class="type card-text">Falafel</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Qom
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest8.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest8-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Dizy Ali Daei</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Contemporary British</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Boshehr
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest9.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest9-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Orkideh</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Iranian Food</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Sari
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest10.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest10-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">Narenjak</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Local Food</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Mashhad
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest11.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest11-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">SIRAZ KADIKOY</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Contemporary British</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Tehran
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="restaurant card rounded-4 h-100 position-relative">
+              <a href="#" class="restaurant-link">
+                <div class="rate d-flex position-absolute px-2 py-1">
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_empty"
+                  />
+                  <img
+                    class="icon"
+                    src="../images/icons/star_filled.svg"
+                    alt="star_filled"
+                  />
+                </div>
+                <img
+                  src="../images/rest12.png"
+                  class="restaurant-img card-img-top rounded-top-4"
+                  alt="rest12-picture"
+                />
+              </a>
+              <div class="card-body">
+                <div class="card-title name">The Ivy Brasserie</div>
+                <div class="review-count card-text">2096 reviews</div>
+                <div class="type card-text">Contemporary British</div>
+
+                <div class="card-text d-flex location">
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/location.svg"
+                    alt="location-icon"
+                  />
+                  Tehran
+                </div>
+                <div class="card-text d-flex time">
+                  <div class="open">Open</div>
+                  <img
+                    class="icon align-self-center"
+                    src="../images/icons/time.svg"
+                    alt="time-icon"
+                  />
+                  <div class="close-time">Closes at 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-center p-2 m-0" id="footer">
       <p class="m-0">Copyright © 2024 Mizdooni - All rights reserved.</p>
-    </div>
+    </footer>
   </body>
 </html>
