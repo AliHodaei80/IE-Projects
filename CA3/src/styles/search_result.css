@@ -91,7 +91,7 @@ body {
   line-height: 15px;
 }
 
-.search-result-title {
+.result-title {
   color: var(--black);
   font-weight: 400;
   font-size: 16px;
