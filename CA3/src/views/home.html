@@ -14,21 +14,63 @@
 
     <title>Document</title>
   </head>
+
   <body class="d-flex flex-column">
     <header class="d-flex sticky-top container-fluid" id="header">
       <img src="../images/logo.png" alt="logo" class="logo" />
-      <span class="header-text d-none d-sm-block">Reserve Table From
-        Anywhere!</span>
+      <span class="header-text d-none d-sm-block"
+        >Reserve Table From Anywhere!</span
+      >
       <button class="reserve-button rounded-3 border-0 ms-auto">
         Reserve Now!
       </button>
     </header>
     <main class="flex-grow-1">
+      <div class="container-s w-100 text-center">
+        <div class="container home-background">
+          <div class="input-group mb-3 w-30 text-center">
+            <select
+              class="custom-select rounded-4 search-input"
+              id="inputGroupSelect01"
+              aria-placeholder="Location"
+            >
+              <option selected>Location</option>
+              <option value="ff">Tehran</option>
+              <option value="tf">Rasht</option>
+              <option value="if">Gonabad</option>
+            </select>
+            <select
+              class="custom-select rounded-4 search-input"
+              id="RestaurantType"
+            >
+              <option selected>Type</option>
+              <option value="ff">Fast Food</option>
+              <option value="tf">Traditional Food</option>
+              <option value="if">Itallian Food</option>
+            </select>
+            <input
+              type="text"
+              class="form-control search-input restaurant-search rounded-4"
+              placeholder="Type Restaurant ..."
+              aria-label="restaurant search"
+              aria-describedby="basic-addon2"
+            />
+            <button
+              class="btn search-input btn-outline-secondary rounded-4"
+              type="button"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="p-3 container">
         <div class="p-3 container" id="suggestions-container">
           <div class="result-title">Top restuarants on Mizdooni</div>
           <div
-            class="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+            class="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4"
+          >
             <div class="col">
               <div class="restaurant card rounded-4 h-100 position-relative">
                 <a href="#" class="restaurant-link">
@@ -36,28 +78,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest1.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest1_picture" />
+                    alt="rest1_picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">The Ivy Brasserie</div>
@@ -68,7 +116,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -76,7 +125,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -89,28 +139,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest2.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest2_picture" />
+                    alt="rest2_picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">Halia Restaurant</div>
@@ -121,7 +177,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -129,7 +186,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Opens at 10 AM</div>
                   </div>
                 </div>
@@ -142,28 +200,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest3.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest3_picture" />
+                    alt="rest3_picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">The Ivy Brasserie</div>
@@ -174,7 +238,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Rasht
                   </div>
                   <div class="card-text d-flex time">
@@ -182,7 +247,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 12 PM</div>
                   </div>
                 </div>
@@ -196,28 +262,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest10.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest10-picture" />
+                    alt="rest10-picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">Narenjak</div>
@@ -228,7 +300,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Mashhad
                   </div>
                   <div class="card-text d-flex time">
@@ -236,7 +309,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -249,28 +323,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest11.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest11-picture" />
+                    alt="rest11-picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">SIRAZ KADIKOY</div>
@@ -281,7 +361,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -289,7 +370,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -302,28 +384,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest12.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest12-picture" />
+                    alt="rest12-picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">The Ivy Brasserie</div>
@@ -334,7 +422,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -342,7 +431,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -351,7 +441,8 @@
           </div>
           <div class="result-title">You might also like</div>
           <div
-            class="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+            class="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4"
+          >
             <div class="col">
               <div class="restaurant card rounded-4 h-100 position-relative">
                 <a href="#" class="restaurant-link">
@@ -359,28 +450,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest1.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest1_picture" />
+                    alt="rest1_picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">The Ivy Brasserie</div>
@@ -391,7 +488,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -399,7 +497,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -412,28 +511,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest2.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest2_picture" />
+                    alt="rest2_picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">Halia Restaurant</div>
@@ -444,7 +549,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -452,7 +558,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Opens at 10 AM</div>
                   </div>
                 </div>
@@ -465,28 +572,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest3.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest3_picture" />
+                    alt="rest3_picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">The Ivy Brasserie</div>
@@ -497,7 +610,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Rasht
                   </div>
                   <div class="card-text d-flex time">
@@ -505,7 +619,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 12 PM</div>
                   </div>
                 </div>
@@ -519,28 +634,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest10.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest10-picture" />
+                    alt="rest10-picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">Narenjak</div>
@@ -551,7 +672,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Mashhad
                   </div>
                   <div class="card-text d-flex time">
@@ -559,7 +681,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -572,28 +695,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest11.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest11-picture" />
+                    alt="rest11-picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">SIRAZ KADIKOY</div>
@@ -604,7 +733,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -612,7 +742,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>
@@ -625,28 +756,34 @@
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_empty" />
+                      alt="star_empty"
+                    />
                     <img
                       class="icon"
                       src="../images/icons/star_filled.svg"
-                      alt="star_filled" />
+                      alt="star_filled"
+                    />
                   </div>
                   <img
                     src="../images/rest12.png"
                     class="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
-                    alt="rest12-picture" />
+                    alt="rest12-picture"
+                  />
                 </a>
                 <div class="card-body">
                   <div class="card-title name">The Ivy Brasserie</div>
@@ -657,7 +794,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/location.svg"
-                      alt="location-icon" />
+                      alt="location-icon"
+                    />
                     Tehran
                   </div>
                   <div class="card-text d-flex time">
@@ -665,7 +803,8 @@
                     <img
                       class="icon align-self-center"
                       src="../images/icons/dot.svg"
-                      alt="dot-icon" />
+                      alt="dot-icon"
+                    />
                     <div class="close-time">Closes at 11 PM</div>
                   </div>
                 </div>

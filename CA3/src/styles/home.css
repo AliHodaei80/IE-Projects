@@ -1,5 +1,5 @@
 #suggestions-container {
-  width: 70%;
+  width: 100%;
 }
 
 #suggestions-container .card .location {
@@ -80,7 +80,23 @@
 
 #suggestions-container .card .name {
   font-weight: 400;
-  font-size: 8px;
+  font-size: 12px;
   line-height: 12px;
 }
 
+.input-group .search-input {
+  margin-left: 2px;
+  margin-right: 20px;
+  background-color: white;
+}
+
+.input-group .restaurant-search {
+  background-color: white;
+}
+
+.home-background {
+  background-image: url("../images/home.png");
+  background-color: #cccccc;
+  height: 830px;
+  width: 1920px;
+}
