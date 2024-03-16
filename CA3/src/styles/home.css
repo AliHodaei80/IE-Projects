@@ -2,6 +2,11 @@
   width: 100%;
 }
 
+body {
+  font-family: "SplineSans", serif;
+  font-weight: 200;
+}
+
 #suggestions-container .card .location {
   font-weight: 400;
   font-size: 10px;
@@ -94,7 +99,6 @@
   background-color: white;
 }
 .input-group {
-  font-family: "Spline Sans";
   font-size: 14px;
 }
 
@@ -110,7 +114,6 @@
   height: 40px;
   top: 400px;
   color: #303030;
-  font-family: "Spline Sans";
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
@@ -122,7 +125,9 @@
   border-width: 0;
   height: 830px;
 }
-
+.grid-container {
+  display: grid;
+}
 .input-group .search-button {
   width: 90px;
   color: white;
@@ -135,4 +140,18 @@
   margin-left: 7%;
   width: 320px;
   height: 250px;
+}
+
+#table-image {
+  margin-top: 100px;
+  height: 439px;
+  width: 474px;
+}
+#about {
+  color: #ed3545;
+  font-size: 24px;
+}
+
+#bold-red-text {
+  color: #ed3545;
 }
