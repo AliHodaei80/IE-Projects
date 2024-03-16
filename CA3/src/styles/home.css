@@ -121,9 +121,10 @@ body {
 .home-background {
   background-image: url("../images/home.png");
   background-color: #cccccc;
-  border-radius: 12px;
   border-width: 0;
-  height: 830px;
+  position: relative;
+  top: -100px;
+  height: 1000px;
 }
 .grid-container {
   display: grid;
