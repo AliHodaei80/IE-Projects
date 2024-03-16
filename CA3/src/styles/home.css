@@ -109,13 +109,11 @@
   position: relative;
   height: 40px;
   top: 400px;
-  border-radius: 12px;
   color: #303030;
   font-family: "Spline Sans";
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  left: 231px;
 }
 .home-background {
   background-image: url("../images/home.png");
