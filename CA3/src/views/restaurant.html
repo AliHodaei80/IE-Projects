@@ -26,7 +26,7 @@
       </button>
     </header>
     <main class="flex-grow-1">
-      <div class="row mt-0">
+      <div class="row mt-0 position-relatvie">
         <div class="col">
           <img
             src="../images/sample_rest_image.png"
@@ -34,40 +34,141 @@
             class="col rounded-3 mt-5"
             id="sample-rest-img"
           />
-          <div class="descripton-card position-relative text-center">
-            <h1 id="restaurant-name">Dizy Ali Daei</h1>
+          <div class="descripton-card position-relative">
+            <div class="d-inline-flex">
+              <h1 id="restaurant-name">Dizy Ali Daei</h1>
+              <span
+                class="rounded-4 text-center position-relative"
+                id="rest-status"
+                >Open!</span
+              >
+            </div>
+            <div class="container">
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="d-flex">
+                    <img
+                      class="icon p-0"
+                      src="../images/icons/clock.svg"
+                      alt="star_filled"
+                    />
+                    <div class="timing p-0">From 11 AM to 10 PM</div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="icon-container text-center">
+                      <img
+                        class="star-review"
+                        src="../images/icons/star_inside_review.png"
+                        alt="review"
+                      />
+                    </div>
+                    <div class="rating p-0">160 Reviews</div>
+                  </div>
+                  <div class="d-flex">
+                    <img
+                      class="icon"
+                      src="../images/icons/fork_knife.svg"
+                      alt="star_filled"
+                    />
+                    <div class="type">Dizy</div>
+                  </div>
+                </div>
+                <div class="restaurant-location">
+                  <span class="text-muted"
+                    >Iran, Boshenr, Vali-e-Asr Square</span
+                  >
+                </div>
+                <div class="review-content">
+                  <p>
+                    Ali Daei Dizy restaurant is a cultural oasis in the heart of
+                    the city, serving up the best of traditional Iranian
+                    cuisine. With a menu that boasts a diverse selection of
+                    flavorful dishes such as kebabs, stews, and rice dishes,
+                    guests will experience the richness and depth of Persian
+                    flavors. The ambiance of the restaurant is warm and
+                    inviting, with intricate Persian rugs adorning the walls and
+                    the soothing sounds of traditional Iranian music playing in
+                    the background. Whether you're looking to indulge in a
+                    delicious meal with friends or simply craving a taste of
+                    Iran, Ali Daei Dizy restaurant is the perfect spot to
+                    satisfy your culinary cravings.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col mt-5 general-text">
-          <h3 id="about" class="general-text">About Mizdooni</h3>
-          <span id="about-text"
-            >Are you tired of waiting in long lines at restaurants or struggling
-            to find a table at your favorite eatery? <br />
-            <br />
-            Look no further than Mizdooni – the ultimate solution for all your
-            dining reservation needs.
-            <br />
-            <br />
-            Mizdooni is a user-friendly website where you can reserve a table at
-            any restaurant, from anywhere, at a specific time. Whether you're
-            craving sushi, Italian, or a quick bite to eat, Mizdooni has you
-            covered.
-            <br />
-            <br />
-            With a simple search feature, you can easily find a restaurant based
-            on cuisine or location. <br />
-            <br />
-            <span id="bold-red-text"> The best part? </span> There are no fees
-            for making a reservation through Mizdooni. Say goodbye to the hassle
-            of calling multiple restaurants or showing up only to find there's a
-            long wait. With Mizdooni, you can relax knowing that your table is
-            secured and waiting for you. <br />
-            <br />
-            Don't let dining out be a stressful experience. Visit Mizdooni today
-            and start enjoying your favorite meals without the headache of
-            making reservations. Reserve your table with ease and dine with
-            peace of mind.</span
-          >
+          <h5 id="booking" class="general-text">Reserve Table</h5>
+          <div class="d-inline-flex">
+            <span class="text-center mt-1"> For </span>
+            <div class="input-group text-center">
+              <select
+                class="custom-select count-picker rounded-3 w-10 ms-2"
+                id="inputGroupSelect01"
+                aria-placeholder="Location"
+              >
+                <option selected>2</option>
+                <option value="if">3</option>
+              </select>
+              <span class="text-center mt-1 ms-2"> people, on date </span>
+              <button
+                class="btn date-picker btn-outline-secondary ms-2 search-button"
+                type="button"
+              >
+                <div class="d-flex">
+                  <img
+                    class="icon p-0"
+                    src="../images/icons/calendar.svg"
+                    alt="star_filled"
+                  />
+                  <span class="p-0 ms-3"> 2024-02-18 </span>
+                </div>
+              </button>
+            </div>
+          </div>
+          <br />
+          <br />
+          <span>Available Times for Table #1 (2 seats)</span>
+          <div class="container w-75 text-center mt-4 ms-0">
+            <div class="row">
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 11:00AM </span>
+              </div>
+              <div class="selected-reserved-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 12:00PM </span>
+              </div>
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 13:00PM </span>
+              </div>
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 14:00PM </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 15:00PM </span>
+              </div>
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 18:00PM </span>
+              </div>
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 19:00PM </span>
+              </div>
+              <div class="reserve-blob col-sm ms-2 rounded-4 mt-2">
+                <span class="mt-3"> 20:00PM </span>
+              </div>
+            </div>
+            <div class="general-text w-100 mt-3 mb-3">
+              You will reserve this table only for one hour, for more time
+              please contact the restaurant.
+            </div>
+            <div class="row w-100">
+              <div class="selected-reserved-blob col-sm ms-2 rounded-4">
+                Complete the reservation
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
