@@ -27,40 +27,45 @@
     </header>
     <main class="flex-grow-1">
       <div class="container-s w-100 text-center">
-        <div class="container home-background">
-          <div class="input-group mb-3 w-30 text-center">
-            <select
-              class="custom-select rounded-4 search-input"
-              id="inputGroupSelect01"
-              aria-placeholder="Location"
-            >
-              <option selected>Location</option>
-              <option value="ff">Tehran</option>
-              <option value="tf">Rasht</option>
-              <option value="if">Gonabad</option>
-            </select>
-            <select
-              class="custom-select rounded-4 search-input"
-              id="RestaurantType"
-            >
-              <option selected>Type</option>
-              <option value="ff">Fast Food</option>
-              <option value="tf">Traditional Food</option>
-              <option value="if">Itallian Food</option>
-            </select>
-            <input
-              type="text"
-              class="form-control search-input restaurant-search rounded-4"
-              placeholder="Type Restaurant ..."
-              aria-label="restaurant search"
-              aria-describedby="basic-addon2"
-            />
-            <button
-              class="btn search-input btn-outline-secondary rounded-4"
-              type="button"
-            >
-              Search
-            </button>
+        <div class="home-background">
+          <div class="container">
+            <div class="input-group mb-3">
+              <img class="big-logo" src="../images/logo_big.png" />
+            </div>
+            <div class="input-group mb-1 text-center">
+              <select
+                class="custom-select rounded-4 search-input"
+                id="inputGroupSelect01"
+                aria-placeholder="Location"
+              >
+                <option selected>Location</option>
+                <option value="ff">Tehran</option>
+                <option value="tf">Rasht</option>
+                <option value="if">Gonabad</option>
+              </select>
+              <select
+                class="custom-select rounded-4 search-input"
+                id="RestaurantType"
+              >
+                <option selected>Restaurant</option>
+                <option value="ff">Fast Food</option>
+                <option value="tf">Traditional Food</option>
+                <option value="if">Itallian Food</option>
+              </select>
+              <input
+                type="text"
+                class="search-input restaurant-search rounded-4"
+                placeholder="Type Restaurant ..."
+                aria-label="restaurant search"
+                aria-describedby="basic-addon2"
+              />
+              <button
+                class="btn search-input btn-outline-secondary rounded-4 search-button"
+                type="button"
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
       </div>

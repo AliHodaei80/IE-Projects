@@ -81,22 +81,60 @@
 #suggestions-container .card .name {
   font-weight: 400;
   font-size: 12px;
+  height: 45px;
   line-height: 12px;
 }
 
 .input-group .search-input {
   margin-left: 2px;
   margin-right: 20px;
+  border-width: 0px;
+  height: 45px;
+  width: 117px;
   background-color: white;
+}
+.input-group {
+  font-family: "Spline Sans";
+  font-size: 14px;
 }
 
 .input-group .restaurant-search {
   background-color: white;
+  border-width: 0px;
+  width: 253px;
+  height: 45px;
 }
 
+.input-group {
+  position: relative;
+  height: 40px;
+  top: 400px;
+  border-radius: 12px;
+  color: #303030;
+  font-family: "Spline Sans";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  left: 231px;
+}
 .home-background {
   background-image: url("../images/home.png");
   background-color: #cccccc;
+  border-radius: 12px;
+  border-width: 0;
   height: 830px;
-  width: 1920px;
+}
+
+.input-group .search-button {
+  width: 90px;
+  color: white;
+  background-color: #ed3545;
+}
+
+.big-logo {
+  position: relative;
+  margin-top: -200px;
+  margin-left: 7%;
+  width: 320px;
+  height: 250px;
 }
