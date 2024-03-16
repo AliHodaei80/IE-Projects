@@ -143,10 +143,10 @@ body {
   height: 250px;
 }
 
-#table-image {
-  margin-top: 100px;
-  height: 439px;
-  width: 474px;
+#sample-rest-img {
+  height: 306px;
+  width: 698px;
+  margin-left: 238px;
 }
 #about {
   color: #ed3545;
@@ -155,4 +155,20 @@ body {
 
 #bold-red-text {
   color: #ed3545;
+}
+
+.descripton-card {
+  top: -100px;
+  background-color: white;
+  opacity: 90%;
+  height: 12vh;
+  z-index: 1;
+}
+
+#restaurant-name {
+  font-size: 48px;
+  font-weight: 600;
+  margin-left: -9vw;
+  padding-top: 1vh;
+  top: 50%;
 }
