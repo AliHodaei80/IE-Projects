@@ -4,8 +4,8 @@ body {
 }
 
 #sample-rest-img {
-  height: 306px;
-  width: 698px;
+  height: 70%;
+  width: 75%;
   margin-left: 25%;
 }
 #about {
@@ -29,6 +29,7 @@ body {
 #restaurant-name {
   font-size: 48px;
   font-weight: 600;
+  width: 100%;
   top: 50%;
 }
 
