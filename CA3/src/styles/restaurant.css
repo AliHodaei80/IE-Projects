@@ -60,10 +60,13 @@ review-card {
 
 .review-header .timing {
   font-weight: 400;
+  font-size: medium;
+  margin-left: 11px;
 }
 .type {
   padding: 2px 10px;
   border-radius: 5px;
+  font-size: medium;
   color: 303030;
   font-weight: 400;
 }
@@ -127,17 +130,85 @@ review-card {
   font-weight: 400;
 }
 
-.review-box{
+.review-box {
   height: 25%;
   width: 75%;
   margin-top: 10%;
   margin-left: 12%;
   z-index: 1;
-  background-color: #FFF6F7;
+  background-color: #fff6f7;
 }
 
-.icon{
+.review-pages {
+  height: 25%;
+  width: 75%;
+  z-index: 1;
+}
+.icon {
   height: 20px;
   width: 20px;
+}
 
+review-card {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 1rem 0;
+}
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.review-date {
+  font-size: 0.9rem;
+  color: #757575;
+}
+.review-content {
+  font-size: 0.95rem;
+}
+.add-review-btn {
+  background-color: #ff4757;
+  border: none;
+  color: white;
+  height: 45px;
+  width: 150px;
+  border-radius: 0.3rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.profile-photo {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  color: #000000;
+  background-color: #f0b5ba;
+}
+
+.page-button {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  color: #000000;
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  background-color: white;
+}
+
+.profile-name {
+  font-size: 22px;
+  top: 0%;
+  padding: 10px;
+}
+
+.review-namer {
+  margin-right: 89vh;
+}
+
+.page-no {
+  top: 25%;
+  font-weight: 400;
 }
