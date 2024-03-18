@@ -5,8 +5,6 @@ body {
 
 #sample-rest-img {
   height: 70%;
-  width: 75%;
-  margin-left: 25%;
 }
 #about {
   font-size: 24px;
@@ -17,21 +15,14 @@ body {
 }
 
 .descripton-card {
-  top: -100px;
+  bottom: 20%;
   background-color: white;
   opacity: 92%;
-  height: 12vh;
-  position: inherit;
-  margin-left: 25%;
-  z-index: 1;
+  height: 16vh;
+  position: relative;
+  /* z-index: 1; */
 }
 
-#restaurant-name {
-  font-size: 48px;
-  font-weight: 600;
-  width: 100%;
-  top: 50%;
-}
 
 #rest-status {
   font-size: 18px;
@@ -39,11 +30,7 @@ body {
   color: white;
   width: 90px;
   height: 33px;
-  left: 85%;
-  padding: 1%;
-  margin-top: 12%;
   background-color: green;
-  top: 50%;
 }
 
 review-card {
@@ -136,14 +123,15 @@ review-card {
   width: 75%;
   margin-top: 10%;
   margin-left: 12%;
-  z-index: 1;
   background-color: #fff6f7;
 }
 
+.description-box {
+  margin-bottom: 0%;
+}
 .review-pages {
   height: 25%;
   width: 75%;
-  z-index: 1;
 }
 .icon {
   height: 20px;

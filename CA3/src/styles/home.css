@@ -158,10 +158,6 @@ body {
   color: #ed3545;
 }
 
-.form-select {
-  background-image: url("../images/icons/select.svg");
-  background-size: 10px 8px;
-}
 @media only screen and (max-width: 768px) {
   .search-bars {
     width: 100%;
