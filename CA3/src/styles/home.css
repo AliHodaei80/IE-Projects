@@ -95,7 +95,7 @@ body {
   margin-right: 20px;
   border-width: 0px;
   height: 45px;
-  width: 117px;
+  width: 45px;
   background-color: white;
 }
 .input-group {
@@ -156,4 +156,26 @@ body {
 
 #red-text {
   color: #ed3545;
+}
+
+.form-select {
+  background-image: url("../images/icons/select.svg");
+  background-size: 10px 8px;
+}
+@media only screen and (max-width: 768px) {
+  .search-bars {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .search-bars {
+    width: 75%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .search-bars {
+    width: 60%;
+  }
 }
