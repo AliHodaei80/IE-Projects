@@ -123,6 +123,7 @@ body {
   background-color: #cccccc;
   border-width: 0;
   position: relative;
+  background-size: cover;
   top: -100px;
   height: 1000px;
 }
@@ -156,6 +157,3 @@ body {
 #red-text {
   color: #ed3545;
 }
-
-
-
