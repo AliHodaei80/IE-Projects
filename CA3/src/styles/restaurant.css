@@ -106,18 +106,7 @@ review-card {
   color: #ed3545;
   font-weight: 400;
 }
-.red-stylish-button {
-  background-color: #ed3545;
-  width: 160px;
-  border-style: solid;
-  border-width: 2px;
-  height: 40px;
-  position: relative;
-  padding: 1%;
-  color: white;
-  margin: 0 auto;
-  font-weight: 400;
-}
+
 .reserve-blob:focus {
   background-color: #ed3545;
   width: 160px;
