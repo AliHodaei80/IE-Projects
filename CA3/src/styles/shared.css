@@ -1,0 +1,28 @@
+.form-select {
+  background-image: url("../images/icons/select.svg");
+  background-size: 10px 8px;
+}
+.red-stylish-button {
+  background-color: #ed3545;
+  width: 160px;
+  border-style: solid;
+  border-width: 2px;
+  height: 40px;
+  position: relative;
+  padding: 1%;
+  color: white;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+#red-text {
+  color: #ed3545;
+}
+
+a:link {
+  color: #ed3545;
+}
+
+a:visited {
+  color: white;
+}
