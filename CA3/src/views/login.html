@@ -9,9 +9,8 @@
     <link href="../styles/colors.css" rel="stylesheet" type="text/css" />
     <link href="../styles/header.css" rel="stylesheet" type="text/css" />
     <link href="../styles/shared.css" rel="stylesheet" type="text/css" />
-    <link href="../styles/home.css" rel="stylesheet" type="text/css" />
-    <link href="../styles/search_result.css" rel="stylesheet" type="text/css" />
     <link href="../styles/footer.css" rel="stylesheet" type="text/css" />
+    <link href="../styles/login_signup.css" rel="stylesheet" type="text/css" />
 
     <title>Document</title>
   </head>
@@ -24,43 +23,33 @@
       >
     </header>
     <main class="flex-grow-1">
-      <div class="container align-middle position-relative">
-        <p class="h1 text-center mt-5 fw-bold">Login into Mizdooni</p>
-        <form class="container text-center position-absolute top-100">
-          <div class="form-group row mt-5">
-            <label for="inputPassword" class="col-sm-2 col-form-label"
-              >Username</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="inputUsername"
-                placeholder="Username"
-              />
-            </div>
+      <div class="wrapper">
+        <div class="logo">
+          <img src="../images/logo.png" alt="" />
+        </div>
+        <div class="text-center mt-4 name">LOGIN</div>
+        <form class="p-3 mt-3">
+          <div class="form-field d-flex align-items-center">
+            <input
+              type="text"
+              name="userName"
+              id="userName"
+              placeholder="Username"
+            />
           </div>
-          <div class="form-group row mt-2">
-            <label for="inputPassword" class="col-sm-2 col-form-label"
-              >Password</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="password"
-                class="form-control"
-                id="inputPassword"
-                placeholder="Password"
-              />
-            </div>
+          <div class="form-field d-flex align-items-center">
+            <input
+              type="password"
+              name="password"
+              id="pwd"
+              placeholder="Password"
+            />
           </div>
-          <div class="d-flex flex-column m-5">
-            <button class="red-stylish-button rounded-4 p-0 mt-1">Login</button>
-            <span class="text-muted p-1"
-              >Don't have an account? <a href="signup">Signup</a></span
-            >
-          </div>
+          <button class="btn mt-3">Login</button>
         </form>
-        <div></div>
+        <div class="text-center fs-6">
+          <a href="#">Forget password?</a> or <a href="#">Sign up</a>
+        </div>
       </div>
     </main>
 
