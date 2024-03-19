@@ -26,8 +26,6 @@ body {
 .btn {
   background-color: var(--red);
   border: var(--grey);
-  /* box-shadow: inset 5px 5px 5px var(--light-red),
-    inset -8px -8px 8px var(--white); */
 }
 .btn:hover {
   background-color: var(--brown);

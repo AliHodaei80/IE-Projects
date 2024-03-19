@@ -45,7 +45,6 @@ body {
   font-size: 18px;
   color: var(--grey);
   padding: 10px 15px 10px 10px;
-  /* border: 1px solid red; */
 }
 
 .wrapper .form-field {

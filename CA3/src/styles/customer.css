@@ -31,7 +31,6 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 18.97px;
-  /* color: var(--green); */
 }
 
 .table > tbody > tr.reservation-active > td.reservation-date,
@@ -61,6 +60,5 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 18.97px;
-  background-color: #fff6f7;
-  /* border-radius: 12; */
+  background-color: var(--white-red);
 }

@@ -10,8 +10,6 @@ table.table > thead > tr > td {
 }
 table.table > tbody > tr > th,
 table.table > tbody > tr > td {
-  /* background-color: var(---white); */
-
   border: none;
   border-top: 1px solid var(--light-grey2);
 }
@@ -22,13 +20,10 @@ table.table > tbody > tr > td {
 }
 
 .manager-operation {
-  /* width: 150px;
-  height: 45px; */
   font-size: 16px;
   color: var(--white);
   background: var(--red);
   font-weight: 400;
-  /* margin-right: 20px; */
 }
 
 .add {
@@ -40,7 +35,3 @@ table.table > tbody > tr > td {
   width: 104px;
   height: 35px;
 }
-
-/* .table > tbody > tr:first-child > td {
-  border-top: 0;
-} */
