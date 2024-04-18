@@ -1,0 +1,105 @@
+{
+  "restaurants": {
+    "Morshed": {
+      "id": 5,
+      "name": "Morshed",
+      "avgAmbianceScore": 0.0,
+      "avgOverallScore": 0.0,
+      "avgServiceScore": 0.0,
+      "avgFoodScore": 0.0,
+      "startTime": "09:00:00",
+      "endTime": "23:00:00",
+      "type": "Iranian",
+      "description": "Best Iranian food",
+      "managerUsername": "user2",
+      "address": {
+        "country": "Iran",
+        "city": "Tehran",
+        "street": "Saadat abad"
+      }
+    },
+    "Perperook": {
+      "id": 4,
+      "name": "Perperook",
+      "avgAmbianceScore": 0.0,
+      "avgOverallScore": 0.0,
+      "avgServiceScore": 0.0,
+      "avgFoodScore": 0.0,
+      "startTime": "08:00:00",
+      "endTime": "23:00:00",
+      "type": "Fast Food",
+      "description": "Open seven days a week",
+      "managerUsername": "user2",
+      "address": { "country": "Iran", "city": "Tehran", "street": "Gisha" }
+    },
+    "Orkideh": {
+      "id": 3,
+      "name": "Orkideh",
+      "avgAmbianceScore": 0.0,
+      "avgOverallScore": 0.0,
+      "avgServiceScore": 0.0,
+      "avgFoodScore": 0.0,
+      "startTime": "08:00:00",
+      "endTime": "23:00:00",
+      "type": "International",
+      "description": "Serve Iranian and fast foods",
+      "managerUsername": "user2",
+      "address": { "country": "Iran", "city": "Tehran", "street": "Argantin" }
+    },
+    "Atavich": {
+      "id": 2,
+      "name": "Atavich",
+      "avgAmbianceScore": 0.0,
+      "avgOverallScore": 0.0,
+      "avgServiceScore": 0.0,
+      "avgFoodScore": 0.0,
+      "startTime": "08:00:00",
+      "endTime": "23:00:00",
+      "type": "Fast Food",
+      "description": "Open seven days a week",
+      "managerUsername": "user4",
+      "address": {
+        "country": "Iran",
+        "city": "Tehran",
+        "street": "North Kargar"
+      }
+    },
+    "Baradaran": {
+      "id": 1,
+      "name": "Baradaran",
+      "avgAmbianceScore": 0.0,
+      "avgOverallScore": 0.0,
+      "avgServiceScore": 0.0,
+      "avgFoodScore": 0.0,
+      "startTime": "08:00:00",
+      "endTime": "23:00:00",
+      "type": "Iranian",
+      "description": "Best kebab serves",
+      "managerUsername": "user4",
+      "address": {
+        "country": "Iran",
+        "city": "Tabriz",
+        "street": "North Kargar"
+      }
+    },
+    "ShirazFood": {
+      "id": 6,
+      "name": "ShirazFood",
+      "avgAmbianceScore": 0.0,
+      "avgOverallScore": 0.0,
+      "avgServiceScore": 0.0,
+      "avgFoodScore": 0.0,
+      "startTime": "08:00:00",
+      "endTime": "23:00:00",
+      "type": "Iranian",
+      "description": "Open seven days a week",
+      "managerUsername": "user4",
+      "address": {
+        "country": "Iran",
+        "city": "Shiraz",
+        "street": "North od Shiraz"
+      }
+    }
+  },
+  "restaurantCount": 6
+}
