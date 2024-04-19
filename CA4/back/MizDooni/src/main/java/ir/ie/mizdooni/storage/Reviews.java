@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.storage;
 
+import ir.ie.mizdooni.commons.HttpRequestSender;
 import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.storage.commons.Container;
@@ -11,13 +12,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import ir.ie.mizdooni.utils.Parser;
 import org.apache.logging.log4j.core.util.ArrayUtils;
+
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
 
 public class Reviews extends Container<Reviews> {
     Map<String, Map<String, Review>> reviews; // first is restaurant second is user
 
     public Reviews() {
         reviews = new HashMap<>();
+    }
+
+    @Override
+    public Reviews loadFromUrl(String urlPath) {
+        String response = HttpRequestSender.sendGetRequest(urlPath);
+        List<Map<String, Object>> reviewsList = Parser.parseStringToJsonArray(response);
+        Reviews reviewsObject = new Reviews();
+        for (var reviewMap : reviewsList) {
+            reviewsObject.addReview(
+                    (String) reviewMap.get(RESTAURANT_NAME_KEY),
+                    (String) reviewMap.get(USERNAME_KEY),
+                    (Double) reviewMap.get(AMBIANCE_RATE_KEY),
+                    (Double) reviewMap.get(OVERALL_RATE_KEY),
+                    (Double) reviewMap.get(SERVICE_RATE_KEY),
+                    (Double) reviewMap.get(FOOD_RATE_KEY),
+                    (String) reviewMap.get(COMMENT_KEY)
+            );
+        }
+        return reviewsObject;
     }
 
     public Review addReview(

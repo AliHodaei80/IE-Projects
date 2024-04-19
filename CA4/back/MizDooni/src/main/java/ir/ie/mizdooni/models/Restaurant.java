@@ -34,8 +34,11 @@ public class Restaurant {
     String managerUsername;
     @Expose()
     Map<String, String> address;
+    @Expose()
+    String imageUrl;
 
-    public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description, String managerUsername, Map<String, String> address, Long id) {
+    public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,
+                      String managerUsername, Map<String, String> address, String imageUrl, Long id) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -44,6 +47,7 @@ public class Restaurant {
         this.managerUsername = managerUsername;
         this.address = address;
         this.id = id;
+        this.imageUrl = imageUrl;
         this.avgOverallScore = 0.0;
         this.avgServiceScore = 0.0;
         this.avgFoodScore = 0.0;

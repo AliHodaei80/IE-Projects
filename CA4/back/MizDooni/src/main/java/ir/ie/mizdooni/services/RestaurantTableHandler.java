@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.services; 
 
+import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.UserRole;
@@ -20,7 +21,7 @@ public class RestaurantTableHandler {
     private RestaurantTableHandler() {
         restaurantsHandler = RestaurantHandler.getInstance();
         userHandler = UserHandler.getInstance();
-        restaurantTables = new RestaurantTables().loadFromFile(Locations.RESTAURANT_TABLES_LOCATION,RestaurantTables.class);
+        restaurantTables = new RestaurantTables().loadFromUrl(DataBaseUrlPath.RESTAURANT_TABLES_DATABASE_URL);
     }
 
     public void addRestaurantTable(String restName, Long tableNo, int seatsNo, String managerUsername)

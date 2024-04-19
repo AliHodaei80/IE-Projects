@@ -73,7 +73,8 @@ public class MizDooniController {
                     (String) data.get(END_TIME_KEY),
                     (String) data.get(MANAGER_USERNAME_KEY),
                     (String) data.get(DESCRIPTION_KEY),
-                    (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY));
+                    (Map<String, String>) data.get(RESTAURANT_ADDRESS_KEY),
+                    (String) data.get(RESTAURANT_IMAGE_URL_KEY));
             return new Response(true, RESTAURANT_ADDED_SUCCESSFULLY);
         } catch (
                 InvalidUserRole | RestaurantManagerNotFound | RestaurentExists e) {

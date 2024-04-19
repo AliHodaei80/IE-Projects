@@ -1,4 +1,5 @@
-package ir.ie.mizdooni.storage.commons; 
+package ir.ie.mizdooni.storage.commons;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ir.ie.mizdooni.utils.DateTimeSerializer;
@@ -31,5 +32,9 @@ public abstract class Container<T> {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public T loadFromUrl(String urlPath) {
+        return null;
     }
 }

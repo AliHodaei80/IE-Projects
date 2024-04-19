@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.services;
 
+import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
@@ -13,12 +14,10 @@ import java.util.Map;
 public class UserHandler {
     private static UserHandler userHandler;
     private final Users users;
-    private final List<String> usersRole;
     private User currentUser;
 
     private UserHandler() {
-        users = new Users().loadFromFile(Locations.USERS_LOCATION, Users.class);
-        usersRole = Arrays.asList("manager", "client");
+        users = new Users().loadFromUrl(DataBaseUrlPath.USERS_DATABASE_URL);
     }
 
     public void addUser(String username, String email, String role, String password, Map<String, String> address)

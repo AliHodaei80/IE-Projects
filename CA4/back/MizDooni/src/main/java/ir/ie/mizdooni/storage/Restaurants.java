@@ -1,11 +1,14 @@
 package ir.ie.mizdooni.storage;
 
+import ir.ie.mizdooni.commons.HttpRequestSender;
 import ir.ie.mizdooni.definitions.Locations;
+import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.services.UserHandler;
 import ir.ie.mizdooni.storage.commons.Container;
+import ir.ie.mizdooni.utils.Parser;
 
 import java.sql.Date;
 import java.time.LocalTime;
@@ -14,6 +17,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.List;
 
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
+
 public class Restaurants extends Container<Restaurants> {
     Map<String, Restaurant> restaurants;
     long restaurantCount;
@@ -21,6 +26,25 @@ public class Restaurants extends Container<Restaurants> {
     public Restaurants() {
         restaurants = new HashMap<>();
         restaurantCount = 0;
+    }
+
+    @Override
+    public Restaurants loadFromUrl(String urlPath) {
+        String response = HttpRequestSender.sendGetRequest(urlPath);
+        List<Map<String, Object>> restaurantsList = Parser.parseStringToJsonArray(response);
+        Restaurants restaurantsObject = new Restaurants();
+        for (var restaurantMap : restaurantsList) {
+            restaurantsObject.addRestaurant(
+                    (String) restaurantMap.get(ADD_RESTAURANT_NAME_KEY),
+                    (String) restaurantMap.get(RESTAURANT_TYPE_KEY),
+                    Parser.parseTime((String) restaurantMap.get(START_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
+                    Parser.parseTime((String) restaurantMap.get(END_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
+                    (String) restaurantMap.get(DESCRIPTION_KEY),
+                    (String) restaurantMap.get(MANAGER_USERNAME_KEY),
+                    (Map<String, String>) restaurantMap.get(RESTAURANT_ADDRESS_KEY),
+                    (String) restaurantMap.get(RESTAURANT_IMAGE_URL_KEY));
+        }
+        return restaurantsObject;
     }
 
     public boolean typeSearchFilter(Restaurant rest, String type) {
@@ -76,9 +100,9 @@ public class Restaurants extends Container<Restaurants> {
     }
 
     public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
-                              String managerUsername, Map<String, String> address) {
+                              String managerUsername, Map<String, String> address, String imageUrl) {
         restaurantCount++;
-        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address, restaurantCount));
+        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address, imageUrl, restaurantCount));
         this.saveToFile(Locations.RESTAURANTS_LOCATION);
     }
 

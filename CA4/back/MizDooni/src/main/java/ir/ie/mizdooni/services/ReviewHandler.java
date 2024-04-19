@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.services;
 
+import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
@@ -22,7 +23,7 @@ public class ReviewHandler {
     private ReviewHandler() {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
-        reviews = new Reviews().loadFromFile(Locations.REVIEWS_LOCATION, Reviews.class);
+        reviews = new Reviews().loadFromUrl(DataBaseUrlPath.REVIEWS_DATABASE_URL);
     }
 
     public static ReviewHandler getInstance() {

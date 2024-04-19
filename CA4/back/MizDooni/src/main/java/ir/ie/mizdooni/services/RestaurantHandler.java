@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
 
+import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.exceptions.*;
@@ -15,6 +16,7 @@ import ir.ie.mizdooni.storage.Restaurants;
 import java.util.List;
 import ir.ie.mizdooni.utils.Parser;
 
+
 public class RestaurantHandler {
     private static RestaurantHandler restaurantHandler;
     private final UserHandler userHandler;
@@ -22,7 +24,7 @@ public class RestaurantHandler {
 
     private RestaurantHandler() {
         userHandler = UserHandler.getInstance();
-        restaurants = new Restaurants().loadFromFile(Locations.RESTAURANTS_LOCATION, Restaurants.class);
+        restaurants = new Restaurants().loadFromUrl(DataBaseUrlPath.RESTAURANT_DATABASE_URL);
     }
 
     public boolean isManager(String managerUsername) {
@@ -64,7 +66,7 @@ public class RestaurantHandler {
     }
 
     public void addRestaurant(String restName, String type, String startTime, String endTime, String managerUsername,
-            String description, Map<String, String> address)
+            String description, Map<String, String> address, String imageUrl)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurentExists {
 
         if (!userHandler.doesUserExist(managerUsername)) {
@@ -77,7 +79,7 @@ public class RestaurantHandler {
             throw new RestaurentExists();
         }
         restaurants.addRestaurant(restName, type, Parser.parseTime(startTime, TimeFormats.RESTAURANT_TIME_FORMAT),
-                Parser.parseTime(endTime, TimeFormats.RESTAURANT_TIME_FORMAT), description, managerUsername, address);
+                Parser.parseTime(endTime, TimeFormats.RESTAURANT_TIME_FORMAT), description, managerUsername, address, imageUrl);
     }
 
     public boolean dateIsInRestaurantRange(String restName, LocalDateTime dateTime) throws RestaurantNotFound {
