@@ -6,4 +6,8 @@ public class Successes {
     public final static String RESTAURANT_ADDED_SUCCESSFULLY = "Restaurant added successfully.";
     public final static String USER_ADDED_SUCCESSFULLY = "User added successfully.";
     public final static String RESERVATION_CANCELLED_SUCCESSFULLY = "Reservation cancelled successfully.";
+    public final static String USER_LOGIN_SUCCESSFULLY = "User login successfully.";
+    public final static String USER_LOGOUT_SUCCESSFULLY = "User logout successfully.";
+
+
 }

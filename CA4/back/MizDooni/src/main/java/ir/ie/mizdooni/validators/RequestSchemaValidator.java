@@ -23,6 +23,7 @@ import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 public class RequestSchemaValidator {
     final static Set<String> userAdditionKeys = Set.of(USERNAME_KEY, PASSWORD_KEY, USER_ROLE_KEY, EMAIL_KEY,
             USER_ADDRESS_KEY);
+    final static Set<String> userLoginKeys = Set.of(USERNAME_KEY, PASSWORD_KEY);
     final static Set<String> restAdditionKeys = Set.of(ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
             START_TIME_KEY, END_TIME_KEY, RESTAURANT_ADDRESS_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY);
     final static Set<String> tableAdditionKeys = Set.of(TABLE_NUM_KEY, RESTAURANT_NAME_KEY,
@@ -120,6 +121,11 @@ public class RequestSchemaValidator {
         checkKeyInclusion((Map<String, Object>) (data.get(USER_ADDRESS_KEY)), userAdditionAddressKeys);
     }
 
+    public static void validateLoginUser(Map<String, Object> data)
+            throws InvalidEmailFormat, InvalidRequestFormat, InvalidRequestTypeFormat {
+        checkKeyInclusion(data, userLoginKeys);
+    }
+
     public static void validateAddRest(Map<String, Object> data) throws InvalidTimeFormat, InvalidRequestFormat, InvalidRequestTypeFormat {
         checkKeyInclusion(data, restAdditionKeys);
         checkKeyInclusion((Map<String, Object>) (data.get(RESTAURANT_ADDRESS_KEY)), restAdditionAddressKeys);
@@ -170,6 +176,8 @@ public class RequestSchemaValidator {
         Double number;
         if (data.get(field) instanceof String) {
             number = Double.parseDouble((String) data.get(field));
+        } else if (data.get(field) instanceof Integer) {
+            number = ((Integer) data.get(field)).doubleValue();
         } else {
             number = (Double) data.get(field);
         }

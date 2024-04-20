@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalTime;
@@ -66,6 +67,7 @@ public class Restaurant {
         return startTime;
     }
 
+    @JsonIgnore
     public String getStartTimeString() {
         return DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT).format(startTime);
     }
@@ -78,6 +80,7 @@ public class Restaurant {
         return endTime;
     }
 
+    @JsonIgnore
     public String getEndTimeString() {
         return DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT).format(endTime);
     }
@@ -122,18 +125,22 @@ public class Restaurant {
         return address;
     }
 
+    @JsonIgnore
     public String getAddressString() {
         return address.get(STREET_KEY) + ", " + address.get(CITY_KEY) + ", " + address.get(COUNTRY_KEY);
     }
 
+    @JsonIgnore
     public String getCity() {
         return address.get("city");
     }
 
+    @JsonIgnore
     public String getCountry() {
         return address.get("country");
     }
 
+    @JsonIgnore
     public String getActivityPeriod() {
         return startTime.toString() + "-" + endTime.toString();
     }
