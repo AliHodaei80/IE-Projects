@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 import java.util.Scanner;
 @SpringBootApplication
-public class MizDooniApplication {
+public class   MizDooniApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MizDooniApplication.class, args);
