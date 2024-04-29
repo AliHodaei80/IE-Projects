@@ -1,0 +1,64 @@
+body {
+  background-color: var(--cream);
+  font-family: "SplineSans", serif;
+  min-height: 100vh;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td {
+  background-color: var(--white);
+  border: none;
+}
+
+.table > tbody > tr > td {
+  border-top: 1px solid var(--light-white);
+}
+.table > tbody > tr:first-child > td {
+  border-top: 0;
+}
+
+.table > thead.reservations-header > tr > th {
+  background-color: var(--light-grey);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 23.07px;
+  color: var(--black);
+}
+
+.table > tbody > tr > td {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.97px;
+}
+
+.table > tbody > tr.reservation-active > td.reservation-date,
+.table > tbody > tr.reservation-active > td.table-id,
+.table > tbody > tr.reservation-active > td.seats-num {
+  color: var(--green);
+}
+.table > tbody > tr.reservation-done > td.reservation-date,
+.table > tbody > tr.reservation-done > td.table-id,
+.table > tbody > tr.reservation-done > td.seats-num {
+  color: var(--light-grey2);
+}
+
+.table > tbody > tr > td.reservation-date,
+.table > tbody > tr > td.restaurant-link > a,
+.table > tbody > tr > td.operation > a {
+  color: var(--red);
+  text-decoration: none;
+}
+
+.mail-address {
+  color: var(--red);
+  text-decoration: none;
+}
+
+.customer-info {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.97px;
+  background-color: var(--white-red);
+}

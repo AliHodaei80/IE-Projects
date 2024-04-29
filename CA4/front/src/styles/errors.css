@@ -1,0 +1,32 @@
+body {
+  background-color: var(--cream);
+  font-family: Arial, sans-serif;
+}
+
+.error-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.error-heading {
+  font-size: 72px;
+  color: var(--red);
+}
+
+.error-message {
+  font-size: 24px;
+  color: var(--grey);
+  margin-top: 20px;
+}
+
+.error-link {
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: var(--red);
+  border: var(--grey);
+}
+.btn:hover {
+  background-color: var(--brown);
+}
