@@ -48,6 +48,7 @@ public class RestaurantRestController {
 
     // addRestaurant
     @RequestMapping(value = "/restaurants/add", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> addRestaurantHandler(@RequestBody Map<String, Object> data) {
         try {
             validateAddRest(data);
@@ -75,6 +76,7 @@ public class RestaurantRestController {
 
     // RestaurantsPageController GET
     @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> getRestaurantsHandler() {
         Map<String, Object> outputData = new HashMap<>();
         List<Restaurant> restaurantList = restaurantHandler.getRestaurants().getRestaurantList(false);
@@ -85,6 +87,7 @@ public class RestaurantRestController {
 
     // RestaurantsPageController post
     @RequestMapping(value = "/restaurants/search", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> searchRestaurantHandler(@RequestBody Map<String, Object> data) {
         String action = (String) data.get(ACTION_FIELD);
         String search = (String) data.get(SEARCH_FIELD);
@@ -104,6 +107,7 @@ public class RestaurantRestController {
 
     // RestaurantPageController POST
     @RequestMapping(value = "/restaurants/{id}/feedback", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> feedbackRestaurantHandler(@PathVariable String id,
                                                               @RequestBody Map<String, Object> data) {
         try {
@@ -131,6 +135,7 @@ public class RestaurantRestController {
 
     // RestaurantPageController POST
     @RequestMapping(value = "/restaurants/{id}/reserve", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> reserveRestaurantHandler(@PathVariable String id,
                                                              @RequestBody Map<String, Object> data) {
         try {
@@ -171,6 +176,7 @@ public class RestaurantRestController {
 
     // RestaurantPageController GET
     @RequestMapping(value = "/restaurants/{id}", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> getRestaurantHandler(@PathVariable String id) {
         Map<String, Object> outputData = new HashMap<>();
         try {

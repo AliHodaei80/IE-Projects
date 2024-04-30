@@ -1,5 +1,5 @@
 package ir.ie.mizdooni.controllers;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.services.ReservationHandler;
@@ -37,6 +37,7 @@ public class TableController {
     }
 
     @RequestMapping(value = "/tables/add", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> addTableHandler(@RequestBody Map<String, Object> data) {
         try {
             validateAddTable(data);

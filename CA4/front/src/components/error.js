@@ -17,11 +17,11 @@ function Error() {
   return (
     <main>
       <Header />
-      <div class="container">
-        <div class="error-container">
-          <h1 class="error-heading">404</h1>
-          <p class="error-message">Error Page</p>
-          <a href="#" class="btn btn-primary error-link">
+      <div className="container">
+        <div className="error-container">
+          <h1 className="error-heading">404</h1>
+          <p className="error-message">Error Page</p>
+          <a href="#" className="btn btn-primary error-link">
             Go back to Home
           </a>
         </div>

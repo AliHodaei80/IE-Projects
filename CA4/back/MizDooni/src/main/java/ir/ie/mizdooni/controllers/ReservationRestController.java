@@ -38,6 +38,7 @@ public class ReservationRestController {
     }
 
     @RequestMapping(value = "/reservations/{username}", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> getReservationHandler(@PathVariable String username) {
         Map<String, Object> outputData = new HashMap<>();
         try {
@@ -56,6 +57,7 @@ public class ReservationRestController {
     }
 
     @RequestMapping(value = "/reservations/{id}/cancel", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> cancelReservationHandler(@PathVariable String id,
                                                              @RequestBody Map<String, Object> data) {
         try {

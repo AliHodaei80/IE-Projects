@@ -1,5 +1,5 @@
 package ir.ie.mizdooni.controllers;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.services.UserHandler;
@@ -34,6 +34,7 @@ public class LoginRestController {
 
     // addUser
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> signUpHandler(@RequestBody Map<String, Object> data) {
         try {
             validateAddUser(data);
@@ -53,6 +54,7 @@ public class LoginRestController {
 
     // LoginPageController POST
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> loginHandler(@RequestBody Map<String, Object> data) {
         try {
             validateLoginUser(data);
@@ -68,6 +70,7 @@ public class LoginRestController {
 
     // LogoutPageController POST
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> logoutHandler() {
         userHandler.logoutUser();
         ;
