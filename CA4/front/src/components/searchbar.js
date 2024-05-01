@@ -1,16 +1,5 @@
 import React from "react";
-import "../styles/colors.css";
-import "../styles/header.css";
-import "../styles/bootstrap.min.css";
-import "../styles/bootstrap.min.css"
-import "../styles/normalize.css"
-import "../styles/font.css"
-import "../styles/colors.css"
-import "../styles/header.css"
-import "../styles/shared.css"
-import "../styles/home.css" 
-import "../styles/search_result.css"
-import "../styles/footer.css"
+import "../styles/home.css";
 
 function SearchBarForm() {
   return (

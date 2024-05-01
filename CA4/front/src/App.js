@@ -4,6 +4,7 @@ import Home from "./Home";
 import Error from "./components/error";
 import Login from "./components/login";
 import Signup from "./components/signup";
+import ManagerRestaurtns from "./manager_restaurants";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/error" element={<Error />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/manager-restaurants" element={<ManagerRestaurtns />} />
       </Routes>
     </Router>
   );
