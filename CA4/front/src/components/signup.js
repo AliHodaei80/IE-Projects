@@ -3,17 +3,22 @@ import axios from "axios";
 import Header from "./header.js";
 import Footer from "./footer.js";
 import logo from "../images/logo.png";
+import { useNavigate } from "react-router-dom";
+const signup_path = "signup";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     role: "client",
     username: "",
     password: "",
     email: "",
-    address: {
-      country: "",
-      city: "",
-    },
+    country: "",
+    city: "",
+  });
+
+  const [responseData, setResult] = useState({
+    error_message: "",
   });
 
   const handleChange = (e) => {
@@ -26,14 +31,24 @@ const Signup = () => {
 
   const sendSignup = async () => {
     console.log("Sending signup request", userData);
+    const sendingUserData = {
+      ...userData,
+      address: { city: userData.city, country: userData.country },
+    };
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8080/signup",
-        userData
+        "http://127.0.0.1:8080/" + signup_path,
+        sendingUserData
       );
-      console.log(response.data);
+
+      if (response.data.success) {
+        navigate("home");
+      } else {
+        setResult({ error_message: response.data.data });
+      }
     } catch (error) {
       console.error("Error sending signup request:", error);
+      setResult({ error_message: error.data.data });
     }
   };
 
@@ -69,33 +84,33 @@ const Signup = () => {
                 onChange={handleChange}
               />
             </div>
-            <div class="d-flex user-type align-items-center">
-              <p class="mb-0 me-4 gender-title">Role:</p>
+            <div className="d-flex user-type align-items-center">
+              <p className="mb-0 me-4 gender-title">Role:</p>
 
-              <div class="form-check form-check-inline mb-0 me-4">
+              <div className="form-check form-check-inline mb-0 me-4">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="role"
                   id="customer-type"
-                  value="customer"
+                  value="client"
                   onChange={handleChange}
                 />
-                <label class="form-check-label" for="customer-type">
-                  Customer
+                <label className="form-check-label" htmlFor="customer-type">
+                  Client
                 </label>
               </div>
 
-              <div class="form-check form-check-inline mb-0 me-4">
+              <div className="form-check form-check-inline mb-0 me-4">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="role"
                   id="manager-type"
                   value="manager"
                   onChange={handleChange}
                 />
-                <label class="form-check-label" for="manager-type">
+                <label className="form-check-label" htmlFor="manager-type">
                   Manager
                 </label>
               </div>
@@ -103,20 +118,20 @@ const Signup = () => {
             <div className="form-field d-flex align-items-center">
               <input
                 type="text"
-                name="address.country"
+                name="country"
                 id="country"
                 placeholder="Country"
-                value={userData.address.country}
+                value={userData.country}
                 onChange={handleChange}
               />
             </div>
             <div className="form-field d-flex align-items-center">
               <input
                 type="text"
-                name="address.city"
+                name="city"
                 id="city"
                 placeholder="City"
-                value={userData.address.city}
+                value={userData.city}
                 onChange={handleChange}
               />
             </div>
@@ -134,8 +149,16 @@ const Signup = () => {
               Signup
             </button>
           </form>
+          <div className="text-center fs-6"></div>
           <div className="text-center fs-6">
             Have already an account? <a href="#">Login</a>
+          </div>
+          <div>
+            {responseData.error_message && (
+              <div className="text-center text-danger">
+                {responseData.error_message}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -145,3 +168,4 @@ const Signup = () => {
 };
 
 export default Signup;
+ 
