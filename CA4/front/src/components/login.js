@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./header.js";
 import Footer from "./footer.js";
 import logo from "../images/logo.png";
-import "../styles/login_signup.css";
+// import "../styles/login_signup.css";
 export default function Login() {
   return (
     <main>
