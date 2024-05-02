@@ -115,8 +115,7 @@ export default function AuthPage() {
                 >
                   Login
                 </button>
-                <ToastContainer />
-              </div>
+                </div>
             </div>
           ) : (
             <div className="container">
