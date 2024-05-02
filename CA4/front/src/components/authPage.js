@@ -223,7 +223,6 @@ export default function AuthPage() {
                 >
                   Signup
                 </button>
-                <ToastContainer />
               </div>
             </div>
           )}
