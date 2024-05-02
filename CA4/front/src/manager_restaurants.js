@@ -10,7 +10,7 @@ import ManagerRestaurantsTable from "./components/manager_restaurant_table.js";
 // import "./styles/font.css";
 // import "./styles/footer.css";
 
-export default function ManagerRestaurtns() {
+export default function ManagerRestaurnts() {
   return (
     <div>
       <Header />
