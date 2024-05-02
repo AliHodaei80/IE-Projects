@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Header from "./header.js";
 import Footer from "./footer.js";
-import logo from "../images/logo.png";
 import "../styles/login_signup.css";
 export default function Login() {
   const [showLogin, setShowLogin] = useState(true);
@@ -18,14 +17,14 @@ export default function Login() {
         <div className="w-50 h-50 align-self-center">
           <div className="d-flex justify-content-between">
             <button
-              className="btn btn-outline-secondary w-100"
+              className="red-btn btn btn-outline-secondary w-100"
               type="button"
               onClick={() => setShowLogin(false)}
             >
               Signup
             </button>
             <button
-              className="btn btn-outline-secondary w-100"
+              className="red-btn btn btn-outline-secondary w-100"
               type="button"
               onClick={() => setShowLogin(true)}
             >
@@ -145,12 +144,21 @@ export default function Login() {
                     </div>
                   </div>
                 </div>
-                <button
-                  className="btn btn-outline-secondary w-75"
-                  type="button"
-                >
-                  Login
-                </button>
+                {showLogin ? (
+                  <button
+                    className="red-btn btn  btn-outline-secondary w-75"
+                    type="button"
+                  >
+                    Login
+                  </button>
+                ) : (
+                  <button
+                    className="red-btn btn btn-outline-secondary w-75"
+                    type="button"
+                  >
+                    Signup
+                  </button>
+                )}
               </div>
             </div>
           )}
