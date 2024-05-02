@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./header.js";
 import Footer from "./footer.js";
 import "../styles/login_signup.css";
@@ -22,16 +22,16 @@ export default function AuthPage() {
   };
   const sendToast = () => {
     const options = {
-      position: toast.POSITION.TOP_LEFT,
-      autoClose: 8000,
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
     };
-
+    console.log("Sending toast");
     if (AxiosResult.success) {
-      toast.success("Success Notification!", {
+      toast.success("Success!", {
         ...options,
         className: "toast-success",
         bodyClassName: "toast-success-body",
@@ -47,6 +47,11 @@ export default function AuthPage() {
     }
   };
 
+  useEffect(() => {
+    if (AxiosResult.hasOwnProperty("success")) {
+      sendToast();
+    }
+  }, [AxiosResult]);
   return (
     <main>
       <header>
@@ -102,20 +107,20 @@ export default function AuthPage() {
                 </div>
                 <button
                   className="btn btn-outline-secondary w-75 mt-4"
-                  onClick={async () => {
+                  onClick={() => {
                     console.log("Printing Error message ", AxiosResult);
-                    const result = await postData(
+                    postData(
                       base_path + login_path,
                       userData,
-                      setResult
+                      setResult,
+                      sendToast
                     );
-                    sendToast();
                   }}
                   type="button"
                 >
                   Login
                 </button>
-                </div>
+              </div>
             </div>
           ) : (
             <div className="container">
@@ -168,7 +173,7 @@ export default function AuthPage() {
                   <div className="mt-4 w-100">
                     <label className="form-label">Password</label>
                     <input
-                      type="text"
+                      type="password"
                       className="form-control rounded-2"
                       name="password"
                       onChange={handleChange}
@@ -206,18 +211,18 @@ export default function AuthPage() {
                   type="button"
                   id="signup_button"
                   className="btn btn-outline-secondary w-75 mt-4"
-                  onClick={async () => {
+                  onClick={() => {
                     console.log("Printing Error message ", AxiosResult);
                     const newUserData = userData;
                     newUserData.address = {};
                     newUserData.address.city = userData.city;
                     newUserData.address.country = userData.country;
-                    await postData(
+                    postData(
                       base_path + signup_path,
                       newUserData,
-                      setResult
+                      setResult,
+                      sendToast
                     );
-                    sendToast();
                   }}
                 >
                   Signup
