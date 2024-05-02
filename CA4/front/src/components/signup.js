@@ -4,6 +4,8 @@ import Header from "./header.js";
 import Footer from "./footer.js";
 import logo from "../images/logo.png";
 import { useNavigate } from "react-router-dom";
+import "../styles/login_signup.css";
+
 const signup_path = "signup";
 
 const Signup = () => {
