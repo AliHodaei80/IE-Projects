@@ -1,6 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import fetchData from "../utils/request_utils.js";
+import postData from "../utils/request_utils.js";
 import "bootstrap/dist/js/bootstrap";
+import "bootstrap/dist/js/bootstrap.js";
+import "bootstrap/dist/js/bootstrap.bundle.js";
+import "bootstrap/dist/js/bootstrap.esm.js";
+
 import "../styles/add_rest_modal.css";
 const round_times = [
   "00:00",
@@ -28,6 +34,7 @@ const round_times = [
   "22:00",
   "23:00",
 ];
+const managerUsername = "ali";
 
 function AddRestaurantModal() {
   const [name, setName] = useState("");
@@ -38,9 +45,23 @@ function AddRestaurantModal() {
   const [street, setStreet] = useState("");
   const [startTime, setStartTime] = useState(round_times.at(0));
   const [endTime, setEndTime] = useState(round_times.at(0));
+  const [subMitResult, setSubMitResult] = useState({});
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const restaurantBody = {
+      name: name,
+      type: type,
+      description: description,
+      address: {
+        country: country,
+        city: city,
+        street: street,
+      },
+      startTime: startTime,
+      endTime: endTime,
+      managerUsername: managerUsername,
+    };
     console.log("Name:", name);
     console.log("type:", type);
     console.log("description:", description);
@@ -49,6 +70,15 @@ function AddRestaurantModal() {
     console.log("street:", street);
     console.log("startTime:", startTime);
     console.log("endTime:", endTime);
+    postData(
+      "http://127.0.0.1:8080/restaurants/add",
+      restaurantBody,
+      setSubMitResult
+    );
+    console.log(subMitResult);
+    console.log(subMitResult.success);
+    // const myModal = bootstrap.Modal(document.getElementById("myModal"));
+    // myModal.hide();
   };
   let content = (
     <div

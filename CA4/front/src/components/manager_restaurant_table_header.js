@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/manager_restaurants.css";
 
-function ManagerRestaurantsTableHeader(props) {
+function ManagerRestaurantsTableHeader() {
   let content = (
     <thead>
       <tr>

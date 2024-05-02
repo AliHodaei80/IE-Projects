@@ -64,7 +64,6 @@ let restaurants = [
 ];
 
 function ManagerRestaurantsTable() {
-  const [addRestModalShow, setAddRestModalShow] = React.useState(false);
   let restaurantList = restaurants.map((restaurant) => (
     <tr key={restaurant.id}>
       <td className="restaurant-name">{restaurant.name}</td>
@@ -81,15 +80,10 @@ function ManagerRestaurantsTable() {
   let content = (
     <div className="table-responsive mx-auto w-100 mt-4 table-container p-4">
       <table className="table align-middle">
-        <ManagerRestaurantsTableHeader
-          onClick={() => setAddRestModalShow(true)}
-        />
+        <ManagerRestaurantsTableHeader />
         <tbody>{restaurantList}</tbody>
       </table>
-      <AddRestaurantModal
-        show={addRestModalShow}
-        onHide={() => setAddRestModalShow(false)}
-      />
+      <AddRestaurantModal />
     </div>
   );
   return content;
