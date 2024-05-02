@@ -7,6 +7,7 @@ import "../styles/colors.css";
 // import "../styles/shared.css";
 import "../styles/header.css";
 import logo from "../images/logo.png";
+
 function Header() {
   return (
     <header className="d-flex sticky-top container-fluid" id="header">
@@ -14,10 +15,13 @@ function Header() {
       <span className="header-text d-none d-sm-block">
         Reserve Table From Anywhere!
       </span>
-      <div className="welcome-user ms-auto">Welcome, Admin!</div>
-      <button className="reserve-button rounded-3 border-0">
-        Reserve Now!
-      </button>
+      {/* <div className="welcome-user ms-auto">Welcome, Admin!</div> */}
+      {/* Fix this with context providers */}
+      {/* {page_context.page == "login_signup" ? (
+        <button className="reserve-button rounded-3 border-0">
+          Reserve Now!
+        </button>
+      ) : null} */}
     </header>
   );
 }

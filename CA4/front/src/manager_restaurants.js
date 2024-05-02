@@ -8,7 +8,7 @@ import Footer from "./components/footer.js";
 // import "./styles/font.css";
 // import "./styles/footer.css";
 
-export default function ManagerRestaurtns() {
+export default function ManagerRestaurnts() {
   return (
     <div>
       <Header />

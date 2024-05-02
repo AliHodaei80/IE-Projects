@@ -7,11 +7,11 @@ const base_path = "http://127.0.0.1:8080/";
 const login_path = "login";
 const signup_path = "signup";
 
-export default function Login() {
+//TODO fix styling
+export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const [userData, setUserData] = useState({});
   const [errorMessage, setErrorMessage] = useState({});
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserData((prevState) => ({
