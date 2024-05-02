@@ -1,0 +1,41 @@
+#addRestModal .modal-content {
+  background-color: var(--white);
+  font-family: "SplineSans", serif;
+}
+
+#addRestModal input,
+#addRestModal textarea,
+#addRestModal select {
+  background-color: var(--light-grey);
+  border: none;
+}
+
+#addRestModal input,
+#addRestModal select {
+  width: 150px;
+  height: 45px;
+}
+
+#addRestModal .form-select {
+  background-image: url("../images/icons/select.svg");
+  background-size: 10px 8px;
+  background-repeat: no-repeat;
+}
+
+#addRestModal .modal-header {
+  color: var(--black);
+  font-weight: 500;
+}
+
+.btn-close {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--black);
+}
+
+#addRestModal .submit-butoon {
+  color: var(--white);
+  background: var(--red);
+  border: none;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "./components/header.js";
 import Footer from "./components/footer.js";
+import UserMailInfo from "./components/user_mail_info.js";
+import ManagerRestaurantsTable from "./components/manager_restaurant_table.js";
 
 // import "./styles/normalize.css";
 // import "./styles/bootstrap.min.css";
@@ -13,10 +15,9 @@ export default function ManagerRestaurtns() {
     <div>
       <Header />
       <main className="flex-grow-1">
-        <div className="container-s w-100 text-center">
-          <div className="w-100">
-            <div className="container"></div>
-          </div>
+        <div className="p-3 container">
+          <UserMailInfo />
+          <ManagerRestaurantsTable />
         </div>
       </main>
 
