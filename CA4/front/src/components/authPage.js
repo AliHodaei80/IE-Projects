@@ -11,7 +11,7 @@ const signup_path = "signup";
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const [userData, setUserData] = useState({});
-  const [errorMessage, setErrorMessage] = useState({});
+  const [AxiosResult, setResult] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserData((prevState) => ({
@@ -75,8 +75,8 @@ export default function AuthPage() {
                 <button
                   className="btn btn-outline-secondary w-75 mt-4"
                   onClick={() => {
-                    console.log("Printing Error message ", errorMessage);
-                    setErrorMessage(postData(base_path + login_path, userData));
+                    console.log("Printing Error message ", AxiosResult);
+                    postData(base_path + login_path, userData,setResult);
                   }}
                   type="button"
                 >
@@ -174,14 +174,12 @@ export default function AuthPage() {
                   id="signup_button"
                   className="btn btn-outline-secondary w-75 mt-4"
                   onClick={() => {
-                    console.log("Printing Error message ", errorMessage);
+                    console.log("Printing Error message ", AxiosResult);
                     const newUserData = userData;
                     newUserData.address = {};
                     newUserData.address.city = userData.city;
                     newUserData.address.country = userData.country;
-                    setErrorMessage(
-                      postData(base_path + signup_path, newUserData)
-                    );
+                    postData(base_path + signup_path, newUserData,setResult)
                   }}
                 >
                   Signup
