@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Header from "./header.js";
 import Footer from "./footer.js";
 import "../styles/login_signup.css";
+import fetchData from "../utils/request_utils.jsx";
+
 export default function Login() {
   const [showLogin, setShowLogin] = useState(true);
 
@@ -17,14 +19,14 @@ export default function Login() {
         <div className="w-50 h-50 align-self-center">
           <div className="d-flex justify-content-between">
             <button
-              className="red-btn btn btn-outline-secondary w-100"
+              className="btn btn-outline-secondary w-100"
               type="button"
               onClick={() => setShowLogin(false)}
             >
               Signup
             </button>
             <button
-              className="red-btn btn btn-outline-secondary w-100"
+              className="btn btn-outline-secondary w-100"
               type="button"
               onClick={() => setShowLogin(true)}
             >
@@ -146,14 +148,14 @@ export default function Login() {
                 </div>
                 {showLogin ? (
                   <button
-                    className="red-btn btn  btn-outline-secondary w-75"
+                    className="btn  btn-outline-secondary w-75"
                     type="button"
                   >
                     Login
                   </button>
                 ) : (
                   <button
-                    className="red-btn btn btn-outline-secondary w-75"
+                    className="btn btn-outline-secondary w-75"
                     type="button"
                   >
                     Signup
