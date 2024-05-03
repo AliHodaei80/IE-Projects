@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { fetchData, postData } from "../utils/request_utils.js";
-// import postData from "../utils/request_utils.js";
-import { Modal } from "bootstrap/dist/js/bootstrap.bundle.js";
-
+import { postData, sendToast } from "../utils/request_utils.js";
+import "bootstrap/dist/js/bootstrap.js";
 import "../styles/add_rest_modal.css";
 
 const round_times = [
@@ -51,8 +49,17 @@ function AddRestaurantModal({ fetchRestaurants }) {
     if (response.success) {
       console.log(restaurantBody);
       fetchRestaurants();
+      sendToast(true, response.data);
+    } else {
+      console.log(restaurantBody);
+      if ("data" in response) {
+        sendToast(false, response.data);
+      } else if ("errorMessage" in response) {
+        sendToast(false, response.errorMessage);
+      }
     }
   };
+
   const handleNameCheckResponse = (response) => {
     console.log("in handleNameCheckResponse");
     console.log(response);
@@ -75,7 +82,9 @@ function AddRestaurantModal({ fetchRestaurants }) {
     let res = postData(
       "http://127.0.0.1:8080/restaurants/search",
       searchRequestBody,
-      handleNameCheckResponse
+      handleNameCheckResponse,
+      (res) => {},
+      (res) => {}
     );
   };
 
@@ -105,7 +114,9 @@ function AddRestaurantModal({ fetchRestaurants }) {
     let res = await postData(
       "http://127.0.0.1:8080/restaurants/add",
       restaurantBody,
-      handleRespponse
+      handleRespponse,
+      () => {},
+      () => {}
     );
   };
   return (

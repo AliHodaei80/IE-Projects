@@ -49,18 +49,18 @@ export default function AuthPage() {
     }
   };
 
-  const onLoginSuccess = () => {
+  const onLoginSuccess = (response) => {
     console.log("Login success");
     navigate("/home");
   };
-  const onSignupSuccess = () => {
+  const onSignupSuccess = (response) => {
     console.log("Signup success");
     navigate("/home");
   };
-  const onLoginFailure = () => {
+  const onLoginFailure = (response) => {
     console.log("Login failed not redirecting");
   };
-  const onSignupFailure = () => {
+  const onSignupFailure = (response) => {
     console.log("Signup failed not redirecting");
   };
 
