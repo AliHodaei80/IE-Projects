@@ -117,6 +117,7 @@ public class Restaurant {
         return managerUsername;
     }
 
+    public String getImageUrl() { return imageUrl;};
     public void setManagerUsername(String managerUsername) {
         this.managerUsername = managerUsername;
     }
