@@ -4,6 +4,7 @@ import Home from "./Home";
 import Error from "./components/error";
 import Signup from "./components/signup";
 import ManagerRestaurants from "./manager_restaurants";
+import ManageRestaurantPage from "./manage_restaurant";
 import AuthPage from "./components/authPage";
 
 function App() {
@@ -14,6 +15,10 @@ function App() {
         <Route path="/error" element={<Error />} />
         <Route path="/authenticate" element={<AuthPage />} />
         <Route path="/manager-restaurants" element={<ManagerRestaurants />} />
+        <Route
+          path="/manager-restaurants/:id"
+          element={<ManageRestaurantPage />}
+        />
       </Routes>
     </Router>
   );

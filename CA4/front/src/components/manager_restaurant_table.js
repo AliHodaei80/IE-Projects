@@ -2,6 +2,7 @@ import React from "react";
 import AddRestaurantModal from "./add_restaurant_modal.js";
 import { useState, useEffect } from "react";
 import { fetchData } from "../utils/request_utils.js";
+import { Link } from "react-router-dom";
 import "../styles/manager_restaurants.css";
 import ManagerRestaurantsTableHeader from "./manager_restaurant_table_header.js";
 
@@ -43,9 +44,11 @@ function ManagerRestaurantsTable() {
                 {restaurant.address.city}, {restaurant.address.country}
               </td>
               <td className="text-end">
-                <button className="manager-operation manage rounded-3 border-0">
-                  Manage
-                </button>
+                <Link to={`/manager-restaurants/${restaurant.id}`}>
+                  <button className="manager-operation manage rounded-3 border-0">
+                    Manage
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}
