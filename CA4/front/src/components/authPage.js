@@ -7,8 +7,8 @@ import "../styles/login_signup.css";
 import { ToastContainer, toast } from "react-toastify";
 import { fetchData, postData } from "../utils/request_utils.js";
 const base_path = "http://127.0.0.1:8080/";
-const login_path = "login";
-const signup_path = "signup";
+const login_path = "/login";
+const signup_path = "/signup";
 
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
@@ -127,7 +127,7 @@ export default function AuthPage() {
                   className="btn btn-outline-secondary w-75 mt-4"
                   onClick={() => {
                     postData(
-                      base_path + login_path,
+                      login_path,
                       userData,
                       setResult,
                       onLoginSuccess,
@@ -236,7 +236,7 @@ export default function AuthPage() {
                     newUserData.address.city = userData.city;
                     newUserData.address.country = userData.country;
                     postData(
-                      base_path + signup_path,
+                      signup_path,
                       newUserData,
                       setResult,
                       onSignupSuccess,

@@ -22,7 +22,7 @@ function ManagerRestaurantsTable() {
 
   const fetchRestaurants = () => {
     fetchData(
-      "http://127.0.0.1:8080/user/" + username + "/restaurants",
+      "/user/" + username + "/restaurants",
       null,
       handleFetchRestaurants,
       (res) => {}

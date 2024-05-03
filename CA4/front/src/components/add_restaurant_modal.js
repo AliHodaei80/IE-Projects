@@ -80,7 +80,7 @@ function AddRestaurantModal({ fetchRestaurants }) {
       search: newName,
     };
     let res = postData(
-      "http://127.0.0.1:8080/restaurants/search",
+      "/restaurants/search",
       searchRequestBody,
       handleNameCheckResponse,
       (res) => {},
@@ -112,7 +112,7 @@ function AddRestaurantModal({ fetchRestaurants }) {
     console.log("startTime:", startTime);
     console.log("endTime:", endTime);
     let res = await postData(
-      "http://127.0.0.1:8080/restaurants/add",
+      "/restaurants/add",
       restaurantBody,
       handleRespponse,
       () => {},

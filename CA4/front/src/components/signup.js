@@ -6,7 +6,7 @@ import logo from "../images/logo.png";
 import { useNavigate } from "react-router-dom";
 import "../styles/login_signup.css";
 
-const signup_path = "signup";
+const signup_path = "/signup";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -38,10 +38,7 @@ const Signup = () => {
       address: { city: userData.city, country: userData.country },
     };
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8080/" + signup_path,
-        sendingUserData
-      );
+      const response = await axios.post(signup_path, sendingUserData);
 
       if (response.data.success) {
         navigate("home");
@@ -170,4 +167,3 @@ const Signup = () => {
 };
 
 export default Signup;
- 
