@@ -1,6 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 import React, { useState, useEffect } from "react";
 import Header from "./header.js";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import Footer from "./footer.js";
 import "../styles/login_signup.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,6 +13,7 @@ const signup_path = "signup";
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
   const [AxiosResult, setResult] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,17 +50,20 @@ export default function AuthPage() {
   };
 
   const onLoginSuccess = () => {
-    console.log("Login failed");
+    console.log("Login success");
+    navigate("/home");
   };
   const onSignupSuccess = () => {
-    console.log("Signup failed");
+    console.log("Signup success");
+    navigate("/home");
   };
   const onLoginFailure = () => {
-    console.log("Login failed");
+    console.log("Login failed not redirecting");
   };
   const onSignupFailure = () => {
-    console.log("Login failed");
+    console.log("Signup failed not redirecting");
   };
+
   useEffect(() => {
     if (AxiosResult.hasOwnProperty("success")) {
       sendToast();
