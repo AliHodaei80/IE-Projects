@@ -64,7 +64,7 @@ function SearchResult({ data }) {
   );
 }
 
-function SearchResults({ searchResult }) {
+function SearchResults({ searchResult,title}) {
   console.log("Search Data", searchResult);
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -81,7 +81,7 @@ function SearchResults({ searchResult }) {
   return (
     <div className="p-3 container">
       <div className="p-3 container" id="suggestions-container">
-        <div className="result-title">Top restuarants on Mizdooni</div>
+        <div className="result-title">{title}</div>
         <div className="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
           {searchResult &&
           searchResult.restaurants &&

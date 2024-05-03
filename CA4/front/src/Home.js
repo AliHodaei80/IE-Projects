@@ -133,7 +133,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <SearchResult searchResult={searchResult} />
+      <SearchResult searchResult={searchResult} title="Top restuarants on Mizdooni"/>
+      <SearchResult searchResult={searchResult} title="You might also like"/>
       <AboutMizdooni />
       <Footer />
     </main>
