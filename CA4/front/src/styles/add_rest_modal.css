@@ -34,8 +34,28 @@
   border: 2px solid var(--black);
 }
 
-#addRestModal .submit-butoon {
+#addRestModal #add-rest-submit-butoon {
   color: var(--white);
-  background: var(--red);
+  background-color: var(--red);
+  font-weight: 400;
+
   border: none;
+}
+
+#addRestModal .text-danger {
+  bottom: -10px;
+}
+
+#addRestModal input:focus,
+#addRestModal textarea:focus,
+#addRestModal select:focus {
+  outline: none !important;
+  border: 1px solid var(--red);
+  box-shadow: 0 0 7px var(--red);
+}
+
+#addRestModal #add-rest-submit-butoon:disabled {
+  color: var(--white);
+  font-weight: 400;
+  background-color: var(--light-white);
 }

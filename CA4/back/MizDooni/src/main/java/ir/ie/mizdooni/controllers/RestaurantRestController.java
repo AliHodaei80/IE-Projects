@@ -95,6 +95,10 @@ public class RestaurantRestController {
         switch (action) {
             case "search_by_name" -> outputData.put("restaurants", restaurantHandler.searchRestaurantByName(search));
             case "search_by_type" -> outputData.put("restaurants", restaurantHandler.searchRestaurantByType(search));
+            case "search_by_exact_name" -> outputData.put("restaurants",
+                    (restaurantHandler.getRestaurant(search) != null ?
+                            List.of(restaurantHandler.getRestaurant(search)) :
+                            new ArrayList<>()));
             case "search_by_city" -> outputData.put("restaurants", restaurantHandler.searchRestaurantByCity(search));
             case "sort_by_rate" -> outputData.put("restaurants",
                     restaurantHandler.getRestaurants().getRestaurantList(true));
