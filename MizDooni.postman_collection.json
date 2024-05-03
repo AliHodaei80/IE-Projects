@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8080/restaurants/add",
+					"raw": "http://127.0.0.1:8090/restaurants/add",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -29,7 +29,7 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"restaurants",
 						"add"
@@ -53,7 +53,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8080/tables/add",
+					"raw": "http://127.0.0.1:8090/tables/add",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -61,7 +61,7 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"tables",
 						"add"
@@ -76,7 +76,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8080/restaurants",
+					"raw": "http://127.0.0.1:8090/restaurants",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -84,7 +84,7 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"restaurants"
 					]
@@ -164,7 +164,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"datetime\": \"2024-12-03T15:00:00\",\r\n    \"tableNumber\": \"1\"\r\n}",
+					"raw": "{\r\n    \"username\": \"Mostafa_Ebrahimi\",\r\n    \"datetime\": \"2025-12-03T15:00:00\",\r\n    \"tableNumber\": \"2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -172,7 +172,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8080/restaurants/1/reserve",
+					"raw": "http://127.0.0.1:8090/restaurants/1/reserve",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -180,7 +180,7 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"restaurants",
 						"1",
@@ -208,7 +208,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8080/restaurants/1",
+					"raw": "http://127.0.0.1:8090/restaurants/1",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -216,7 +216,7 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"restaurants",
 						"1"
@@ -294,6 +294,42 @@
 			"response": []
 		},
 		{
+			"name": "/reservations/restaurant/{restId}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/reservations/restaurant/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"reservations",
+						"restaurant",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/signup",
 			"request": {
 				"method": "POST",
@@ -331,6 +367,40 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"ali\",\r\n    \"password\": \"ali_1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user/{username}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
 					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"1234\"\r\n}",
 					"options": {
 						"raw": {
@@ -339,7 +409,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8080/login",
+					"raw": "http://127.0.0.1:8090/user/ali",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -347,9 +417,34 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
-						"login"
+						"user",
+						"ali"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user/{username}/restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/user/amin/restaurants",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"user",
+						"amin",
+						"restaurants"
 					]
 				}
 			},
@@ -361,7 +456,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8080/logout",
+					"raw": "http://127.0.0.1:8090/logout",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -369,7 +464,7 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"logout"
 					]
