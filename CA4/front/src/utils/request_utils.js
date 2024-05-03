@@ -33,7 +33,7 @@ export function fetchData(url, payload, resultSetter, onCompleted) {
     });
 }
 
-export function postData(url, payload, resultSetter, onCompleted) {
+export function postData(url, payload, resultSetter, onSuccess,onFailure) {
   console.log("Sending data to url", url, "with payload", payload);
   axios
     .post(url, payload, {
@@ -44,7 +44,7 @@ export function postData(url, payload, resultSetter, onCompleted) {
     .then((response) => {
       console.log("Data:", response.data);
       resultSetter({ success: true });
-      // onCompleted();
+      onSuccess();
     })
     .catch((error) => {
       if (error.response) {
@@ -62,6 +62,6 @@ export function postData(url, payload, resultSetter, onCompleted) {
         console.log("Error:", error.message);
         resultSetter({ errorCode: null, errorMessage: error.message });
       }
-      // onCompleted();
+      onFailure();
     });
 }

@@ -47,11 +47,24 @@ export default function AuthPage() {
     }
   };
 
+  const onLoginSuccess = () => {
+    console.log("Login failed");
+  };
+  const onSignupSuccess = () => {
+    console.log("Signup failed");
+  };
+  const onLoginFailure = () => {
+    console.log("Login failed");
+  };
+  const onSignupFailure = () => {
+    console.log("Login failed");
+  };
   useEffect(() => {
     if (AxiosResult.hasOwnProperty("success")) {
       sendToast();
     }
   }, [AxiosResult]);
+
   return (
     <main>
       <header>
@@ -108,12 +121,12 @@ export default function AuthPage() {
                 <button
                   className="btn btn-outline-secondary w-75 mt-4"
                   onClick={() => {
-                    console.log("Printing Error message ", AxiosResult);
                     postData(
                       base_path + login_path,
                       userData,
                       setResult,
-                      sendToast
+                      onLoginSuccess,
+                      onLoginFailure
                     );
                   }}
                   type="button"
@@ -221,7 +234,8 @@ export default function AuthPage() {
                       base_path + signup_path,
                       newUserData,
                       setResult,
-                      sendToast
+                      onSignupSuccess,
+                      onSignupFailure
                     );
                   }}
                 >
