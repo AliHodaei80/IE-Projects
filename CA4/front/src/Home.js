@@ -25,6 +25,8 @@ const search_method_name = "search_by_name";
 const search_method_type = "search_by_type";
 const user_details_endpoint = "/user/";
 const restaurant_search_endpoint = "/restaurants/search";
+const all_restaurants = "/restaurants";
+
 // ------------------------------------------------------------- //
 
 export default function Home() {
@@ -33,6 +35,32 @@ export default function Home() {
   const [userDetails, setUserDetails] = useState({});
   const [isMounted, setIsMounted] = useState(false);
   const [searchResult, setSearchResult] = useState({});
+  const [restTypes, setRestTypes] = useState([]);
+  const [restLocations, setRestLocations] = useState([]);
+
+  const fetchRestTypes = () => {
+    fetchData(
+      all_restaurants,
+      {},
+      (response) => {
+        if (response.success) {
+          const restTypes = [
+            ...new Set(response.data.restaurants.map((val) => val.type)),
+          ];
+          const restLoactions = [
+            ...new Set(
+              response.data.restaurants.map((val) => val.address.city)
+            ),
+          ];
+          setRestTypes(restTypes);
+          setRestLocations(restLoactions);
+        }
+      },
+      (res) => {}
+    );
+    return;
+  };
+
   const searchRestaurants = (search_type, key_data) => {
     postData(
       restaurant_search_endpoint,
@@ -41,7 +69,6 @@ export default function Home() {
         search: key_data,
       },
       (response) => {
-        console.log("Search Result : ", response);
         setSearchResult(response.data);
         sendToast(
           response.success,
@@ -60,7 +87,6 @@ export default function Home() {
       user_details_endpoint + state.username,
       { username: state.username, password: state.password },
       (response) => {
-        console.log(response);
         setUserDetails(response.data);
         if (response.success) {
           searchRestaurants(
@@ -79,6 +105,7 @@ export default function Home() {
         navigate("/authenticate");
         sendToast(false, "Login First!");
       } else {
+        fetchRestTypes();
         fetchUser();
       }
       setIsMounted(true);
@@ -99,7 +126,10 @@ export default function Home() {
             <div className="input-group mb-3">
               <img className="big-logo" src={logo_big} />
             </div>
-            <SearchBarForm />
+            <SearchBarForm
+              restTypes={restTypes}
+              restLocations={restLocations}
+            />
           </div>
         </div>
       </div>
