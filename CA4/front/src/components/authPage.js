@@ -1,6 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./header.js";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import Footer from "./footer.js";
 import "../styles/login_signup.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,6 +13,7 @@ const signup_path = "signup";
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
   const [AxiosResult, setResult] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,16 +24,16 @@ export default function AuthPage() {
   };
   const sendToast = () => {
     const options = {
-      position: toast.POSITION.TOP_LEFT,
-      autoClose: 8000,
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
     };
-
+    console.log("Sending toast");
     if (AxiosResult.success) {
-      toast.success("Success Notification!", {
+      toast.success("Success!", {
         ...options,
         className: "toast-success",
         bodyClassName: "toast-success-body",
@@ -46,6 +48,27 @@ export default function AuthPage() {
       });
     }
   };
+
+  const onLoginSuccess = () => {
+    console.log("Login success");
+    navigate("/home");
+  };
+  const onSignupSuccess = () => {
+    console.log("Signup success");
+    navigate("/home");
+  };
+  const onLoginFailure = () => {
+    console.log("Login failed not redirecting");
+  };
+  const onSignupFailure = () => {
+    console.log("Signup failed not redirecting");
+  };
+
+  useEffect(() => {
+    if (AxiosResult.hasOwnProperty("success")) {
+      sendToast();
+    }
+  }, [AxiosResult]);
 
   return (
     <main>
@@ -102,20 +125,20 @@ export default function AuthPage() {
                 </div>
                 <button
                   className="btn btn-outline-secondary w-75 mt-4"
-                  onClick={async () => {
-                    console.log("Printing Error message ", AxiosResult);
-                    const result = await postData(
+                  onClick={() => {
+                    postData(
                       base_path + login_path,
                       userData,
-                      setResult
+                      setResult,
+                      onLoginSuccess,
+                      onLoginFailure
                     );
-                    sendToast();
                   }}
                   type="button"
                 >
                   Login
                 </button>
-                </div>
+              </div>
             </div>
           ) : (
             <div className="container">
@@ -168,7 +191,7 @@ export default function AuthPage() {
                   <div className="mt-4 w-100">
                     <label className="form-label">Password</label>
                     <input
-                      type="text"
+                      type="password"
                       className="form-control rounded-2"
                       name="password"
                       onChange={handleChange}
@@ -206,18 +229,19 @@ export default function AuthPage() {
                   type="button"
                   id="signup_button"
                   className="btn btn-outline-secondary w-75 mt-4"
-                  onClick={async () => {
+                  onClick={() => {
                     console.log("Printing Error message ", AxiosResult);
                     const newUserData = userData;
                     newUserData.address = {};
                     newUserData.address.city = userData.city;
                     newUserData.address.country = userData.country;
-                    await postData(
+                    postData(
                       base_path + signup_path,
                       newUserData,
-                      setResult
+                      setResult,
+                      onSignupSuccess,
+                      onSignupFailure
                     );
-                    sendToast();
                   }}
                 >
                   Signup
