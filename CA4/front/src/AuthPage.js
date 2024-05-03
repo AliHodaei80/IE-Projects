@@ -1,11 +1,12 @@
 import "react-toastify/dist/ReactToastify.css";
+import "./styles/login_signup.css";
+
 import React, { useState, useEffect } from "react";
-import Header from "./header.js";
+import Header from "./components/header.js";
 import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
-import Footer from "./footer.js";
-import "../styles/login_signup.css";
+import Footer from "./components/footer.js";
 import { ToastContainer, toast } from "react-toastify";
-import { fetchData, postData } from "../utils/request_utils.js";
+import { fetchData, postData } from "./utils/request_utils.js";
 const base_path = "http://127.0.0.1:8080/";
 const login_path = "/login";
 const signup_path = "/signup";
