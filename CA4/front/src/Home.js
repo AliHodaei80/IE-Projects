@@ -16,7 +16,7 @@ import React, { useState, useEffect } from "react";
 // ------------------------------------------------------------- //
 import AboutMizdooni from "./components/about.js";
 import SearchBarForm from "./components/searchbar.js";
-import SearchResult from "./components/search_result.js";
+import SearchResult from "./components/top_result.js";
 import Header from "./components/header.js";
 import Footer from "./components/footer.js";
 // ------------------------------------------------------------- //
@@ -56,8 +56,8 @@ export default function Home() {
           setRestTypes(restTypes);
           setRestLocations(restLoactions);
           const rests = response.data.restaurants;
+          rests.sort((a, b) => b.avgOverallScore - a.avgOverallScore);
           console.log("Rest rests", rests);
-          // rests.sort((a, b) => b.avgOverallScore - a.avgOverallScore);
           setTopRestaurants({ restaurants: rests });
         }
       },
@@ -115,6 +115,7 @@ export default function Home() {
       }
       setIsMounted(true);
     } else {
+      setIsMounted(true);
       console.log("Already Fetched user data : ", userDetails);
     }
   });

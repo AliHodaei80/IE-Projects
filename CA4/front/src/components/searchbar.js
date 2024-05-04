@@ -2,6 +2,9 @@ import React from "react";
 import "../styles/home.css";
 
 function SearchBarForm({ restTypes,restLocations }) {
+  const sendSearch = () => {
+
+  }
   return (
     <div className="search-bars input-group mb-1 text-center w-md-75">
       <select
