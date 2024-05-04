@@ -15,8 +15,9 @@ import rest1 from "../images/rest1.png";
 import Rating from "./rating.js";
 import TimeInfoComponent from "./time_info.js";
 // ------------------------------------------------------------------ //
+const max_top_number_to_show = 6;
 
-function SearchResult({ data }) {
+function SearchResult({ data: data }) {
   const overall = data.avgOverallScore;
   const imageUrl = data.imageUrl;
   const city = data.address.city;
@@ -64,7 +65,7 @@ function SearchResult({ data }) {
   );
 }
 
-function SearchResults({ searchResult,title}) {
+function SearchResults({ searchResult, title }) {
   console.log("Search Data", searchResult);
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -86,9 +87,11 @@ function SearchResults({ searchResult,title}) {
           {searchResult &&
           searchResult.restaurants &&
           searchResult.restaurants.length > 0
-            ? searchResult.restaurants.map((restaurant, index) => (
-                <SearchResult key={index} data={restaurant} />
-              ))
+            ? searchResult.restaurants
+                .slice(0, max_top_number_to_show)
+                .map((restaurant, index) => (
+                  <SearchResult key={index} data={restaurant} />
+                ))
             : null}
         </div>
       </div>

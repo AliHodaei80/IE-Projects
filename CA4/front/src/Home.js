@@ -26,7 +26,6 @@ const search_method_type = "search_by_type";
 const user_details_endpoint = "/user/";
 const restaurant_search_endpoint = "/restaurants/search";
 const all_restaurants = "/restaurants";
-
 // ------------------------------------------------------------- //
 
 export default function Home() {
@@ -34,11 +33,13 @@ export default function Home() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
   const [isMounted, setIsMounted] = useState(false);
-  const [searchResult, setSearchResult] = useState({});
+  const [userSpecificSearchResult, setUserSpecificSearchResult] = useState({});
+  const [topRestaurants, setTopRestaurants] = useState({});
+
   const [restTypes, setRestTypes] = useState([]);
   const [restLocations, setRestLocations] = useState([]);
 
-  const fetchRestTypes = () => {
+  const fetchRestMetaInfo = () => {
     fetchData(
       all_restaurants,
       {},
@@ -54,6 +55,10 @@ export default function Home() {
           ];
           setRestTypes(restTypes);
           setRestLocations(restLoactions);
+          const rests = response.data.restaurants;
+          console.log("Rest rests", rests);
+          // rests.sort((a, b) => b.avgOverallScore - a.avgOverallScore);
+          setTopRestaurants({ restaurants: rests });
         }
       },
       (res) => {}
@@ -69,7 +74,7 @@ export default function Home() {
         search: key_data,
       },
       (response) => {
-        setSearchResult(response.data);
+        setUserSpecificSearchResult(response.data);
         sendToast(
           response.success,
           response.success
@@ -105,7 +110,7 @@ export default function Home() {
         navigate("/authenticate");
         sendToast(false, "Login First!");
       } else {
-        fetchRestTypes();
+        fetchRestMetaInfo();
         fetchUser();
       }
       setIsMounted(true);
@@ -133,8 +138,14 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <SearchResult searchResult={searchResult} title="Top restuarants on Mizdooni"/>
-      <SearchResult searchResult={searchResult} title="You might also like"/>
+      <SearchResult
+        searchResult={topRestaurants}
+        title="Top restuarants on Mizdooni"
+      />
+      <SearchResult
+        searchResult={userSpecificSearchResult}
+        title="You might also like"
+      />
       <AboutMizdooni />
       <Footer />
     </main>
