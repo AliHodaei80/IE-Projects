@@ -119,7 +119,7 @@ public class ReservationHandler {
         return resultOpenings;
     }
 
-    public long addReservation(String restName, String username, long tableNumber, String dateTime)
+    public long addReservation(String restName, String username, long tableNumber, String dateTime, long restaurantId)
             throws InvalidUserRole, RestaurantNotFound, TableDoesntExist,
             TableAlreadyReserved, InvalidDateTime, DateTimeNotInRange, UserNotExists {
         if (!userExists(username)) {
@@ -145,7 +145,7 @@ public class ReservationHandler {
             throw new DateTimeNotInRange();
         }
         return reservations.addReservation(username, restName, tableNumber,
-                Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT));
+                Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT), restaurantId);
     }
 
     public void cancelReservation(String username, long reservationId)

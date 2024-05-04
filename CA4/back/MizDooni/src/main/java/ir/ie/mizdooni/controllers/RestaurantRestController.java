@@ -176,7 +176,8 @@ public class RestaurantRestController {
                     (String) modifiedData.get(RESTAURANT_NAME_KEY),
                     (String) modifiedData.get(USERNAME_KEY),
                     (Long) modifiedData.get(TABLE_NUM_KEY),
-                    (String) modifiedData.get(DATETIME_KEY));
+                    (String) modifiedData.get(DATETIME_KEY),
+                    restaurant.getId());
             logger.info("Reservation `" + reservationNum + "` added successfully");
             Map<String, Object> outputData = new HashMap<>();
             outputData.put("reservationNumber", reservationNum);

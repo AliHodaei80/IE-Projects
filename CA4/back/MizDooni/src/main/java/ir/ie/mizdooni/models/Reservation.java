@@ -19,15 +19,17 @@ public class Reservation {
     LocalDateTime datetime;
     @Expose()
     Long reservationId;
+    Long restaurantId;
     boolean canceled;
 
-    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber) {
+    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber, Long restaurantId) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.tableNumber = tableNumber;
         this.datetime = date;
         this.reservationId = reservationNumber;
         this.canceled = false;
+        this.restaurantId = restaurantId;
     }
 
     public String getUsername() {
@@ -78,5 +80,9 @@ public class Reservation {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
     }
 }

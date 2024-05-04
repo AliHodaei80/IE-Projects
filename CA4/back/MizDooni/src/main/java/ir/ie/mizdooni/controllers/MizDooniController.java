@@ -99,10 +99,15 @@ public class MizDooniController {
     public Response reserveTable(Map<String, Object> data) {
         try {
             Map<String, Object> resultDate = new HashMap<>();
+            Restaurant restaurant = restaurantHandler.getRestaurant((String) data.get(RESTAURANT_NAME_KEY));
+            if (restaurant == null) {
+                throw new RestaurantNotFound();
+            }
             long reservationNum = reservationHandler.addReservation((String) data.get(RESTAURANT_NAME_KEY),
                     (String) data.get(USERNAME_KEY),
                     ((Double) data.get(TABLE_NUM_KEY)).intValue(),
-                    (String) data.get(DATETIME_KEY));
+                    (String) data.get(DATETIME_KEY),
+                    restaurant.getId());
             resultDate.put(RESERVATION_NUM_KEY, reservationNum);
 
             return new Response(true, resultDate);
