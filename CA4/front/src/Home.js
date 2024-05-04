@@ -7,7 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { fetchData, postData, sendToast } from "./utils/request_utils.js";
-
+import { useAuth, UserContext } from "./context/AuthContext.js";
 import "./styles/home.css";
 import logo_big from "./images/logo_big.png";
 import background_image from "./images/home.png";
@@ -29,16 +29,16 @@ const all_restaurants = "/restaurants";
 // ------------------------------------------------------------- //
 
 export default function Home() {
-  const { state } = useLocation();
+// ------------------------------------------------------------- //
+  const { authDetails } = useAuth();
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
   const [isMounted, setIsMounted] = useState(false);
   const [userSpecificSearchResult, setUserSpecificSearchResult] = useState({});
   const [topRestaurants, setTopRestaurants] = useState({});
-
   const [restTypes, setRestTypes] = useState([]);
   const [restLocations, setRestLocations] = useState([]);
-
+// ------------------------------------------------------------- //
   const fetchRestMetaInfo = () => {
     fetchData(
       all_restaurants,
@@ -91,8 +91,8 @@ export default function Home() {
 
   const fetchUser = () => {
     fetchData(
-      user_details_endpoint + state.username,
-      { username: state.username, password: state.password },
+      user_details_endpoint + authDetails.username,
+      { username: authDetails.username, password: authDetails.password },
       (response) => {
         setUserDetails(response.data);
         if (response.success) {
@@ -108,7 +108,10 @@ export default function Home() {
 
   useEffect(() => {
     if (!isMounted) {
-      if (state === null) {
+      if (
+        (authDetails.logged_in === null) |
+        (authDetails.logged_in === false)
+      ) {
         navigate("/authenticate");
         sendToast(false, "Login First!");
       } else {

@@ -7,14 +7,7 @@ import "./styles/header.css";
 import "./styles/search_result.css";
 import "./styles/footer.css";
 
-import {
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function SearchResultPage() {
   const { state } = useLocation();
