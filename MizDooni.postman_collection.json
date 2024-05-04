@@ -39,13 +39,13 @@
 			"response": []
 		},
 		{
-			"name": "/tables/add",
+			"name": "/tables/{restId}/add",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"restaurantName\": \"The Commoner\",\r\n    \"managerUsername\": \"ali\",\r\n    \"seatsNumber\": \"100\",\r\n    \"tableNumber\": \"10\"\r\n}",
+					"raw": "{\r\n    \"managerUsername\": \"ali\",\r\n    \"seatsNumber\": \"100\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -53,7 +53,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8090/tables/add",
+					"raw": "http://127.0.0.1:8090/tables/1/add",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -64,7 +64,31 @@
 					"port": "8090",
 					"path": [
 						"tables",
+						"1",
 						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tables/{restId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/tables/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"tables",
+						"1"
 					]
 				}
 			},
@@ -164,7 +188,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Mostafa_Ebrahimi\",\r\n    \"datetime\": \"2025-12-03T15:00:00\",\r\n    \"tableNumber\": \"2\"\r\n}",
+					"raw": "{\r\n    \"username\": \"Ali_Hodaei\",\r\n    \"datetime\": \"2024-05-05T21:00:00\",\r\n    \"seatsNumber\": 7\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -243,7 +267,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8080/reservations/user1",
+					"raw": "http://127.0.0.1:8090/reservations/Ali_Hodaei",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -251,10 +275,10 @@
 						"0",
 						"1"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"reservations",
-						"user1"
+						"Ali_Hodaei"
 					]
 				}
 			},
@@ -294,24 +318,12 @@
 			"response": []
 		},
 		{
-			"name": "/reservations/restaurant/{restId}",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "/restaurants/{restId}/reservations",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"user1\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://127.0.0.1:8090/reservations/restaurant/1",
+					"raw": "http://127.0.0.1:8090/restaurants/1/reservations",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -321,9 +333,45 @@
 					],
 					"port": "8090",
 					"path": [
-						"reservations",
-						"restaurant",
+						"restaurants",
+						"1",
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/restaurants/{restId}/avails",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"datetime\": \"2024-05-05\",\r\n    \"seatsNumber\": 7,\r\n    \"time\": \"21:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/restaurants/1/avails",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
 						"1"
+					],
+					"port": "8090",
+					"path": [
+						"restaurants",
+						"1",
+						"avails"
 					]
 				}
 			},
