@@ -112,10 +112,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!isMounted) {
-      if (
-        (authDetails.logged_in === null) |
-        (authDetails.logged_in === false)
-      ) {
+      if (authDetails.logged_in === false) {
         // navigate("/authenticate");
         // sendToast(false, "Login First!");
       } else {

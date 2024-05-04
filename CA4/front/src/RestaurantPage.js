@@ -3,15 +3,14 @@ import "./styles/search_result.css";
 import React, { useState, useEffect } from "react";
 import Header from "./components/header.js";
 import RestaurantCard from "./components/restaurant_card.js";
-import "./styles/shared.css"
+import Footer from "./components/footer.js";
+import "./styles/shared.css";
 import "./styles/header.css";
-import "./styles/restaurant.css"
+import "./styles/restaurant.css";
 import "./styles/search_result.css";
 import "./styles/footer.css";
 import "./styles/normalize.css";
 import "./styles/search_result.css";
-
-import Footer from "./components/footer.js";
 import {
   Routes,
   Route,
@@ -21,8 +20,10 @@ import {
   useLocation,
 } from "react-router-dom";
 
-export default function RestaurantPage() {
-  const { state } = useLocation();
+export default function RestaurantPage(props) {
+  const location = useLocation()
+  const state = {};
+  console.log("Location restaurant",location);
   return (
     <main class="flex-grow-1">
       <Header></Header>
@@ -32,16 +33,14 @@ export default function RestaurantPage() {
             <div class="container row">
               <div class="container mb-0 col-sm ms-0 align-middle">
                 <img
-                  src="../images/sample_rest_image.png"
+                  src={state.imageUrl}
                   alt="tables_logo"
                   class="rounded-4 position-relative col rounded-3 mt-5"
                   id="sample-rest-img"
                 />
                 <div class="container descripton-card ms-0 position-relative">
                   <div class="container d-flex justify-content-between">
-                    <p class="display-4 position-absolute mt-5">
-                      Dizy Ali Daei
-                    </p>
+                    <p class="display-4 position-absolute mt-5">{state.name}</p>
                     <p
                       class="rounded-4 text-center position-absolute top-50 end-0 me-5"
                       id="rest-status"
