@@ -1,10 +1,10 @@
-body {
+.manage-restaurant-body {
   background-color: var(--red);
   font-family: "SplineSans", serif;
   min-height: 100vh;
 }
 
-main {
+.manage-restaurant-body main {
   min-height: 0;
 }
 
@@ -18,6 +18,15 @@ main {
   background-color: var(--white-red);
   border-left: 7px solid var(--red);
   overflow-y: scroll;
+}
+
+#empty-reservation {
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 
 .rest-table {

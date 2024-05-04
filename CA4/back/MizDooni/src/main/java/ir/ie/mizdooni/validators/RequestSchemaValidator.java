@@ -26,8 +26,7 @@ public class RequestSchemaValidator {
     final static Set<String> userLoginKeys = Set.of(USERNAME_KEY, PASSWORD_KEY);
     final static Set<String> restAdditionKeys = Set.of(ADD_RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY,
             START_TIME_KEY, END_TIME_KEY, RESTAURANT_ADDRESS_KEY, DESCRIPTION_KEY, RESTAURANT_TYPE_KEY);
-    final static Set<String> tableAdditionKeys = Set.of(TABLE_NUM_KEY, RESTAURANT_NAME_KEY,
-            MANAGER_USERNAME_KEY, SEATS_NUM_KEY);
+    final static Set<String> tableAdditionKeys = Set.of(RESTAURANT_NAME_KEY, MANAGER_USERNAME_KEY, SEATS_NUM_KEY);
     final static Set<String> tableAReserveKeys = Set.of(USERNAME_KEY, RESTAURANT_NAME_KEY,
             TABLE_NUM_KEY, DATETIME_KEY);
     final static Set<String> userAdditionAddressKeys = Set.of(CITY_KEY, COUNTRY_KEY);

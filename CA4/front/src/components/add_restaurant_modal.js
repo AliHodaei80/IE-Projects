@@ -123,7 +123,7 @@ function AddRestaurantModal({ fetchRestaurants }) {
     <>
       {
         <div
-          className="modal"
+          className="modal fade"
           role="dialog"
           id="addRestModal"
           data-bs-backdrop="static"

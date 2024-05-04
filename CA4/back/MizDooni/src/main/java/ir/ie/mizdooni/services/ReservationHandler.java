@@ -145,7 +145,7 @@ public class ReservationHandler {
         if (!checkCancellationTimeValid(reservationId)) {
             throw new CancellationTimePassed();
         }
-        reservations.removeReservation(reservationId);
+        reservations.cancelReservation(reservationId);
     }
 
     public List<Reservation> showHistoryReservation(String username) {
@@ -154,5 +154,9 @@ public class ReservationHandler {
 
     public Reservations getReservations() {
         return reservations;
+    }
+
+    public List<Reservation> getRestaurantReservation(String restName) {
+        return reservations.getRestaurantReservations(restName);
     }
 }

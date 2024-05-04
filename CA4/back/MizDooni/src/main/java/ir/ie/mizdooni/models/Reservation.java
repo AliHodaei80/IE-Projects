@@ -1,12 +1,12 @@
 package ir.ie.mizdooni.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
-import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
 public class Reservation {
     @Expose(serialize = false)
@@ -19,6 +19,7 @@ public class Reservation {
     LocalDateTime datetime;
     @Expose()
     Long reservationId;
+    boolean canceled;
 
     public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber) {
         this.username = username;
@@ -26,6 +27,7 @@ public class Reservation {
         this.tableNumber = tableNumber;
         this.datetime = date;
         this.reservationId = reservationNumber;
+        this.canceled = false;
     }
 
     public String getUsername() {
@@ -56,6 +58,7 @@ public class Reservation {
         return datetime;
     }
 
+    @JsonIgnore
     public String getDatetimeString() {
         return DateTimeFormatter.ofPattern(RESERVE_DATETIME_FORMAT).format(datetime);
     }
@@ -67,5 +70,13 @@ public class Reservation {
 
     public Long getReservationId() {
         return reservationId;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }

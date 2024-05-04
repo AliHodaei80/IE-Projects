@@ -58,8 +58,19 @@ public class RestaurantTables  extends Container<RestaurantTables>{
         if (restaurantTables.get(restName) == null) {
             restaurantTables.put(restName, new HashMap<>());
         }
+        long tableID = restaurantTables.get(restName).size() + 1;
         restaurantTables.get(restName).put(tableNo, new RestaurantTable(tableNo, restName, restManagerName, seatsNo));
         this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
+    }
+
+    public Long addRestaurantTable(String restName, String restManagerName, int seatsNo) {
+        if (restaurantTables.get(restName) == null) {
+            restaurantTables.put(restName, new HashMap<>());
+        }
+        long tableID = restaurantTables.get(restName).size() + 1;
+        restaurantTables.get(restName).put(tableID, new RestaurantTable(tableID, restName, restManagerName, seatsNo));
+        this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
+        return tableID;
     }
 
     public Map<String, Map<Long, RestaurantTable>> getRestaurantTables() {

@@ -2,6 +2,7 @@ package ir.ie.mizdooni.controllers;
 
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
@@ -69,6 +70,23 @@ public class ReservationRestController {
         } catch (InvalidRequestFormat | InvalidRequestTypeFormat | ReservationNotForUser | CancellationTimePassed e) {
             logger.error("Cancellation reserve `" + id + "` failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/reservations/restaurant/{restId}", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Response> getRestaurantReservationsHandler(@PathVariable Long restId) {
+        Map<String, Object> outputData = new HashMap<>();
+        try {
+            Restaurant restaurant = restaurantHandler.getRestaurant(restId);
+            if (restaurant == null)
+                throw new RestaurantNotFound();
+            outputData.put("reservations", reservationHandler.getRestaurantReservation(restaurant.getName()));
+            logger.info("Reservations for Restaurant `" + restId + "` retrieved successfully");
+            return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
+        } catch (RestaurantNotFound e) {
+            logger.error("Reservations retrieve for Restaurant `" + restId + "`` failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -24,7 +24,7 @@ public class RestaurantTableHandler {
         restaurantTables = new RestaurantTables().loadFromUrl(DataBaseUrlPath.RESTAURANT_TABLES_DATABASE_URL);
     }
 
-    public void addRestaurantTable(String restName, Long tableNo, int seatsNo, String managerUsername)
+    public Long addRestaurantTable(String restName, int seatsNo, String managerUsername)
             throws RestaurantManagerNotFound, InvalidUserRole, RestaurantNotFound, TableAlreadyExists, ManagerUsernameNotMatch {
         if (!restaurantsHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
@@ -38,10 +38,7 @@ public class RestaurantTableHandler {
         if (!restaurantsHandler.getRestaurant(restName).getManagerUsername().equals(managerUsername)) {
             throw new ManagerUsernameNotMatch();
         }
-        if (doesTableExist(restName, tableNo)) {
-            throw new TableAlreadyExists();
-        }
-        restaurantTables.addRestaurantTable(restName, managerUsername, tableNo, seatsNo);
+        return restaurantTables.addRestaurantTable(restName, managerUsername, seatsNo);
     }
 
     public List<RestaurantTable> getRestaurantTables(String restName) {

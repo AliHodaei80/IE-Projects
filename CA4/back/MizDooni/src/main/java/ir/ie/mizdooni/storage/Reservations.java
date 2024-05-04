@@ -76,6 +76,17 @@ public class Reservations extends Container<Reservations>{
         reservationsIdIndex.remove(reservationId);
     }
 
+    public void cancelReservation(long reservationId) {
+        Reservation reservation = reservationsIdIndex.get(reservationId);
+        if (reservation == null) {
+            return;
+        }
+//        reservations.get(reservation.getRestaurantName()).get(reservation.getTableNumber())
+//                .remove(reservation.getDatetime());
+//        reservationsIdIndex.remove(reservationId);
+        reservation.setCanceled(true);
+    }
+
     public List<Reservation> getAllReservations() {
         return reservations.values().stream()
                 .flatMap(innerMap -> innerMap.values().stream())
@@ -113,5 +124,14 @@ public class Reservations extends Container<Reservations>{
 
     public void setReservationCounts(long reservationCounts) {
         this.reservationCounts = reservationCounts;
+    }
+
+    public List<Reservation> getRestaurantReservations(String restName) {
+        if (reservations.get(restName) == null) {
+            return new ArrayList<>();
+        }
+        return reservations.get(restName).values().stream()
+                .flatMap(innerMap -> innerMap.values().stream())
+                .collect(Collectors.toList());
     }
 }
