@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/home.css";
 
-function SearchBarForm() {
+function SearchBarForm({ restTypes,restLocations }) {
   return (
     <div className="search-bars input-group mb-1 text-center w-md-75">
       <select
@@ -12,9 +12,9 @@ function SearchBarForm() {
         <option value="" disabled selected>
           Location
         </option>
-        <option value="ff">Tehran</option>
-        <option value="tf">Rasht</option>
-        <option value="if">Gonabad</option>
+        {restLocations.map((v) => (
+          <option value={v}>{v}</option>
+        ))}
       </select>
       <select
         className="form-select custom-select rounded-4 search-input"
@@ -24,9 +24,10 @@ function SearchBarForm() {
         <option value="" disabled selected>
           Restaurant
         </option>
-        <option value="ff">Fast Food</option>
-        <option value="tf">Traditional Food</option>
-        <option value="if">Itallian Food</option>
+
+        {restTypes.map((v) => (
+          <option value={v}>{v}</option>
+        ))}
       </select>
       <input
         type="text"

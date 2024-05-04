@@ -2,10 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Error from "./components/error";
-import Signup from "./components/signup";
 import ManagerRestaurants from "./manager_restaurants";
 import ManageRestaurantPage from "./manage_restaurant";
-import AuthPage from "./components/authPage";
+import AuthPage from "./AuthPage";
 
 function App() {
   return (

@@ -1,12 +1,11 @@
 import "react-toastify/dist/ReactToastify.css";
+import "./styles/login_signup.css";
+
 import React, { useState, useEffect } from "react";
-import Header from "./header.js";
+import Header from "./components/header.js";
 import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
-import Footer from "./footer.js";
-import "../styles/login_signup.css";
-import { ToastContainer, toast } from "react-toastify";
-import { fetchData, postData } from "../utils/request_utils.js";
-const base_path = "http://127.0.0.1:8080/";
+import Footer from "./components/footer.js";
+import { fetchData, postData, sendToast } from "./utils/request_utils.js";
 const login_path = "/login";
 const signup_path = "/signup";
 
@@ -22,40 +21,21 @@ export default function AuthPage() {
       [name]: value,
     }));
   };
-  const sendToast = () => {
-    const options = {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    };
-    console.log("Sending toast");
+  const resolveToast = () => {
     if (AxiosResult.success) {
-      toast.success("Success!", {
-        ...options,
-        className: "toast-success",
-        bodyClassName: "toast-success-body",
-        progressClassName: "toast-success-progress",
-      });
+      sendToast(true, "Signed up / Logged in Succesfully!");
     } else {
-      toast.error(AxiosResult.errorMessage, {
-        ...options,
-        className: "toast-error",
-        bodyClassName: "toast-error-body",
-        progressClassName: "toast-error-progress",
-      });
+      sendToast(false, AxiosResult.errorMessage);
     }
   };
 
   const onLoginSuccess = (response) => {
     console.log("Login success");
-    navigate("/home");
+    navigate("/home", { replace: true, state: userData });
   };
   const onSignupSuccess = (response) => {
     console.log("Signup success");
-    navigate("/home");
+    navigate("/home", { replace: true, state: userData });
   };
   const onLoginFailure = (response) => {
     console.log("Login failed not redirecting");
@@ -66,7 +46,7 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (AxiosResult.hasOwnProperty("success")) {
-      sendToast();
+      resolveToast();
     }
   }, [AxiosResult]);
 
