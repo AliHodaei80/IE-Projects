@@ -130,14 +130,14 @@ public class ReservationHandler {
         return resultOpenings;
     }
 
-    public List<Opening> findAvailableTables(String restName, long seatNum, LocalDateTime desiredDate, LocalTime desiredTime) throws RestaurantNotFound {
+    public ArrayList<Opening> findAvailableTables(String restName, long seatNum, LocalDateTime desiredDate, LocalTime desiredTime) throws RestaurantNotFound {
         ArrayList<Opening> resultOpenings = findAvailableTables( restName,  seatNum,  desiredDate);
         // check resultOpenings that if they have desiredTime in their available times or not
-        List<Opening> resultOpeningsFinal = resultOpenings.stream().filter(opening -> opening.getAvailableTimes().stream().anyMatch(dateTime -> dateTime.toLocalTime().equals(desiredTime))).toList();
+        ArrayList<Opening> resultOpeningsFinal = new ArrayList<>(resultOpenings.stream().filter(opening -> opening.getAvailableTimes().stream().anyMatch(dateTime -> dateTime.toLocalTime().equals(desiredTime))).toList());
         return resultOpeningsFinal;
     }
 
-    public long addReservation(String restName, String username, long tableNumber, String dateTime, long restaurantId)
+    public Reservation addReservation(String restName, String username, long tableNumber, String dateTime, long restaurantId)
             throws InvalidUserRole, RestaurantNotFound, TableDoesntExist,
             TableAlreadyReserved, InvalidDateTime, DateTimeNotInRange, UserNotExists {
         if (!userExists(username)) {

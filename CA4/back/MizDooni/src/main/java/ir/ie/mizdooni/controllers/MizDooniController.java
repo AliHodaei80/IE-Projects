@@ -103,11 +103,12 @@ public class MizDooniController {
             if (restaurant == null) {
                 throw new RestaurantNotFound();
             }
-            long reservationNum = reservationHandler.addReservation((String) data.get(RESTAURANT_NAME_KEY),
+            Reservation reservation = reservationHandler.addReservation((String) data.get(RESTAURANT_NAME_KEY),
                     (String) data.get(USERNAME_KEY),
                     ((Double) data.get(TABLE_NUM_KEY)).intValue(),
                     (String) data.get(DATETIME_KEY),
                     restaurant.getId());
+            long reservationNum = reservation.getReservationId();
             resultDate.put(RESERVATION_NUM_KEY, reservationNum);
 
             return new Response(true, resultDate);

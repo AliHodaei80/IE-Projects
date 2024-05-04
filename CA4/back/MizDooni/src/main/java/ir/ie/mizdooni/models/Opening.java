@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Opening {
     @Expose
-    Integer seatNumber;
+    int seatNumber;
     @Expose
     Long tableNumber;
     @Expose
@@ -19,7 +19,7 @@ public class Opening {
         this.tableNumber = tableNumber;
     }
 
-    public Integer getSeatNumber() {
+    public int getSeatNumber() {
         return seatNumber;
     }
 

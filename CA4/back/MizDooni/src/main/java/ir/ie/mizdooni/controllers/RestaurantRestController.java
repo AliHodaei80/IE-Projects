@@ -4,6 +4,7 @@ import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Opening;
+import ir.ie.mizdooni.models.Reservation;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.services.ReservationHandler;
@@ -22,10 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static ir.ie.mizdooni.definitions.Parameters.ACTION_FIELD;
 import static ir.ie.mizdooni.definitions.Parameters.SEARCH_FIELD;
@@ -168,26 +166,42 @@ public class RestaurantRestController {
             if (!data.containsKey(DATETIME_KEY) || ((String) data.get(DATETIME_KEY)).isEmpty()) {
                 throw new InvalidRequestFormat(DATETIME_KEY);
             }
+            if (!data.containsKey(SEATS_NUM_KEY)) {
+                throw new InvalidRequestFormat(SEATS_NUM_KEY);
+            }
             LocalDateTime localDateTime = LocalDateTime.parse((String) data.get(DATETIME_KEY));
             String localDateTimeString = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime);
+
+            List<Opening> availableOpenings = reservationHandler.findAvailableTables(
+                    restName,
+                    data.get(SEATS_NUM_KEY) instanceof Integer ?
+                            ((Integer) data.get(SEATS_NUM_KEY)).longValue() : Long.parseLong((String) data.get(SEATS_NUM_KEY)),
+                    localDateTime,
+                    localDateTime.toLocalTime());
+            if (availableOpenings.isEmpty())
+                throw new NoAvailableTable();
+            availableOpenings.sort(Comparator.comparingInt(Opening::getSeatNumber));
+
+
             Map<String, Object> modifiedData = Map.of(
                     RESTAURANT_NAME_KEY, restName,
                     USERNAME_KEY, (String) data.get(USERNAME_KEY),
-                    TABLE_NUM_KEY, Long.parseLong((String) data.get(TABLE_NUM_KEY)),
+                    TABLE_NUM_KEY, availableOpenings.get(0).getTableNumber(),
                     DATETIME_KEY, localDateTimeString
             );
             validateReserveTable(modifiedData);
-            long reservationNum = reservationHandler.addReservation(
+            Reservation reservation = reservationHandler.addReservation(
                     (String) modifiedData.get(RESTAURANT_NAME_KEY),
                     (String) modifiedData.get(USERNAME_KEY),
                     (Long) modifiedData.get(TABLE_NUM_KEY),
                     (String) modifiedData.get(DATETIME_KEY),
                     restaurant.getId());
+            long reservationNum = reservation.getReservationId();
             logger.info("Reservation `" + reservationNum + "` added successfully");
             Map<String, Object> outputData = new HashMap<>();
-            outputData.put("reservationNumber", reservationNum);
+            outputData.put("reservation", reservation);
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
-        } catch (InvalidRequestFormat | InvalidTimeFormat | InvalidRequestTypeFormat |
+        } catch (InvalidRequestFormat | InvalidTimeFormat | InvalidRequestTypeFormat | NoAvailableTable |
                  InvalidUserRole | TableDoesntExist | TableAlreadyReserved | InvalidDateTime | DateTimeNotInRange e) {
             logger.error("Reservation failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.BAD_REQUEST);

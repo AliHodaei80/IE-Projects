@@ -43,7 +43,7 @@ public class Reservations extends Container<Reservations>{
         }
     }
 
-    public long addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime, long restaurantId) {
+    public Reservation addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime, long restaurantId) {
         if (reservations.get(restaurantName) == null) {
             reservations.put(restaurantName, new HashMap<>());
         }
@@ -58,7 +58,7 @@ public class Reservations extends Container<Reservations>{
         reservations.get(restaurantName).get(tableNumber).get(dateTime).add(reservation);
         reservationsIdIndex.put(reservationId, reservation);
         this.saveToFile(Locations.RESERVATIONS_LOCATION);
-        return reservationId;
+        return reservation;
     }
     public List<Reservation> getReservation(String restName, long tableNumber, LocalDateTime dateTime) {
         if (!reservations.containsKey(restName) || !reservations.get(restName).containsKey(tableNumber)) {
