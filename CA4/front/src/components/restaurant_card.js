@@ -3,24 +3,29 @@ import location_icon from "../images/icons/location.svg";
 import dot_icon from "../images/icons/dot.svg";
 import Rating from "./rating.js";
 import TimeInfoComponent from "./time_info.js";
-
+import { Navigate, useNavigate } from "react-router-dom";
 export default function RestaurantCard({ data: data }) {
   const overall = data.avgOverallScore;
   const imageUrl = data.imageUrl;
   const city = data.address.city;
   const type = data.type;
   const restName = data.name;
+  const navigate = useNavigate();
   return (
     <div className="col">
       <div className="restaurant card rounded-4 h-100 position-relative">
-        <a href="#" className="restaurant-link">
+        <div
+          onClick={() => {
+            navigate("/restaurant", { state: data, replace: true });
+          }}
+        >
           <Rating rate={overall} />
           <img
             src={imageUrl}
             className="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
             alt="rest1_picture"
           />
-        </a>
+        </div>
         <div className="card-body">
           <div className="card-title name">{restName}</div>
           <div className="review-count card-text">2096 reviews</div>
