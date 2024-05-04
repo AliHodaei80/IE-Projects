@@ -3,10 +3,14 @@ import "./styles/search_result.css";
 import React, { useState, useEffect } from "react";
 import Header from "./components/header.js";
 import RestaurantCard from "./components/restaurant_card.js";
+import "./styles/shared.css"
 import "./styles/header.css";
 import "./styles/restaurant.css"
 import "./styles/search_result.css";
 import "./styles/footer.css";
+import "./styles/normalize.css";
+import "./styles/search_result.css";
+
 import Footer from "./components/footer.js";
 import {
   Routes,

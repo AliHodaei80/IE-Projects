@@ -29,8 +29,8 @@ const all_restaurants = "/restaurants";
 // ------------------------------------------------------------- //
 
 export default function Home() {
-// ------------------------------------------------------------- //
-  const { authDetails } = useAuth();
+  // ------------------------------------------------------------- //
+  const { authDetails, setAuthDetails } = useAuth();
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
   const [isMounted, setIsMounted] = useState(false);
@@ -38,7 +38,8 @@ export default function Home() {
   const [topRestaurants, setTopRestaurants] = useState({});
   const [restTypes, setRestTypes] = useState([]);
   const [restLocations, setRestLocations] = useState([]);
-// ------------------------------------------------------------- //
+
+  // ------------------------------------------------------------- //
   const fetchRestMetaInfo = () => {
     fetchData(
       all_restaurants,
@@ -95,6 +96,9 @@ export default function Home() {
       { username: authDetails.username, password: authDetails.password },
       (response) => {
         setUserDetails(response.data);
+        const user_details_response = response.data.user;
+        user_details_response.logged_in = true;
+        setAuthDetails(user_details_response);
         if (response.success) {
           searchRestaurants(
             search_method_city,
@@ -112,8 +116,8 @@ export default function Home() {
         (authDetails.logged_in === null) |
         (authDetails.logged_in === false)
       ) {
-        navigate("/authenticate");
-        sendToast(false, "Login First!");
+        // navigate("/authenticate");
+        // sendToast(false, "Login First!");
       } else {
         fetchRestMetaInfo();
         fetchUser();

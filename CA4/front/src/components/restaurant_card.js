@@ -16,7 +16,7 @@ export default function RestaurantCard({ data: data }) {
       <div className="restaurant card rounded-4 h-100 position-relative">
         <div
           onClick={() => {
-            navigate("/restaurant", { state: "Pooria", replace: true });
+            navigate("/restaurant", { state: data, replace: true });
           }}
         >
           <Rating rate={overall} />

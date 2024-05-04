@@ -5,7 +5,7 @@ import UserMailInfo from "./components/user_mail_info.js";
 import ManagerRestaurantsTable from "./components/manager_restaurant_table.js";
 
 // import "./styles/normalize.css";
-// import "./styles/bootstrap.min.css";
+// import "./styles/bootstrطap.min.css";
 // import "./styles/header.css";
 // import "./styles/font.css";
 // import "./styles/footer.css";

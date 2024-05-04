@@ -10,7 +10,7 @@ import { useAuth, AuthProvider } from "./context/AuthContext.js";
 const login_path = "/login";
 const signup_path = "/signup";
 export default function AuthPage() {
-  const {authDetails, setAuthDetails} = useAuth();
+  const { authDetails, setAuthDetails } = useAuth();
   const [showLogin, setShowLogin] = useState(true);
   const [userData, setUserData] = useState({});
   const handleChange = (event) => {
@@ -33,12 +33,16 @@ export default function AuthPage() {
   const onLoginSuccess = (response) => {
     console.log("Login success");
     navigate("/home", { replace: true, state: userData });
-    setAuthDetails(userData);
+    const NuserData = userData;
+    NuserData.logged_in = true;
+    setAuthDetails(NuserData);
   };
   const onSignupSuccess = (response) => {
     console.log("Signup success");
     navigate("/home", { replace: true, state: userData });
-    setAuthDetails(userData);
+    const NuserData = userData;
+    NuserData.logged_in = true;
+    setAuthDetails(NuserData);
   };
   const onLoginFailure = (response) => {
     console.log("Login failed not redirecting");
