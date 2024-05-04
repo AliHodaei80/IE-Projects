@@ -1,53 +1,96 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { fetchData } from "../utils/request_utils.js";
 
-// import "../styles/footer.css";
-let restReservations = [
-  {
-    username: "Mostafa_Ebrahimi",
-    restaurantName: "The Commoner",
-    tableNumber: 1,
-    datetime: "2024-12-03T15:00:00",
-    canceled: true,
-    reservationId: 1,
-  },
-  {
-    username: "Mostafa_Ebrahimi",
-    restaurantName: "The Commoner",
-    tableNumber: 2,
-    datetime: "2024-12-03T15:00:00",
-    reservationId: 2,
-    canceled: false,
-  },
-  {
-    username: "Mostafa_Ebrahimi",
-    restaurantName: "The Commoner",
-    tableNumber: 2,
-    datetime: "2025-12-03T15:00:00",
-    reservationId: 3,
-    canceled: true,
-  },
-];
+function RestaurantReservationList({ restaurantId, tableSelected }) {
+  const [restReservations, setRestReservations] = useState([]);
+  const [datetimeFilter, setDatetimeFilter] = useState("");
 
-function RestaurantReservationList() {
+  let filteredReservations = restReservations.filter((reservation) =>
+    datetimeFilter
+      ? new Date(reservation.datetime).toDateString() ===
+        new Date(datetimeFilter).toDateString()
+      : true
+  );
+
+  if (tableSelected !== -1) {
+    filteredReservations = filteredReservations.filter(
+      (reservation) => reservation.tableNumber === tableSelected
+    );
+  }
+
+  const handleDatetimeChange = (e) => {
+    console.log("time " + e.target.value);
+    setDatetimeFilter(e.target.value);
+  };
+
+  const handleFetchRestaurantReservations = (response) => {
+    console.log(response);
+    if (response.success) {
+      setRestReservations(response.data.reservations);
+    } else {
+      console.log("error happend");
+    }
+  };
+
+  const fetchRestaurantReservations = () => {
+    fetchData(
+      "/restaurants/" + restaurantId + "/reservations",
+      null,
+      handleFetchRestaurantReservations,
+      (res) => {}
+    );
+  };
+
+  useEffect(() => {
+    fetchRestaurantReservations();
+  }, []);
+
   return (
     <div className="col-4 h-100" id="reservation-list">
-      <div className="d-flex align-items-center p-2">
-        <div id="manage-rest-reservation-list-header">Reservation List</div>
-        {restReservations.length > 0 ? (
-          <div className="ms-auto" id="manage-rest-reservation-list-info">
-            Select a table to see its reservations
+      {restReservations.length > 0 ? (
+        <div className="d-flex flex-column align-items-center p-2">
+          <div className="d-flex container-fluid align-items-center p-0">
+            <div id="manage-rest-reservation-list-header">Reservation List</div>
+            <input
+              className="form-control w-25 rounded-4 ms-auto p-1"
+              type="date"
+              name="date"
+              id="date"
+              onChange={handleDatetimeChange}
+              required
+            />
           </div>
-        ) : (
+
+          {tableSelected === -1 ? (
+            <div
+              className="ms-auto mt-1"
+              id="manage-rest-reservation-list-info"
+            >
+              Select a table to see its reservations
+            </div>
+          ) : (
+            <div className="ms-auto mt-1" id="table-reservations">
+              Reservations for Table-{tableSelected}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="d-flex align-items-center p-2">
+          <div id="manage-rest-reservation-list-header">Reservation List</div>
           <div className="ms-auto" id="empty-reservation">
             No Reservation
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="table-responsive">
-        <table className="table-responsive table rounded-3 overflow-hidden">
+        <table
+          id="manage-rest-reservations"
+          className="table-responsive table rounded-3 overflow-hidden"
+        >
           <tbody>
-            {restReservations.map((reservation) => (
+            {filteredReservations.map((reservation) => (
               <tr
                 className={
                   reservation.canceled
@@ -56,11 +99,17 @@ function RestaurantReservationList() {
                 }
               >
                 <td className="manage-reservation-date">
-                  {reservation.datetime}
+                  {new Date(reservation.datetime).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </td>
                 <td className="reserver">{"By " + reservation.username}</td>
                 <td className="manage-table-id">
-                  <a href="#">{" Table " + reservation.tableNumber}</a>
+                  {" Table " + reservation.tableNumber}
                 </td>
               </tr>
             ))}

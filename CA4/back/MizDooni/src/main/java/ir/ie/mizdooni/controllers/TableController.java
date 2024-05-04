@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.controllers;
 import ir.ie.mizdooni.models.Restaurant;
+import ir.ie.mizdooni.models.RestaurantTable;
 import org.springframework.web.bind.annotation.*;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
@@ -27,12 +28,14 @@ import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddTable;
 public class TableController {
     private static RestaurantTableHandler restaurantTableHandler;
     private static RestaurantHandler restaurantHandler;
+    private static ReservationHandler reservationHandler;
     private final Logger logger;
 
     @Autowired
     public TableController() {
         restaurantTableHandler = RestaurantTableHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
+        reservationHandler = ReservationHandler.getInstance();
         logger = LoggerFactory.getLogger(TableController.class);
     }
 
@@ -78,6 +81,26 @@ public class TableController {
                     , HttpStatus.OK);
         } catch (RestaurantNotFound e) {
             logger.error("Restaurant `" + restaurantId + "` Tables retrieve failed. error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/tables/reservations", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Response> getRestaurantTableReservationHandler(@RequestBody Map<String, Object> body) {
+        try {
+            Restaurant restaurant = restaurantHandler.getRestaurant((Long) body.get(RESTAURANT_ID_KEY));
+            if (restaurant == null)
+                throw new RestaurantNotFound();
+            RestaurantTable table = restaurantTableHandler.getRestaurantTable(restaurant.getName(), (Long) body.get(TABLE_NUM_KEY));
+            if (table == null)
+                throw new TableDoesntExist();
+            logger.info("Restaurant `" + restaurant.getName() + "` Table `" + table.getTableNumber() + "` Reservations retrieved successfully");
+            return new ResponseEntity<>(new Response(true,
+                    Map.of("reservations", reservationHandler.getTableReservations(restaurant.getName(), table.getTableNumber())))
+                    , HttpStatus.OK);
+        } catch (RestaurantNotFound | TableDoesntExist e) {
+            logger.error("Reservations retrieve failed. error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }

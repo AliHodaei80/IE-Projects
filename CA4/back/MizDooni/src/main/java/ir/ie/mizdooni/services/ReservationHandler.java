@@ -159,4 +159,8 @@ public class ReservationHandler {
     public List<Reservation> getRestaurantReservation(String restName) {
         return reservations.getRestaurantReservations(restName);
     }
+
+    public  List<Reservation> getTableReservations(String restName, long tableNumber) throws RestaurantNotFound {
+        return new ArrayList<>(reservations.getTableReservations(restName, tableNumber).values());
+    }
 }

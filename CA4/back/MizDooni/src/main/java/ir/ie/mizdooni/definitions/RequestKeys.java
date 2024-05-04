@@ -28,5 +28,6 @@ public class RequestKeys {
     final public static String AMBIANCE_RATE_KEY = "ambianceRate";
     final public static String OVERALL_RATE_KEY = "overallRate";
     final public static String COMMENT_KEY = "comment";
+    final public static String RESTAURANT_ID_KEY = "restaurant_id";
 
 }

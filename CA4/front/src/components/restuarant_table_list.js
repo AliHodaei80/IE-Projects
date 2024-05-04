@@ -7,9 +7,12 @@ import { useState, useEffect } from "react";
 import { fetchData } from "../utils/request_utils.js";
 
 import "bootstrap/dist/js/bootstrap.js";
-// import "../styles/footer.css";
 
-function RestaurantTableList({ restaurantId }) {
+function RestaurantTableList({
+  restaurantId,
+  tableSelected,
+  setTableSelected,
+}) {
   const [restaurantTables, setRestaurantTables] = useState([]);
 
   const handleFetchRestaurantTables = (response) => {
@@ -30,6 +33,17 @@ function RestaurantTableList({ restaurantId }) {
     );
   };
 
+  const handleTableClicked = (tableNumber) => {
+    console.log("table number " + tableNumber);
+    if (tableSelected === tableNumber) {
+      setTableSelected(-1);
+      console.log("table selected " + tableSelected);
+    } else {
+      setTableSelected(tableNumber);
+      console.log("table selected " + tableSelected);
+    }
+  };
+
   useEffect(() => {
     fetchRestaurantTables();
   }, []);
@@ -46,25 +60,42 @@ function RestaurantTableList({ restaurantId }) {
           <div className="container p-4">
             <div className="row mt-4 w-75 mx-auto row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-xl-5 row-cols-xxl-6 g-4">
               {restaurantTables.map((restTable) => (
-                <div className="col">
+                <div
+                  key={restTable.tableNumber}
+                  className="col"
+                  //   onClick={(e) => {
+                  //     console.log(e);
+                  //   }}
+                >
                   <div className="rest-table mx-auto d-flex flex-column justify-content-center rounded-4">
-                    <div className="icon-num d-flex justify-content-evenly">
-                      <img
-                        className="table-manage-icon align-self-center"
-                        // src="../images/icons/hashtag.svg"
-                        src={hashtag}
-                        alt="hashtag-icon"
-                      />
-                      <div>{restTable.tableNumber}</div>
-                    </div>
-                    <div className="icon-num d-flex justify-content-evenly">
-                      <img
-                        className="table-manage-icon align-self-center"
-                        src={seat}
-                        alt="seat-icon"
-                      />
-                      <div>{restTable.seatsNumber}</div>
-                    </div>
+                    <button
+                      className={
+                        tableSelected === restTable.tableNumber
+                          ? "table-button rounded-4 table-selected"
+                          : "table-button rounded-4"
+                      }
+                      onClick={() => {
+                        console.log(restTable.tableNumber);
+                        handleTableClicked(restTable.tableNumber);
+                      }}
+                    >
+                      <div className="icon-num d-flex justify-content-evenly">
+                        <img
+                          className="table-manage-icon align-self-center"
+                          src={hashtag}
+                          alt="hashtag-icon"
+                        />
+                        <div>{restTable.tableNumber}</div>
+                      </div>
+                      <div className="icon-num d-flex justify-content-evenly">
+                        <img
+                          className="table-manage-icon align-self-center"
+                          src={seat}
+                          alt="seat-icon"
+                        />
+                        <div>{restTable.seatsNumber}</div>
+                      </div>
+                    </button>
                   </div>
                 </div>
               ))}

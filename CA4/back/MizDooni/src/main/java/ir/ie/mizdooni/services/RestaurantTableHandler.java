@@ -70,4 +70,8 @@ public class RestaurantTableHandler {
     public RestaurantTables getRestaurantTables() {
         return restaurantTables;
     }
+
+    public RestaurantTable getRestaurantTable(String restName, Long tableNumber) {
+        return restaurantTables.getRestaurantTable(restName, tableNumber);
+    }
 }
