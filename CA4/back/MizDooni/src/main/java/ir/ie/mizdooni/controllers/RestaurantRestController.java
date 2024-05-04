@@ -1,13 +1,16 @@
 package ir.ie.mizdooni.controllers;
 
 import ir.ie.mizdooni.commons.Response;
+import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.exceptions.*;
+import ir.ie.mizdooni.models.Opening;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.RestaurantTable;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
 import ir.ie.mizdooni.services.ReviewHandler;
+import ir.ie.mizdooni.utils.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -226,6 +231,66 @@ public class RestaurantRestController {
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
         } catch (RestaurantNotFound e) {
             logger.error("Reservations retrieve for Restaurant `" + restId + "`` failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/restaurants/{id}/avails", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Response> getRestaurantAvailableTimesHandler(@PathVariable Long id, @RequestBody (required=false) Map<String, Object> data) {
+        Map<String, Object> outputData = new HashMap<>();
+        try {
+            String dateString = data != null ? (String) data.get(DATETIME_KEY) : null;
+            LocalDateTime desiredDate;
+            if (dateString == null || dateString.isEmpty()) {
+                desiredDate = LocalDateTime.now();
+            } else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localDate = LocalDate.parse(dateString, formatter);
+                desiredDate = LocalDateTime.of(localDate, LocalTime.MIDNIGHT);
+            }
+            Restaurant restaurant = restaurantHandler.getRestaurant(id);
+            if (restaurant == null)
+                throw new RestaurantNotFound();
+            Long seatNum = data != null ? (data.containsKey(SEATS_NUM_KEY) ? (data.get(SEATS_NUM_KEY) instanceof Integer ?
+                    ((Integer) data.get(SEATS_NUM_KEY)).longValue() : Long.parseLong((String) data.get(SEATS_NUM_KEY))) : null) : null;
+            List<Opening> availableOpenings;
+            ////////////////////////////////////////////////////////
+            LocalTime desiredTime;
+            String timeString = data != null ? (String) data.get("time") : null;
+            if (timeString == null || timeString.isEmpty()) {
+                if (seatNum == null) {
+                    availableOpenings = reservationHandler.findAvailableTables(
+                            restaurant.getName(),
+                            desiredDate);
+                } else {
+                    availableOpenings = reservationHandler.findAvailableTables(
+                            restaurant.getName(),
+                            seatNum,
+                            desiredDate);
+                }
+
+            } else {
+                desiredTime = Parser.parseTime(timeString, "HH:mm");
+                if (seatNum == null) {
+                    availableOpenings = reservationHandler.findAvailableTables(
+                            restaurant.getName(),
+                            1,
+                            desiredDate,
+                            desiredTime);
+                } else {
+                    availableOpenings = reservationHandler.findAvailableTables(
+                            restaurant.getName(),
+                            seatNum,
+                            desiredDate,
+                            desiredTime);
+                }
+            }
+            outputData.put("availableTimes", availableOpenings);
+            logger.info("Available times for Restaurant `" + id + "` retrieved successfully");
+            return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
+        } catch (RestaurantNotFound e) {
+            logger.error("Available times retrieve for Restaurant `" + id + "`` failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }

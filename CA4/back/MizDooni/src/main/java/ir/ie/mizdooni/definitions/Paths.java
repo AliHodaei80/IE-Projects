@@ -3,7 +3,7 @@ package ir.ie.mizdooni.definitions;
 public class Paths {
     public static final String LOGIN_URL = "/login";
     public static final String SIGNUP_URL = "/signup";
-    public static final String RESTAURANT_URL_REGEX = "^/restaurant/\\d+$";
+    public static final String RESTAURANT_URL_REGEX = "^/restaurants/\\d+$";
     public static final String RESTAURANTS_URL = "/restaurants";
     public static final String RESTAURANTS_SEARCH_URL = "/restaurants/search";
 

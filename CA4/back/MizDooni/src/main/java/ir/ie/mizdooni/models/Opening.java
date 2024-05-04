@@ -19,4 +19,15 @@ public class Opening {
         this.tableNumber = tableNumber;
     }
 
+    public Integer getSeatNumber() {
+        return seatNumber;
+    }
+
+    public Long getTableNumber() {
+        return tableNumber;
+    }
+
+    public ArrayList<LocalDateTime> getAvailableTimes() {
+        return availableTimes;
+    }
 }

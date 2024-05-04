@@ -79,8 +79,8 @@ public class ReservationHandler {
         LocalDateTime currentDateTime;
         for(int day = 0; day <= nextDays; day++) {
             currentDateTime = date.plusDays(day);
-            int startHour = (currentDateTime.toLocalDate().isEqual(date.toLocalDate()))?
-                    max(startTime.getHour(), date.getHour() + 1):
+            int startHour = (LocalDateTime.now().toLocalDate().isEqual(date.toLocalDate()))?
+                    max(startTime.getHour(), LocalDateTime.now().getHour() + 1):
                     startTime.getHour();
             for (int time = startHour; time <= endTime.getHour(); time = time + 1) {
                 openingDateTimes.add(LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.of(time,0)));
@@ -92,23 +92,28 @@ public class ReservationHandler {
     public ArrayList<LocalDateTime> findAvailableDateTimes(String restName, RestaurantTable table,
             LocalDateTime desiredDate) throws RestaurantNotFound {
         Restaurant rest = restaurantHandler.getRestaurant(restName);
+        if (desiredDate.toLocalDate().isBefore(LocalDateTime.now().toLocalDate())) {
+            return new ArrayList<>();
+        }
         Map<LocalDateTime, List<Reservation>> tableReserves = reservations.getTableReservations(restName,
                 table.getTableNumber());
 
         Set<LocalDateTime> reservedDateTimes = tableReserves.values().stream().flatMap(Collection::stream).filter(reservation -> !reservation.isCanceled()).toList().stream().map(Reservation::getDatetime).collect(Collectors.toSet());
 
         // CHECK
-        ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate, 1);
+        ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate, 0);
         Set<LocalDateTime> openingDateTimesSet = new HashSet<>(restOpeningDateTimes);
         openingDateTimesSet.removeAll(reservedDateTimes);
         ArrayList<LocalDateTime> availableDateTimes = new ArrayList<>(openingDateTimesSet);
         return availableDateTimes;
     }
 
+
     public ArrayList<Opening> findAvailableTables(String restName, LocalDateTime desiredDate) throws RestaurantNotFound {
         if (!restaurantHandler.restaurantExists(restName)) {
             throw new RestaurantNotFound();
         }
+
         Collection<RestaurantTable> tables = restaurantTableHandler.getRestTables(restName);
         ArrayList<Opening> resultOpenings = new ArrayList<Opening>();
         for (RestaurantTable table : tables) {
@@ -117,6 +122,19 @@ public class ReservationHandler {
             resultOpenings.add(opening);
         }
         return resultOpenings;
+    }
+
+    public ArrayList<Opening> findAvailableTables(String restName, long seatNum, LocalDateTime desiredDate) throws RestaurantNotFound {
+        ArrayList<Opening> resultOpenings = findAvailableTables(restName, desiredDate);
+        resultOpenings.removeIf(opening -> opening.getSeatNumber() < seatNum);
+        return resultOpenings;
+    }
+
+    public List<Opening> findAvailableTables(String restName, long seatNum, LocalDateTime desiredDate, LocalTime desiredTime) throws RestaurantNotFound {
+        ArrayList<Opening> resultOpenings = findAvailableTables( restName,  seatNum,  desiredDate);
+        // check resultOpenings that if they have desiredTime in their available times or not
+        List<Opening> resultOpeningsFinal = resultOpenings.stream().filter(opening -> opening.getAvailableTimes().stream().anyMatch(dateTime -> dateTime.toLocalTime().equals(desiredTime))).toList();
+        return resultOpeningsFinal;
     }
 
     public long addReservation(String restName, String username, long tableNumber, String dateTime, long restaurantId)
