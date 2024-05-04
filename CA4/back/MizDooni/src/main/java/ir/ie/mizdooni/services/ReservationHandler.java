@@ -9,6 +9,7 @@ import ir.ie.mizdooni.utils.Parser;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 import static java.lang.Integer.max;
@@ -45,7 +46,13 @@ public class ReservationHandler {
     }
 
     private boolean tableIsAvailable(String restName, long tableNumber, LocalDateTime dateTime) {
-        return reservations.getReservation(restName, tableNumber, dateTime) == null;
+//        Reservation reservation = reservations.getReservation(restName, tableNumber, dateTime);
+        List<Reservation> reservations1 = reservations.getReservation(restName, tableNumber, dateTime);
+        if (reservations1 ==null || reservations1.isEmpty()) {
+            return true;
+        }
+        List<Reservation> notCancelledReservations = reservations1.stream().filter(reservation -> !reservation.isCanceled()).toList();;
+        return notCancelledReservations.isEmpty();
     }
 
     public boolean currentDateTimeIsBefore(LocalDateTime dateTime) {
@@ -85,11 +92,15 @@ public class ReservationHandler {
     public ArrayList<LocalDateTime> findAvailableDateTimes(String restName, RestaurantTable table,
             LocalDateTime desiredDate) throws RestaurantNotFound {
         Restaurant rest = restaurantHandler.getRestaurant(restName);
-        Map<LocalDateTime, Reservation> tableReserves = reservations.getTableReservations(restName,
+        Map<LocalDateTime, List<Reservation>> tableReserves = reservations.getTableReservations(restName,
                 table.getTableNumber());
+
+        Set<LocalDateTime> reservedDateTimes = tableReserves.values().stream().flatMap(Collection::stream).filter(reservation -> !reservation.isCanceled()).toList().stream().map(Reservation::getDatetime).collect(Collectors.toSet());
+
+        // CHECK
         ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate, 1);
         Set<LocalDateTime> openingDateTimesSet = new HashSet<>(restOpeningDateTimes);
-        openingDateTimesSet.removeAll(tableReserves.keySet());
+        openingDateTimesSet.removeAll(reservedDateTimes);
         ArrayList<LocalDateTime> availableDateTimes = new ArrayList<>(openingDateTimesSet);
         return availableDateTimes;
     }
@@ -161,6 +172,6 @@ public class ReservationHandler {
     }
 
     public  List<Reservation> getTableReservations(String restName, long tableNumber) throws RestaurantNotFound {
-        return new ArrayList<>(reservations.getTableReservations(restName, tableNumber).values());
+        return new ArrayList<>(reservations.getTableReservations(restName, tableNumber).values().stream().flatMap(Collection::stream).toList());
     }
 }

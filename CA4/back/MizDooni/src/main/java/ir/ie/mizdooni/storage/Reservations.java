@@ -12,7 +12,9 @@ public class Reservations extends Container<Reservations>{
     // Outter 3 is restaurent name
     // Outter 2 is table id
     // OUter 1 is the reservation date
-    Map<String, Map<Long, Map<LocalDateTime, Reservation>>> reservations;
+//    Map<String, Map<Long, Map<LocalDateTime, Reservation>>> reservations;
+    Map<String, Map<Long, Map<LocalDateTime, List<Reservation>>>> reservations;
+
     Map<Long, Reservation> reservationsIdIndex;
     long reservationCounts;
 
@@ -32,7 +34,7 @@ public class Reservations extends Container<Reservations>{
         return ++reservationCounts;
     }
 
-    public Map<LocalDateTime, Reservation> getTableReservations(String restName, long tableNumber)
+    public Map<LocalDateTime, List<Reservation>> getTableReservations(String restName, long tableNumber)
             throws RestaurantNotFound {
         if (reservations.get(restName) != null && reservations.get(restName).get(tableNumber) != null) {
             return reservations.get(restName).get(tableNumber);
@@ -50,12 +52,15 @@ public class Reservations extends Container<Reservations>{
         }
         long reservationId = generateReservationId();
         Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId);
-        reservations.get(restaurantName).get(tableNumber).put(dateTime, reservation);
+        if (reservations.get(restaurantName).get(tableNumber).get(dateTime) == null) {
+            reservations.get(restaurantName).get(tableNumber).put(dateTime, new ArrayList<>());
+        }
+        reservations.get(restaurantName).get(tableNumber).get(dateTime).add(reservation);
         reservationsIdIndex.put(reservationId, reservation);
         this.saveToFile(Locations.RESERVATIONS_LOCATION);
         return reservationId;
     }
-    public Reservation getReservation(String restName, long tableNumber, LocalDateTime dateTime) {
+    public List<Reservation> getReservation(String restName, long tableNumber, LocalDateTime dateTime) {
         if (!reservations.containsKey(restName) || !reservations.get(restName).containsKey(tableNumber)) {
             return null;
         }
@@ -89,24 +94,25 @@ public class Reservations extends Container<Reservations>{
 
     public List<Reservation> getAllReservations() {
         return reservations.values().stream()
-                .flatMap(innerMap -> innerMap.values().stream())
-                .flatMap(innerMap2 -> innerMap2.values().stream())
-                .collect(Collectors.toList());
+                .flatMap(outerMap -> outerMap.values().stream())
+                .flatMap(middleMap -> middleMap.values().stream())
+                .flatMap(List::stream).toList();
     }
 
     public List<Reservation> getUserReservations(String username) {
         return reservations.values().stream()
                 .flatMap(innerMap -> innerMap.values().stream())
                 .flatMap(innerMap2 -> innerMap2.values().stream())
+                .flatMap(List::stream)
                 .filter(reservation -> username.equals(reservation.getUsername()))
                 .collect(Collectors.toList());
     }
 
-    public Map<String, Map<Long, Map<LocalDateTime, Reservation>>> getReservations() {
+    public Map<String, Map<Long, Map<LocalDateTime, List<Reservation>>>> getReservations() {
         return reservations;
     }
 
-    public void setReservations(Map<String, Map<Long, Map<LocalDateTime, Reservation>>> reservations) {
+    public void setReservations(Map<String, Map<Long, Map<LocalDateTime, List<Reservation>>>> reservations) {
         this.reservations = reservations;
     }
 
@@ -132,6 +138,7 @@ public class Reservations extends Container<Reservations>{
         }
         return reservations.get(restName).values().stream()
                 .flatMap(innerMap -> innerMap.values().stream())
+                .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 }
