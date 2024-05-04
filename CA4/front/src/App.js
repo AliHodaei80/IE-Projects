@@ -5,7 +5,7 @@ import Error from "./components/error";
 import ManagerRestaurants from "./manager_restaurants";
 import ManageRestaurantPage from "./manage_restaurant";
 import AuthPage from "./AuthPage";
-
+import SearchResultPage from "./SearchResultPage"
 function App() {
   return (
     <Router>
@@ -13,6 +13,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/error" element={<Error />} />
         <Route path="/authenticate" element={<AuthPage />} />
+        <Route path="/search_result" element={<SearchResultPage />} />
         <Route path="/manager-restaurants" element={<ManagerRestaurants />} />
         <Route
           path="/manager-restaurants/:id"

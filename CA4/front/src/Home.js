@@ -15,7 +15,7 @@ import background_image from "./images/home.png";
 import React, { useState, useEffect } from "react";
 // ------------------------------------------------------------- //
 import AboutMizdooni from "./components/about.js";
-import SearchBarForm from "./components/searchbar.js";
+import SearchBarForm from "./components/rest_search_bar.js";
 import SearchResult from "./components/top_result.js";
 import Header from "./components/header.js";
 import Footer from "./components/footer.js";
@@ -48,13 +48,15 @@ export default function Home() {
           const restTypes = [
             ...new Set(response.data.restaurants.map((val) => val.type)),
           ];
-          const restLoactions = [
+          const restLocations = [
             ...new Set(
-              response.data.restaurants.map((val) => val.address.city)
+              response.data.restaurants
+                .map((val) => [val.address.city, val.address.country])
+                .flat()
             ),
           ];
           setRestTypes(restTypes);
-          setRestLocations(restLoactions);
+          setRestLocations(restLocations);
           const rests = response.data.restaurants;
           rests.sort((a, b) => b.avgOverallScore - a.avgOverallScore);
           console.log("Rest rests", rests);
