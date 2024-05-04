@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import location_icon from "../images/icons/location.svg";
 import dot_icon from "../images/icons/dot.svg";
 import Rating from "./rating.js";
 import TimeInfoComponent from "./time_info.js";
-import { Navigate, useNavigate } from "react-router-dom";
-export default function RestaurantCard({ data: data }) {
+
+export default function RestaurantCard({ data }) {
   const overall = data.avgOverallScore;
   const imageUrl = data.imageUrl;
   const city = data.address.city;
   const type = data.type;
   const restName = data.name;
-  const navigate = useNavigate();
+
   return (
     <div className="col">
       <div className="restaurant card rounded-4 h-100 position-relative">
-        <div
-          onClick={() => {
-            navigate("/restaurant", { state: data, replace: true });
+        <Link
+          to={{
+            pathname: "/restaurant",
+            state: { overall : overall,imageUrl:imageUrl,type:type,city:city,name:restName },
           }}
+          className="text-decoration-none text-reset"
         >
           <Rating rate={overall} />
           <img
@@ -25,7 +28,7 @@ export default function RestaurantCard({ data: data }) {
             className="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
             alt="rest1_picture"
           />
-        </div>
+        </Link>
         <div className="card-body">
           <div className="card-title name">{restName}</div>
           <div className="review-count card-text">2096 reviews</div>

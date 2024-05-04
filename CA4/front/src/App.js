@@ -8,10 +8,13 @@ import AuthPage from "./AuthPage";
 import SearchResultPage from "./SearchResultPage";
 import RestaurantPage from "./RestaurantPage";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { BrowserRouter, Link } from "react-router-dom";
+
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <Link to="/restaurant">Go to Other Component</Link>
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/error" element={<Error />} />
