@@ -14,9 +14,6 @@ import RestaurantCard from "./restaurant_card.js";
 const max_top_number_to_show = 6;
 
 function TopResults({ searchResult, title }) {
-  console.log("Search Data", searchResult);
-  const [isMounted, setIsMounted] = useState(false);
-
   return (
     <div className="p-3 container">
       <div className="p-3 container" id="suggestions-container">

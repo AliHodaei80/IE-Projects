@@ -12,8 +12,6 @@ const signup_path = "/signup";
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const [userData, setUserData] = useState({});
-  const navigate = useNavigate();
-  const [AxiosResult, setResult] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserData((prevState) => ({
@@ -21,6 +19,8 @@ export default function AuthPage() {
       [name]: value,
     }));
   };
+  const navigate = useNavigate();
+  const [AxiosResult, setResult] = useState({});
   const resolveToast = () => {
     if (AxiosResult.success) {
       sendToast(true, "Signed up / Logged in Succesfully!");

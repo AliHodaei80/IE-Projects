@@ -109,6 +109,19 @@ public class RestaurantRestController {
         return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/restaurants/search_general", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Response> searchGeneralHandler(@RequestBody Map<String, Object> data) {
+        String location = (String) data.get("location");
+        String restType = (String) data.get("type");
+        String name = (String) data.get("name");
+        Map<String, Object> outputData = new HashMap<>();
+        outputData.put("restaurants",
+                restaurantHandler.generalSearch(name,location,restType));
+        logger.info("Restaurants Searched (`" + restType + " "+ name + ", `" + location + "`) retrieved successfully");
+        return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
+    }
+
     // RestaurantPageController POST
     @RequestMapping(value = "/restaurants/{id}/feedback", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")

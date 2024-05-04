@@ -55,6 +55,10 @@ public class Restaurants extends Container<Restaurants> {
         return rest.getCity().equals(city);
     }
 
+    public boolean countrySearchFilter(Restaurant rest, String country) {
+        return rest.getCountry().equals(country);
+    }
+
     public boolean nameSearchFilter(Restaurant rest, String type) {
         return rest.getName().contains(type);
     }
@@ -82,6 +86,13 @@ public class Restaurants extends Container<Restaurants> {
         return new ArrayList<>(restaurants.values())
                 .stream()
                 .filter(rest -> citySearchFilter(rest, city))
+                .collect(Collectors.toList());
+    }
+
+    public List<Restaurant> searchByCountry(String country) {
+        return new ArrayList<>(restaurants.values())
+                .stream()
+                .filter(rest -> countrySearchFilter(rest, country))
                 .collect(Collectors.toList());
     }
 

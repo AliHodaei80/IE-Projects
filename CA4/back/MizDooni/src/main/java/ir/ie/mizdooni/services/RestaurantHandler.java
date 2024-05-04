@@ -1,9 +1,8 @@
 package ir.ie.mizdooni.services;
-
+import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.definitions.Locations;
@@ -13,7 +12,6 @@ import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Restaurants;
-import java.util.List;
 import ir.ie.mizdooni.utils.Parser;
 
 
@@ -52,7 +50,24 @@ public class RestaurantHandler {
     public List<Restaurant> searchRestaurantByName(String restName) {
         return restaurants.searchByName(restName);
     }
+    public List<Restaurant> generalSearch(String restName, String location, String restType) {
+        Set<Restaurant> resultSet = new HashSet<>();
 
+        if (restName != null && !restName.isEmpty()) {
+            resultSet.addAll(restaurants.searchByName(restName));
+        }
+
+        if (location != null && !location.isEmpty()) {
+            resultSet.addAll(restaurants.searchByCity(location));
+            resultSet.addAll(restaurants.searchByCountry(location));
+        }
+
+        if (restType != null && !restType.isEmpty()) {
+            resultSet.addAll(restaurants.searchByType(restType));
+        }
+
+        return new ArrayList<>(resultSet);
+    }
     public List<Restaurant> searchRestaurantByManagerName(String managerName) {
         return restaurants.searchByManagerName(managerName);
     }
