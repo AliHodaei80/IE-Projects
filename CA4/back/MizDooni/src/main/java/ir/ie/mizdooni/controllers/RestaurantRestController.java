@@ -166,16 +166,17 @@ public class RestaurantRestController {
             if (!data.containsKey(DATETIME_KEY) || ((String) data.get(DATETIME_KEY)).isEmpty()) {
                 throw new InvalidRequestFormat(DATETIME_KEY);
             }
-            if (!data.containsKey(SEATS_NUM_KEY)) {
-                throw new InvalidRequestFormat(SEATS_NUM_KEY);
+            if (!data.containsKey(SEATS_RESERVED_KEY)) {
+                throw new InvalidRequestFormat(SEATS_RESERVED_KEY);
             }
             LocalDateTime localDateTime = LocalDateTime.parse((String) data.get(DATETIME_KEY));
             String localDateTimeString = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime);
+            int seatsReserved = data.get(SEATS_RESERVED_KEY) instanceof Integer ?
+                    (Integer) data.get(SEATS_RESERVED_KEY) : Integer.parseInt((String) data.get(SEATS_RESERVED_KEY));
 
             List<Opening> availableOpenings = reservationHandler.findAvailableTables(
                     restName,
-                    data.get(SEATS_NUM_KEY) instanceof Integer ?
-                            ((Integer) data.get(SEATS_NUM_KEY)).longValue() : Long.parseLong((String) data.get(SEATS_NUM_KEY)),
+                    seatsReserved,
                     localDateTime,
                     localDateTime.toLocalTime());
             if (availableOpenings.isEmpty())
@@ -195,7 +196,8 @@ public class RestaurantRestController {
                     (String) modifiedData.get(USERNAME_KEY),
                     (Long) modifiedData.get(TABLE_NUM_KEY),
                     (String) modifiedData.get(DATETIME_KEY),
-                    restaurant.getId());
+                    restaurant.getId(),
+                    seatsReserved);
             long reservationNum = reservation.getReservationId();
             logger.info("Reservation `" + reservationNum + "` added successfully");
             Map<String, Object> outputData = new HashMap<>();

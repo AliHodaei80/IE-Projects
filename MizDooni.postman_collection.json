@@ -188,7 +188,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Ali_Hodaei\",\r\n    \"datetime\": \"2024-05-05T21:00:00\",\r\n    \"seatsNumber\": 7\r\n}",
+					"raw": "{\r\n    \"username\": \"Ali_Hodaei\",\r\n    \"datetime\": \"2024-05-05T21:00:00\",\r\n    \"seatsReserved\": 7\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

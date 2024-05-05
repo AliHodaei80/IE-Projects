@@ -43,7 +43,8 @@ public class Reservations extends Container<Reservations>{
         }
     }
 
-    public Reservation addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime, long restaurantId) {
+    public Reservation addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime,
+                                      long restaurantId, long seatsReserved) {
         if (reservations.get(restaurantName) == null) {
             reservations.put(restaurantName, new HashMap<>());
         }
@@ -51,7 +52,7 @@ public class Reservations extends Container<Reservations>{
             reservations.get(restaurantName).put(tableNumber, new HashMap<>());
         }
         long reservationId = generateReservationId();
-        Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId, restaurantId);
+        Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId, restaurantId, seatsReserved);
         if (reservations.get(restaurantName).get(tableNumber).get(dateTime) == null) {
             reservations.get(restaurantName).get(tableNumber).put(dateTime, new ArrayList<>());
         }

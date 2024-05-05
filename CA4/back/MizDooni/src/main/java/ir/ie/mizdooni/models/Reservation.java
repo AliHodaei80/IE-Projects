@@ -21,8 +21,9 @@ public class Reservation {
     Long reservationId;
     Long restaurantId;
     boolean canceled;
+    Long seatsReserved;
 
-    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber, Long restaurantId) {
+    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber, Long restaurantId, Long seatsReserved) {
         this.username = username;
         this.restaurantName = restaurantName;
         this.tableNumber = tableNumber;
@@ -30,6 +31,7 @@ public class Reservation {
         this.reservationId = reservationNumber;
         this.canceled = false;
         this.restaurantId = restaurantId;
+        this.seatsReserved = seatsReserved;
     }
 
     public String getUsername() {
@@ -84,5 +86,9 @@ public class Reservation {
 
     public Long getRestaurantId() {
         return restaurantId;
+    }
+
+    public Long getSeatsReserved() {
+        return seatsReserved;
     }
 }

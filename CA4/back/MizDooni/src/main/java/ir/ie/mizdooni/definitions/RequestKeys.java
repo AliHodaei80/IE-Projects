@@ -18,6 +18,7 @@ public class RequestKeys {
     final public static String RESTAURANT_IMAGE_URL_KEY = "image";
     final public static String TABLE_NUM_KEY = "tableNumber";
     final public static String SEATS_NUM_KEY = "seatsNumber";
+    final public static String SEATS_RESERVED_KEY = "seatsReserved";
     final public static String RESTAURANT_NAME_KEY = "restaurantName";
     final public static String RESTAURANT_SEARCH_NAME_KEY = "name";
     final public static String DATETIME_KEY = "datetime";

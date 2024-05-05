@@ -107,7 +107,7 @@ public class MizDooniController {
                     (String) data.get(USERNAME_KEY),
                     ((Double) data.get(TABLE_NUM_KEY)).intValue(),
                     (String) data.get(DATETIME_KEY),
-                    restaurant.getId());
+                    restaurant.getId(), 1);
             long reservationNum = reservation.getReservationId();
             resultDate.put(RESERVATION_NUM_KEY, reservationNum);
 
