@@ -321,9 +321,11 @@ public class RestaurantRestController {
                             desiredTime);
                 }
             }
-//            Set<String> availableTimes = availableOpenings.stream()
-//                    .map(Opening::getAvailableTimes).collect(Collectors.toList()).stream().collect(Collectors.toSet());
-            outputData.put("availableTimes", availableOpenings);
+            // get all list of availableTimes of each Opening and put them in a set
+            Set<LocalDateTime> availableTimes = availableOpenings.stream()
+                    .map(Opening::getAvailableTimes).flatMap(Collection::stream)
+                    .collect(Collectors.toSet());
+            outputData.put("availableTimes", availableTimes);
             logger.info("Available times for Restaurant `" + id + "` retrieved successfully");
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
         } catch (RestaurantNotFound e) {
