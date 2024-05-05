@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-
-import "../styles/bootstrap.min.css";
 import "../styles/normalize.css";
 import "../styles/font.css";
 import "../styles/colors.css";
@@ -18,13 +16,25 @@ function Header() {
     console.log("Auth Details", authDetails);
   });
   const handleReserveNow = () => {
-    if (authDetails.logged_in === false) {
-      navigate("/authenticate");
-      sendToast(false, "Login first!");
-    } else {
-      // navigate to some other place
-    }
+    navigate("/authenticate");
   };
+  const handleMyRestaurants = () => {
+    navigate("/manager_restaurants");
+  };
+  const handleMyReservations = () => {
+    navigate("/reservations");
+  };
+  let buttonText,buttonOnClick;
+  if (authDetails.logged_in === false) {
+    buttonText = "Reserve Now!";
+    buttonOnClick = handleReserveNow;
+  } else if (authDetails.role === "MANAGER") {
+    buttonText = "My Restaurants";
+    buttonOnClick = handleMyRestaurants;
+  } else {
+    buttonText = "My Reservations";
+    buttonOnClick = handleMyReservations;
+  }
   return (
     <header
       className="justify-content-between d-flex sticky-top container-fluid"
@@ -45,9 +55,10 @@ function Header() {
         )}
         <button
           className="reserve-button rounded-3 border-0"
-          onClick={handleReserveNow}
+          id = "btn-reserve"
+          onClick={buttonOnClick}
         >
-          Reserve Now!
+          {buttonText}
         </button>
       </div>
     </header>

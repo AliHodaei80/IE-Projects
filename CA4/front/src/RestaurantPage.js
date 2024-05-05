@@ -12,12 +12,6 @@ import "./styles/footer.css";
 import "./styles/normalize.css";
 import "./styles/search_result.css";
 import {
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-  useLocation,
   useParams,
 } from "react-router-dom";
 import { fetchData, sendToast } from "./utils/request_utils.js";
@@ -53,7 +47,7 @@ export default function RestaurantPage() {
         (res) => {}
       );
     }
-  }, []);
+  }, [mounted,id]);
 
   return (
     mounted && (
