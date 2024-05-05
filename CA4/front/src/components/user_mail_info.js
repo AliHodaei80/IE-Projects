@@ -15,6 +15,7 @@ function UserMailInfo() {
       () => {
         navigate("/authenticate");
         sendToast(true, "Logged out successfully");
+        setAuthDetails({ logged_in: false });
       },
       () => {
         sendToast(true, "Logout failed");

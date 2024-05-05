@@ -76,7 +76,6 @@ export default function Home() {
         search: key_data,
       },
       (response) => {
-        
         setUserSpecificSearchResult(response.data);
         sendToast(
           response.success,
@@ -91,23 +90,25 @@ export default function Home() {
   };
 
   const fetchUser = () => {
-    fetchData(
-      user_details_endpoint + authDetails.username,
-      { username: authDetails.username, password: authDetails.password },
-      (response) => {
-        setUserDetails(response.data);
-        const user_details_response = response.data.user;
-        user_details_response.logged_in = true;
-        setAuthDetails(user_details_response);
-        if (response.success) {
-          searchRestaurants(
-            search_method_city,
-            response.data.user.address.city
-          );
-        }
-      },
-      (res) => {}
-    );
+    if (authDetails.logged_in) {
+      fetchData(
+        user_details_endpoint + authDetails.username,
+        { username: authDetails.username, password: authDetails.password },
+        (response) => {
+          setUserDetails(response.data);
+          const user_details_response = response.data.user;
+          user_details_response.logged_in = true;
+          setAuthDetails(user_details_response);
+          if (response.success) {
+            searchRestaurants(
+              search_method_city,
+              response.data.user.address.city
+            );
+          }
+        },
+        (res) => {}
+      );
+    }
   };
 
   useEffect(() => {
