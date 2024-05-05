@@ -76,6 +76,7 @@ export default function Home() {
         search: key_data,
       },
       (response) => {
+        
         setUserSpecificSearchResult(response.data);
         sendToast(
           response.success,
@@ -110,8 +111,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchUser();
     fetchRestMetaInfo();
+    fetchUser();
     // if (!isMounted) {
     //   if (authDetails.logged_in === false) {
     //     // navigate("/authenticate");

@@ -12,11 +12,11 @@ import { useLocation } from "react-router-dom";
 export default function SearchResultPage() {
   const { state } = useLocation();
   return (
-    <main class="flex-grow-1">
+    <main className="flex-grow-1">
       <Header></Header>
-      <div class="p-3 container">
-        <div class="search-result-title">Search Results</div>
-        <div class="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+      <div className="p-3 container">
+        <div className="search-result-title">Search Results</div>
+        <div className="restaurants row p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
           {state && state.restaurants && state.restaurants.length > 0
             ? state.restaurants.map((restaurant, index) => (
                 <RestaurantCard key={index} data={restaurant} />

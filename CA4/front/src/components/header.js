@@ -35,20 +35,25 @@ function Header() {
     buttonText = "My Reservations";
     buttonOnClick = handleMyReservations;
   }
+  const handleNavigateHome = () => {
+    navigate("/home");
+  };
   return (
     <header
       className="justify-content-between d-flex sticky-top container-fluid"
       id="header"
     >
-      <div class="d-flex sticky-top container-fluid">
-        <img src={logo} alt="logo" className="logo" />
-        <span className="mt-4 header-text d-none d-sm-block">
-          Reserve Table From Anywhere!
-        </span>
-      </div>
+      <button onClick={handleNavigateHome} className="bg-transparent border-0">
+        <div className="d-flex sticky-top container-fluid">
+          <img src={logo} alt="logo" className="logo" />
+          <span className="mt-4 header-text d-none d-sm-block">
+            Reserve Table From Anywhere!
+          </span>
+        </div>
+      </button>
       <div className="d-flex justify-content-between align-items-center">
         {authDetails.logged_in === false ? null : (
-          <span className="d-flex align-items-center flex-wrap align-middle me-2 ms-1 w-100">
+          <span className="d-flex align-items-center flex-wrap align-middle w-75">
             {"Welcome  " +
               (authDetails.role === "MANAGER"
                 ? "Admin!"

@@ -45,9 +45,9 @@ let reservations = [
 ];
 function CustomerReservations() {
   return (
-    <div class="table-responsive">
-      <table class="table-responsive table mt-4 rounded-3 overflow-hidden">
-        <thead class="reservations-header">
+    <div className="table-responsive">
+      <table className="table-responsive table mt-4 rounded-3 overflow-hidden">
+        <thead className="reservations-header">
           <tr>
             <th colspan="5" scope="colgroup">
               My Reservations
