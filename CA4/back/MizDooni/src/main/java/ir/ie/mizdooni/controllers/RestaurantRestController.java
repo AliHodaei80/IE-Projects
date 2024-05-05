@@ -276,7 +276,7 @@ public class RestaurantRestController {
         }
     }
 
-    @RequestMapping(value = "/restaurants/{id}/avails", method = RequestMethod.GET)
+    @RequestMapping(value = "/restaurant/{id}/avails", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> getRestaurantAvailableTimesHandler(@PathVariable Long id, @RequestBody (required=false) Map<String, Object> data) {
         Map<String, Object> outputData = new HashMap<>();

@@ -18,8 +18,9 @@ import "./styles/search_result.css";
 import clock_icon from "./images/icons/clock.svg";
 import fork_knife from "./images/icons/fork_knife.svg";
 import { useParams } from "react-router-dom";
-import { fetchData, sendToast } from "./utils/request_utils.js";
+import { fetchData, postData, sendToast } from "./utils/request_utils.js";
 import star_inside_review from "./images/icons/star_inside_review.png";
+import calender from "./images/icons/calendar.svg";
 const review_page_size = 5;
 export default function RestaurantPage() {
   const [mounted, setMounted] = useState(false);
@@ -28,12 +29,41 @@ export default function RestaurantPage() {
     startTime: "12:00:00",
     endTime: "12:00:00",
   });
+
   const [reviewData, setReviewData] = useState([]);
   const [tableData, setTables] = useState([]);
   const { id } = useParams();
-
+  const [targetDateTime, setTargetDateTime] = useState();
+  const [targetPeopleCount, setTargetPeopleCount] = useState();
+  const [resolvedTables, setResolvedTables] = useState();
   const [page, setPage] = useState(0);
   const [filteredReview, setFilteredReview] = useState();
+
+  const handleDatetimeChange = (e) => {
+    console.log("time " + e.target.value);
+    setTargetDateTime(e.target.value);
+  };
+  const handleCountChange = (e) => {
+    console.log("Count", e.target.value);
+    console.log("County",targetDateTime , targetPeopleCount)
+    setTargetPeopleCount(e.target.value)
+    if (targetDateTime && targetPeopleCount) {
+      const payload = {
+        datetime: targetDateTime,
+        time: "12:00",
+        seatsNumber: targetPeopleCount,
+      };
+      postData(
+         "/restaurant/"+ restaurantData.id + "/avails",
+        payload,
+        (response) => {setResolvedTables(response.data)},
+        () => {},
+        () => {}
+      );
+      console.log(resolvedTables);
+    } else {
+    }
+  };
 
   useEffect(() => {
     setFilteredReview(
@@ -163,46 +193,37 @@ export default function RestaurantPage() {
                     </div>
                   </div>
                 </div>
-                <div className=" col-md mt-5 ms-0 p-1 m-0">
+                <div className="col-md mt-5 ms-0 p-1 m-0">
                   <h5 id="booking" className="h5">
                     Reserve Table
                   </h5>
-                  <div className="d-inline-flex">
-                    <span className="text-center mt-1"> For </span>
-                    <div className="input-group text-center">
-                      <select
-                        className="custom-select count-picker rounded-3 ms-2 form-select"
-                        id="inputGroupSelect01"
-                        aria-placeholder="Location"
-                      >
-                        <option selected>2</option>
-                        <option value="if">3</option>
-                      </select>
-                      <span className="text-center mt-1 ms-2">
-                        {" "}
-                        people, on date{" "}
+                  <div className="d-flex align-middle">
+                    <span className="mt"> For </span>
+                    <input
+                      type="number"
+                      className="ms-2 custom-select count-picker rounded-3"
+                      id="tableNumber"
+                      onChange={handleCountChange}
+                      aria-placeholder="Location"
+                    />
+                    <div className="text-center d-flex align-middle">
+                      <span className="text-center ms-auto align-middle">
+                        people, on date
                       </span>
-                      <button
-                        className="btn date-picker btn-outline-secondary ms-2 search-button"
-                        type="button"
-                      >
-                        <div className="d-flex">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/calendar.svg"
-                            alt="star_filled"
-                          />
-                          <span className="p-0 ms-3 fw-bolder">
-                            {" "}
-                            2024-02-18{" "}
-                          </span>
-                        </div>
-                      </button>
+                      <input
+                        className="form-control w-25 rounded-4 ms-auto align-middle"
+                        type="date"
+                        name="date"
+                        id="date"
+                        onChange={handleDatetimeChange}
+                        required
+                      />
+                      <span className="p-0 ms-3 fw-bolder">2024-02-18</span>
                     </div>
                   </div>
                   <br />
                   <br />
-                  <span>Available Times for Table #1 (2 seats)</span>
+                  <span>Available Times for Table #1 ({targetPeopleCount} seats)</span>
                   <div className=" text-center mt-3 ms-0">
                     <div className="row">
                       <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
