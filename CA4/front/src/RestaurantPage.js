@@ -7,7 +7,7 @@ import TimeInfoComponent from "./components/time_info.js";
 import Rating from "./components/rating.js";
 import ReviewCard from "./components/review_card.js";
 import ReactPaginate from "react-paginate";
-
+import { isOpen } from "./components/time_info.js";
 import "./styles/shared.css";
 import "./styles/header.css";
 import "./styles/restaurant.css";
@@ -58,7 +58,11 @@ export default function RestaurantPage() {
             sendToast(true, "Restaurant loaded succesfully");
             setRestaurantData(response.data.restaurant);
             setReviewData(response.data.reviews);
-            setFilteredReview(response.data.reviews.filter((items,index) => { return (index <= review_page_size)}));
+            setFilteredReview(
+              response.data.reviews.filter((items, index) => {
+                return index <= review_page_size;
+              })
+            );
             setTables(response.data.restaurantTables);
           } else {
             sendToast(false, "Restaurant fetch failed");
@@ -85,16 +89,23 @@ export default function RestaurantPage() {
                   />
                   <div className=" descripton-card mt-5 position-relative">
                     <div className=" d-flex justify-content-between">
-                      <p className="display-4 position-absolute mt-5">
+                      <p className="display-6 position-absolute mt-5">
                         {restaurantData.name}
                       </p>
-                      <p
-                        className="rounded-4 text-center position-absolute top-50 end-0 me-5"
-                        id="rest-status"
-                      >
-                        Open!
-                      </p>
-                      <div className="mb-2 pt-4 mt-5 position-absolute top-100">
+                      {isOpen(
+                        restaurantData.startTime,
+                        restaurantData.endTime
+                      ) ? (
+                        <p className="rest-status-open rounded-4 text-center position-absolute top-50 end-0 me-2">
+                          Open!
+                        </p>
+                      ) : (
+                        <p className="rest-status-closed rounded-4 text-center position-absolute top-50 end-0 me-2">
+                          Closed!
+                        </p>
+                      )}
+
+                      <div className="mb-2 pt-4 mt-1 position-absolute top-100">
                         <div className="">
                           <div className="review-header">
                             <div className="d-flex justify-content-between">
@@ -315,11 +326,12 @@ export default function RestaurantPage() {
                   <ReactPaginate
                     className="align-middle d-flex justify-content-center p-5 list-unstyled"
                     containerClassName={"align-middle list-unstyled"}
-                    pageClassName={"button page-button align-middle m-2 list-unstyled"}
+                    pageClassName={
+                      "button page-button align-middle m-2 list-unstyled"
+                    }
                     pageLinkClassName="page-link rounded-circle h-100 pt-2 list-unstyled"
                     activeClassName={"border-danger border-2"}
                     onPageChange={(event) => setPage(event.selected)}
-              
                     pageCount={Math.ceil(reviewData.length / review_page_size)}
                     breakLabel={null}
                     previousLabel={

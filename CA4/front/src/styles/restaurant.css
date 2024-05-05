@@ -23,7 +23,7 @@ body {
   /* z-index: 1; */
 }
 
-#rest-status {
+.rest-status-open {
   font-size: 18px;
   font-weight: 400;
   color: white;
@@ -31,7 +31,18 @@ body {
   top: 50%;
   position: relative;
   height: 33px;
-  background-color: green;
+  background-color: rgb(124, 228, 124);
+}
+
+.rest-status-closed {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+  width: 90px;
+  top: 50%;
+  position: relative;
+  height: 33px;
+  background-color: rgb(255, 121, 81);
 }
 
 review-card {
