@@ -143,4 +143,8 @@ public class Restaurants extends Container<Restaurants> {
         }
         return res;
     }
+
+    public long getRestaurantCount() {
+        return restaurantCount;
+    }
 }

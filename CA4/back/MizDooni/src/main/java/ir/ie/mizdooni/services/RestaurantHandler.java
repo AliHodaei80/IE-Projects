@@ -50,6 +50,7 @@ public class RestaurantHandler {
     public List<Restaurant> searchRestaurantByName(String restName) {
         return restaurants.searchByName(restName);
     }
+
     public List<Restaurant> generalSearch(String restName, String location, String restType) {
         Set<Restaurant> resultSet = new HashSet<>();
 
@@ -128,5 +129,9 @@ public class RestaurantHandler {
 
     public Map<String, Long> getRestaurantsIds() {
         return restaurants.getRestaurantsId();
+    }
+
+    public  long getTotalRestaurantsCount() {
+        return restaurants.getRestaurantCount();
     }
 }

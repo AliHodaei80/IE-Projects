@@ -3,10 +3,7 @@ package ir.ie.mizdooni.controllers;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.exceptions.*;
-import ir.ie.mizdooni.models.Opening;
-import ir.ie.mizdooni.models.Reservation;
-import ir.ie.mizdooni.models.Restaurant;
-import ir.ie.mizdooni.models.RestaurantTable;
+import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
@@ -24,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ir.ie.mizdooni.definitions.Parameters.ACTION_FIELD;
 import static ir.ie.mizdooni.definitions.Parameters.SEARCH_FIELD;
@@ -119,8 +117,12 @@ public class RestaurantRestController {
         String restType = (String) data.get("type");
         String name = (String) data.get("name");
         Map<String, Object> outputData = new HashMap<>();
+        List<Restaurant> restaurantList = restaurantHandler.generalSearch(name, location, restType);
+        int pageLimit = data.containsKey("pageLimit") ? (int) data.get("pageLimit") : restaurantList.size();
+        int page = data.containsKey("page") ? (int) data.get("page") : 1;
+        List<Object> restaurantObjectList = new ArrayList<>(restaurantList);
         outputData.put("restaurants",
-                restaurantHandler.generalSearch(name,location,restType));
+                PageData.paginate(restaurantObjectList, page, pageLimit, "Restaurants"));
         logger.info("Restaurants Searched (`" + restType + " "+ name + ", `" + location + "`) retrieved successfully");
         return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
     }
@@ -319,6 +321,8 @@ public class RestaurantRestController {
                             desiredTime);
                 }
             }
+//            Set<String> availableTimes = availableOpenings.stream()
+//                    .map(Opening::getAvailableTimes).collect(Collectors.toList()).stream().collect(Collectors.toSet());
             outputData.put("availableTimes", availableOpenings);
             logger.info("Available times for Restaurant `" + id + "` retrieved successfully");
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
