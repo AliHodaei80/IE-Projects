@@ -113,17 +113,6 @@ export default function Home() {
   useEffect(() => {
     fetchRestMetaInfo();
     fetchUser();
-    // if (!isMounted) {
-    //   if (authDetails.logged_in === false) {
-    //     // navigate("/authenticate");
-    //     // sendToast(false, "Login First!");
-    //   } else {
-    //   }
-    //   setIsMounted(true);
-    // } else {
-    //   setIsMounted(true);
-    //   console.log("Already Fetched user data : ", userDetails);
-    // }
   }, []);
 
   return (
