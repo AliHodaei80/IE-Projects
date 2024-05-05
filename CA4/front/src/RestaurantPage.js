@@ -63,7 +63,6 @@ export default function RestaurantPage() {
                     src={restaurantData.imageUrl}
                     alt="tables_logo"
                     className="h-50 rounded-4 position-relative col rounded-3 mt-5 w-100"
-                    // id="sample-rest-img"
                   />
                   <div className=" descripton-card mt-5 position-relative">
                     <div className=" d-flex justify-content-between">

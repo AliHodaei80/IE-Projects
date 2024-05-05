@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "../styles/home.css";
 import { postData, sendToast } from "../utils/request_utils";
 import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
-
+const page_limit = 12;
 const search_general = "/restaurants/search_general";
 function SearchBarForm({ restTypes, restLocations }) {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useState({});
+  const [searchParams, setSearchParams] = useState({page:1,pageLimit:page_limit});
 
   const handleChange = (event) => {
     console.log("event", searchParams);
@@ -24,7 +24,7 @@ function SearchBarForm({ restTypes, restLocations }) {
       (response) => {
         if (response.success) {
           sendToast("true", "Search succesful!");
-          navigate("/search_result", { state: response.data, replace: true });
+          navigate("/search_result", { state: {state : response.data , searchParams : searchParams}, replace: true });
         } else {
           sendToast(false, "Search Failed for some reason");
         }

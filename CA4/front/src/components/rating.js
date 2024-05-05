@@ -1,3 +1,4 @@
+import React from "react";
 import starFilledIcon from "../images/icons/star_filled.svg";
 import starEmptyIcon from "../images/icons/star_empty.svg";
 
