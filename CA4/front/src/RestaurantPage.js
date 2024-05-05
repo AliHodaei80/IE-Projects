@@ -54,19 +54,19 @@ export default function RestaurantPage() {
     mounted && (
       <main className="flex-grow-1">
         <Header></Header>
-        <div className="row mt-0 position-relative ms-0">
-          <div className="w-100 description-box container align-middle">
-            <div className="container mt-0">
-              <div className="container row w-100 me-5">
-                <div className="container mb-0 col-sm ms-0 align-middle w-100">
+        <div className="mt-0 position-relative ms-0">
+          <div className=" align-middle">
+            <div className="mt-0 d-flex justify-content-center">
+              <div className=" row me-5">
+                <div className=" mb-0 col-md ms-0 align-middle w-50">
                   <img
                     src={restaurantData.imageUrl}
                     alt="tables_logo"
-                    className="rounded-4 position-relative col rounded-3 mt-5"
+                    className="h-50 rounded-4 position-relative col rounded-3 mt-5 w-100"
                     // id="sample-rest-img"
                   />
-                  <div className="container descripton-card ms-0 position-relative">
-                    <div className="container d-flex justify-content-between">
+                  <div className=" descripton-card mt-5 position-relative">
+                    <div className=" d-flex justify-content-between">
                       <p className="display-4 position-absolute mt-5">
                         {restaurantData.name}
                       </p>
@@ -77,7 +77,7 @@ export default function RestaurantPage() {
                         Open!
                       </p>
                       <div className="mb-2 pt-4 mt-5 position-absolute top-100">
-                        <div className="container">
+                        <div className="">
                           <div className="review-header">
                             <div className="d-flex justify-content-between">
                               <img
@@ -96,7 +96,7 @@ export default function RestaurantPage() {
                               </div>
                             </div>
                             <div className="d-flex align-items-center ms-0">
-                              <div className="icon-container text-center">
+                              <div className="icon- text-center">
                                 <img
                                   className="star-review"
                                   src={star_inside_review}
@@ -133,7 +133,7 @@ export default function RestaurantPage() {
                     </div>
                   </div>
                 </div>
-                <div className="container col-sm mt-5 ms-0 p-1 m-0">
+                <div className=" col-md mt-5 ms-0 p-1 m-0">
                   <h5 id="booking" className="h5">
                     Reserve Table
                   </h5>
@@ -173,7 +173,7 @@ export default function RestaurantPage() {
                   <br />
                   <br />
                   <span>Available Times for Table #1 (2 seats)</span>
-                  <div className="container text-center mt-3 ms-0">
+                  <div className=" text-center mt-3 ms-0">
                     <div className="row">
                       <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
                         11:00 AM
@@ -217,63 +217,65 @@ export default function RestaurantPage() {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="review-box container w-75 align-middle">
-            <div className="container mt-2 p-3">
-              <div className="container row">
-                <div className="col">
-                  <div>
-                    <h4>What {reviewData.length} people are saying</h4>
-                    <div className="rounded-4 d-flex justify-content-start">
-                      <div class="d-flex justify-content-between text-align">
-                        <div className="d-flex flex-column">
-                          <Rating
-                            rate={restaurantData.avgOverallScore}
-                          ></Rating>
+            <div className="container review-box  w-75 align-middle rounded-2">
+              <div className=" mt-2 p-3">
+                <div className=" row">
+                  <div className="col">
+                    <div>
+                      <h4>What {reviewData.length} people are saying</h4>
+                      <div className="rounded-4 d-flex justify-content-start">
+                        <div class="d-flex justify-content-between text-align">
+                          <div className="d-flex flex-column">
+                            <Rating
+                              rate={restaurantData.avgOverallScore}
+                            ></Rating>
+                          </div>
+                          <p className="text-muted ps-0 align-middle mt-1 ms-2">
+                            {restaurantData.avgOverallScore} based on recent
+                            ratings
+                          </p>
                         </div>
-                        <p className="text-muted ps-0 align-middle mt-1 ms-2">
-                          {restaurantData.avgOverallScore} based on recent
-                          ratings
-                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col">
-                  <div className="d-flex justify-content-between">
-                    <div className="text-center">
-                      <p className="mb-0">Food</p>
-                      <p className="fw-bolder">{restaurantData.avgFoodScore}</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="mb-0">Service</p>
-                      <p className="fw-bolder">
-                        {restaurantData.avgServiceScore}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="mb-0">Ambience</p>
-                      <p className="fw-bolder">
-                        {restaurantData.avgAmbianceScore}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="mb-0">Overall</p>
-                      <p className="fw-bolder">
-                        {restaurantData.avgOverallScore}
-                      </p>
+                  <div className="col">
+                    <div className="d-flex justify-content-between">
+                      <div className="text-center">
+                        <p className="mb-0">Food</p>
+                        <p className="fw-bolder">
+                          {restaurantData.avgFoodScore}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="mb-0">Service</p>
+                        <p className="fw-bolder">
+                          {restaurantData.avgServiceScore}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="mb-0">Ambience</p>
+                        <p className="fw-bolder">
+                          {restaurantData.avgAmbianceScore}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="mb-0">Overall</p>
+                        <p className="fw-bolder">
+                          {restaurantData.avgOverallScore}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="review-pages mt-5 container align-middle">
+
+          <div className="container review-pages mt-5  align-middle">
             <div className="row">
               <div className="col">
-                <div className="review-container">
-                  <div className="container d-flex justify-content-between align-items-center my-3">
+                <div className="review-">
+                  <div className=" d-flex justify-content-between align-items-center my-3">
                     <div className="rounded-4">
                       <h4>{reviewData.length} Reviews</h4>
                     </div>
@@ -282,7 +284,7 @@ export default function RestaurantPage() {
                     </button>
                   </div>
 
-                  <div className="container">
+                  <div className="">
                     <div className="review-header">
                       <div className="profile-photo d-flex">
                         <span className="fw-bolder profile-name general-text position-relative">
@@ -294,7 +296,7 @@ export default function RestaurantPage() {
                       </span>
 
                       <div>
-                        <div className="container rounded-4 d-flex justify-content-start">
+                        <div className=" rounded-4 d-flex justify-content-start">
                           <img
                             className="icon p-0"
                             src="../images/icons/star_filled.svg"
@@ -326,7 +328,7 @@ export default function RestaurantPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="container ms-5">
+                    <div className=" ms-5">
                       <div className="fw-bolder">
                         <small>
                           Overall<span className="red-text ms-1">5 </span>
@@ -354,7 +356,7 @@ export default function RestaurantPage() {
                     </div>
                     <hr />
                   </div>
-                  <div className="container">
+                  <div className="">
                     <div className="review-header">
                       <div className="profile-photo d-flex">
                         <span className="fw-bolder profile-name general-text position-relative">
@@ -366,7 +368,7 @@ export default function RestaurantPage() {
                       </span>
 
                       <div>
-                        <div className="container rounded-4 d-flex justify-content-start">
+                        <div className=" rounded-4 d-flex justify-content-start">
                           <img
                             className="icon p-0"
                             src="../images/icons/star_filled.svg"
@@ -398,7 +400,7 @@ export default function RestaurantPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="container ms-5">
+                    <div className=" ms-5">
                       <div className="fw-bolder">
                         <small>
                           Overall<span className="red-text ms-1">5 </span>
@@ -426,7 +428,7 @@ export default function RestaurantPage() {
                     </div>
                     <hr />
                   </div>
-                  <div className="container">
+                  <div className="">
                     <div className="review-header">
                       <div className="profile-photo d-flex">
                         <span className="fw-bolder profile-name general-text position-relative">
@@ -438,7 +440,7 @@ export default function RestaurantPage() {
                       </span>
 
                       <div>
-                        <div className="container rounded-4 d-flex justify-content-start">
+                        <div className=" rounded-4 d-flex justify-content-start">
                           <img
                             className="icon p-0"
                             src="../images/icons/star_filled.svg"
@@ -470,7 +472,7 @@ export default function RestaurantPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="container ms-5">
+                    <div className=" ms-5">
                       <div className="fw-bolder">
                         <small>
                           Overall<span className="red-text ms-1">5 </span>
@@ -498,7 +500,7 @@ export default function RestaurantPage() {
                     </div>
                     <hr />
                   </div>
-                  <div className="container">
+                  <div className="">
                     <div className="review-header">
                       <div className="profile-photo d-flex">
                         <span className="fw-bolder profile-name general-text position-relative">
@@ -510,7 +512,7 @@ export default function RestaurantPage() {
                       </span>
 
                       <div>
-                        <div className="container rounded-4 d-flex justify-content-start">
+                        <div className=" rounded-4 d-flex justify-content-start">
                           <img
                             className="icon p-0"
                             src="../images/icons/star_filled.svg"
@@ -542,7 +544,7 @@ export default function RestaurantPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="container ms-5">
+                    <div className=" ms-5">
                       <div className="fw-bolder">
                         <small>
                           Overall<span className="red-text ms-1">5 </span>
@@ -570,7 +572,7 @@ export default function RestaurantPage() {
                     </div>
                     <hr />
                   </div>
-                  <div className="container">
+                  <div className="">
                     <div className="review-header">
                       <div className="profile-photo d-flex">
                         <span className="fw-bolder profile-name general-text position-relative">
@@ -582,7 +584,7 @@ export default function RestaurantPage() {
                       </span>
 
                       <div>
-                        <div className="container rounded-4 d-flex justify-content-start">
+                        <div className=" rounded-4 d-flex justify-content-start">
                           <img
                             className="icon p-0"
                             src="../images/icons/star_filled.svg"
@@ -614,7 +616,7 @@ export default function RestaurantPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="container ms-5">
+                    <div className=" ms-5">
                       <div className="fw-bolder">
                         <small>
                           Overall<span className="red-text ms-1">5 </span>
@@ -642,7 +644,7 @@ export default function RestaurantPage() {
                     </div>
                     <hr />
                   </div>
-                  <div className="container">
+                  <div className="">
                     <div className="review-header">
                       <div className="profile-photo d-flex">
                         <span className="fw-bolder profile-name general-text position-relative">
@@ -654,7 +656,7 @@ export default function RestaurantPage() {
                       </span>
 
                       <div>
-                        <div className="container rounded-4 d-flex justify-content-start">
+                        <div className=" rounded-4 d-flex justify-content-start">
                           <img
                             className="icon p-0"
                             src="../images/icons/star_filled.svg"
@@ -686,7 +688,7 @@ export default function RestaurantPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="container ms-5">
+                    <div className=" ms-5">
                       <div className="fw-bolder">
                         <small>
                           Overall<span className="red-text ms-1">5 </span>
