@@ -22,7 +22,6 @@ export default function RestaurantCard({ data }) {
           }}
           className="text-decoration-none text-reset"
         >
-          <Rating rate={overall} />
           <img
             src={imageUrl}
             className="restaurant-img card-img-top object-fit-cover w-100 rounded-top-4"
@@ -53,6 +52,9 @@ export default function RestaurantCard({ data }) {
               startTime={data.startTime}
               endTime={data.endTime}
             />
+          </div>
+          <div className="rate d-flex position-absolute px-2 py-1">
+            <Rating rate={overall} />
           </div>
         </div>
       </div>
