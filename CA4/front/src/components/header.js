@@ -8,7 +8,7 @@ import logo from "../images/logo.png";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { sendToast } from "../utils/request_utils";
-const MANAGER= "MANAGER"
+const MANAGER = "MANAGER";
 function Header() {
   const { authDetails } = useAuth();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Header() {
   const handleMyReservations = () => {
     navigate("/reservations");
   };
-  let buttonText,buttonOnClick;
+  let buttonText, buttonOnClick;
   if (authDetails.logged_in === false) {
     buttonText = "Reserve Now!";
     buttonOnClick = handleReserveNow;
@@ -48,14 +48,16 @@ function Header() {
       </div>
       <div className="d-flex justify-content-between align-items-center">
         {authDetails.logged_in === false ? null : (
-          <span className="d-flex align-items-center flex-wrap align-middle me-5 ms-1">
-            Welcome ,{" "}
-            {authDetails.role === "MANAGER" ? "Admin!" : authDetails.username}
+          <span className="d-flex align-items-center flex-wrap align-middle me-2 ms-1 w-100">
+            {"Welcome  " +
+              (authDetails.role === "MANAGER"
+                ? "Admin!"
+                : authDetails.username)}
           </span>
         )}
         <button
           className="reserve-button rounded-3 border-0"
-          id = "btn-reserve"
+          id="btn-reserve"
           onClick={buttonOnClick}
         >
           {buttonText}

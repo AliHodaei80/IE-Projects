@@ -110,19 +110,19 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!isMounted) {
-      if (authDetails.logged_in === false) {
-        // navigate("/authenticate");
-        // sendToast(false, "Login First!");
-      } else {
-        fetchRestMetaInfo();
-        fetchUser();
-      }
-      setIsMounted(true);
-    } else {
-      setIsMounted(true);
-      console.log("Already Fetched user data : ", userDetails);
-    }
+    fetchUser();
+    fetchRestMetaInfo();
+    // if (!isMounted) {
+    //   if (authDetails.logged_in === false) {
+    //     // navigate("/authenticate");
+    //     // sendToast(false, "Login First!");
+    //   } else {
+    //   }
+    //   setIsMounted(true);
+    // } else {
+    //   setIsMounted(true);
+    //   console.log("Already Fetched user data : ", userDetails);
+    // }
   }, []);
 
   return (
