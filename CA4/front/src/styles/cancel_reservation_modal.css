@@ -1,0 +1,41 @@
+#cancelConfirmationModal .modal-content {
+  background-color: var(--white);
+  font-family: "SplineSans", serif;
+}
+
+#reserve-canelation-text {
+  color: var(--grey);
+}
+
+#cancelConfirmationModal #agree-cancelation-check-box {
+  accent-color: var(--red);
+}
+
+#cancelConfirmationModal .modal-header {
+  color: var(--black);
+  font-weight: 500;
+}
+
+#cancelConfirmationModal #cancelation-submit-btn {
+  color: var(--white);
+  background-color: var(--red);
+  font-weight: 400;
+
+  border: none;
+}
+
+#cancelConfirmationModal #agree-cancelation-check-box:focus {
+  outline: none !important;
+  border: 1px solid var(--red);
+  box-shadow: 0 0 7px var(--red);
+}
+
+#cancelConfirmationModal #cancelation-submit-btn:disabled {
+  color: var(--white);
+  font-weight: 400;
+  background-color: var(--light-white);
+}
+
+#restaurant-name-cancelation {
+  color: var(--red);
+}

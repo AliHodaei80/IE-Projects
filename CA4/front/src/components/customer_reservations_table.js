@@ -1,53 +1,43 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import CancelConfirmationModal from "./cancel_confimation_modal";
+import { fetchData } from "../utils/request_utils.js";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-let username = "Ali_Hodaei";
-let reservations = [
-  {
-    username: "Ali_Hodaei",
-    restaurantName: "The Commoner",
-    tableNumber: 3,
-    datetime: "2024-05-05T20:00:00",
-    reservationId: 2,
-    restaurantId: 1,
-    canceled: false,
-    seatsReserved: 7,
-  },
-  {
-    username: "Ali_Hodaei",
-    restaurantName: "The Commoner",
-    tableNumber: 3,
-    datetime: "2024-05-04T21:00:00",
-    reservationId: 1,
-    restaurantId: 1,
-    canceled: false,
-    seatsReserved: 7,
-  },
-  {
-    username: "Ali_Hodaei",
-    restaurantName: "The Commoner",
-    tableNumber: 3,
-    datetime: "2024-05-06T20:00:00",
-    reservationId: 3,
-    restaurantId: 1,
-    canceled: false,
-    seatsReserved: 7,
-  },
-  {
-    username: "Ali_Hodaei",
-    restaurantName: "The Commoner",
-    tableNumber: 4,
-    datetime: "2024-05-06T20:00:00",
-    reservationId: 4,
-    restaurantId: 1,
-    canceled: true,
-    seatsReserved: 10,
-  },
-];
+// import "../styles/cancel_reservation_modal.css";
+
 function CustomerReservations() {
+  const { authDetails } = useAuth();
+  const [cancelReservationIds, setCancelReservationId] = useState(-1);
+  const [reservations, setReservations] = useState([]);
+
+  const handleFetchReservations = (response) => {
+    console.log(response);
+    if (response.success) {
+      setReservations(response.data.reservations);
+    } else {
+      console.log("error happend");
+    }
+  };
+
+  const fetchReservations = () => {
+    fetchData(
+      "/reservations/" + authDetails.username,
+      null,
+      handleFetchReservations,
+      (res) => {}
+    );
+  };
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
   return (
-    <div className="table-responsive">
-      <table className="table-responsive table mt-4 rounded-3 overflow-hidden">
-        <thead className="reservations-header">
+    <div class="table-responsive">
+      <table class="table-responsive table mt-4 rounded-3 overflow-hidden">
+        <thead class="reservations-header">
           <tr>
             <th colspan="5" scope="colgroup">
               My Reservations
@@ -75,7 +65,14 @@ function CustomerReservations() {
                 })}
               </td>
               <td className="restaurant-link">
-                <a href="#">{reservation.restaurantName}</a>
+                <Link
+                  to={{
+                    pathname: "/restaurant/" + reservation.restaurantId,
+                    state: {},
+                  }}
+                >
+                  {reservation.restaurantName}
+                </Link>
               </td>
               <td className="table-id">Table-{reservation.tableNumber}</td>
               <td className="seats-num">{reservation.seatsReserved} Seats</td>
@@ -91,15 +88,42 @@ function CustomerReservations() {
                 {reservation.canceled ? (
                   <div>Canceled</div>
                 ) : new Date() < new Date(reservation.datetime) ? (
-                  <a href="#">Cancel</a>
+                  <Link
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#cancelConfirmationModal"
+                    onClick={() => {
+                      setCancelReservationId(reservation.reservationId);
+                    }}
+                  >
+                    Cancel
+                  </Link>
                 ) : (
-                  <a href="#">Add Comment</a>
+                  <Link href="#">Add Comment</Link>
                 )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <CancelConfirmationModal
+        reservationId={cancelReservationIds}
+        unSetCancelReservationId={() => {
+          setCancelReservationId(-1);
+          fetchReservations();
+          console.log("cancelreservation id " + cancelReservationIds);
+        }}
+        restaurantName={
+          reservations.find(
+            (reservation) => reservation.reservationId === cancelReservationIds
+          ) != null
+            ? reservations.find(
+                (reservation) =>
+                  reservation.reservationId === cancelReservationIds
+              ).restaurantName
+            : null
+        }
+      />
     </div>
   );
 }
