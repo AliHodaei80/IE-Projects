@@ -3,8 +3,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Error from "./components/error";
-import ManagerRestaurants from "./manager_restaurants";
-import ManageRestaurantPage from "./manage_restaurant";
+import ManagerRestaurants from "./ManagerRestaurants";
+import ManageRestaurantPage from "./ManageRestaurant";
 import AuthPage from "./AuthPage";
 import SearchResultPage from "./SearchResultPage";
 import RestaurantPage from "./RestaurantPage";
@@ -23,7 +23,6 @@ function App() {
           <Route path="/restaurant/:id" element={<RestaurantPage />} />
           <Route path="/manager_restaurants" element={<ManagerRestaurants />} />
           <Route path="/reservations" element={<ReservationsPage />} />
-
           <Route
             path="/manager_restaurants/:id"
             element={<ManageRestaurantPage />}
