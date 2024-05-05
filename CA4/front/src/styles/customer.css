@@ -44,6 +44,20 @@ body {
   color: var(--light-grey2);
 }
 
+.table > tbody > tr.reservation-cancelled > td.reservation-date,
+.table > tbody > tr.reservation-cancelled > td.table-id,
+.table > tbody > tr.reservation-cancelled > td.seats-num {
+  color: var(--grey);
+  text-decoration: line-through;
+}
+.table > tbody > tr.reservation-cancelled > td.restaurant-link > a {
+  text-decoration: line-through;
+}
+
+.table > tbody > tr > td.no-operation {
+  color: var(--light-grey2);
+}
+
 .table > tbody > tr > td.reservation-date,
 .table > tbody > tr > td.restaurant-link > a,
 .table > tbody > tr > td.operation > a {
