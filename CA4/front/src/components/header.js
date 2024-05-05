@@ -8,7 +8,7 @@ import logo from "../images/logo.png";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { sendToast } from "../utils/request_utils";
-
+const MANAGER= "MANAGER"
 function Header() {
   const { authDetails } = useAuth();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function Header() {
   if (authDetails.logged_in === false) {
     buttonText = "Reserve Now!";
     buttonOnClick = handleReserveNow;
-  } else if (authDetails.role === "MANAGER") {
+  } else if (authDetails.role === MANAGER) {
     buttonText = "My Restaurants";
     buttonOnClick = handleMyRestaurants;
   } else {

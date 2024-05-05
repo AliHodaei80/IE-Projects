@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/header.js";
 import Footer from "./components/footer.js";
 import TimeInfoComponent from "./components/time_info.js";
+import Rating from "./components/rating.js";
 import "./styles/shared.css";
 import "./styles/header.css";
 import "./styles/restaurant.css";
@@ -11,9 +12,7 @@ import "./styles/search_result.css";
 import "./styles/footer.css";
 import "./styles/normalize.css";
 import "./styles/search_result.css";
-import {
-  useParams,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchData, sendToast } from "./utils/request_utils.js";
 export default function RestaurantPage() {
   const [mounted, setMounted] = useState(false);
@@ -47,7 +46,7 @@ export default function RestaurantPage() {
         (res) => {}
       );
     }
-  }, [mounted,id]);
+  }, [mounted, id]);
 
   return (
     mounted && (
@@ -220,35 +219,11 @@ export default function RestaurantPage() {
               <div class="container row">
                 <div class="col">
                   <div>
-                    <h4>What 160 people are saying</h4>
+                    <h4>What {reviewData.length} people are saying</h4>
                     <div class="container rounded-4 d-flex justify-content-start">
-                      <img
-                        class="icon p-0"
-                        src="../images/icons/star_filled.svg"
-                        alt="star_filled"
-                      />
-                      <img
-                        class="icon p-0"
-                        src="../images/icons/star_filled.svg"
-                        alt="star_filled"
-                      />
-                      <img
-                        class="icon p-0"
-                        src="../images/icons/star_filled.svg"
-                        alt="star_filled"
-                      />
-                      <img
-                        class="icon p-0"
-                        src="../images/icons/star_filled.svg"
-                        alt="star_filled"
-                      />
-                      <img
-                        class="icon p-0"
-                        src="../images/icons/star_empty.svg"
-                        alt="star_filled"
-                      />
+                      <Rating class="p-0" rate={restaurantData.avgOverallScore}></Rating>
                       <p class="text-muted p-0 ms-3">
-                        4 based on recent ratings
+                        {restaurantData.avgOverallScore} based on recent ratings
                       </p>
                     </div>
                   </div>
@@ -257,19 +232,19 @@ export default function RestaurantPage() {
                   <div class="d-flex justify-content-between">
                     <div class="text-center">
                       <p class="mb-0">Food</p>
-                      <p class="fw-bolder">4.5</p>
+                      <p class="fw-bolder">{restaurantData.avgFoodScore}</p>
                     </div>
                     <div class="text-center">
                       <p class="mb-0">Service</p>
-                      <p class="fw-bolder">4.1</p>
+                      <p class="fw-bolder">{restaurantData.avgServiceScore}</p>
                     </div>
                     <div class="text-center">
                       <p class="mb-0">Ambience</p>
-                      <p class="fw-bolder">3.8</p>
+                      <p class="fw-bolder">{restaurantData.avgAmbianceScore}</p>
                     </div>
                     <div class="text-center">
                       <p class="mb-0">Overall</p>
-                      <p class="fw-bolder">4</p>
+                      <p class="fw-bolder">{restaurantData.avgOverallScore}</p>
                     </div>
                   </div>
                 </div>
@@ -282,7 +257,7 @@ export default function RestaurantPage() {
                 <div class="review-container">
                   <div class="container d-flex justify-content-between align-items-center my-3">
                     <div class="rounded-4">
-                      <h4>160 Reviews</h4>
+                      <h4>{reviewData.length} Reviews</h4>
                     </div>
                     <button class="add-review-btn rounded-4">Add Review</button>
                   </div>
