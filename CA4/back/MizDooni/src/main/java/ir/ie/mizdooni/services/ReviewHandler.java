@@ -24,6 +24,14 @@ public class ReviewHandler {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
         reviews = new Reviews().loadFromUrl(DataBaseUrlPath.REVIEWS_DATABASE_URL);
+        List<Restaurant> restaurantList = restaurantHandler.getRestaurants().getRestaurantList(false);
+        for (Restaurant restaurant : restaurantList) {
+            restaurantHandler.updateScores(restaurant.getName(),
+                    scoreAverage(restaurant.getName(),Review::getFoodRate)
+                    ,scoreAverage(restaurant.getName(),Review::getServiceRate)
+                    ,scoreAverage(restaurant.getName(),Review::getOverallRate)
+                    ,scoreAverage(restaurant.getName(),Review::getAmbianceRate));
+        }
     }
 
     public static ReviewHandler getInstance() {
