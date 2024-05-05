@@ -3,16 +3,18 @@ import { useState } from "react";
 import { postData, sendToast } from "../utils/request_utils.js";
 import "bootstrap/dist/js/bootstrap.js";
 import "../styles/add_table_modal.css";
+import { useAuth } from "../context/AuthContext";
 
-let username = "ali";
 function AddTableModal({ restaurantId, fetchTables }) {
-  const [seats, setSeats] = useState(1);
+  const { authDetails } = useAuth();
+
+  const [seats, setSeats] = useState("");
   const handleRespponse = (response) => {
     console.log(response);
     console.log(response.success);
     if (response.success) {
       fetchTables();
-      setSeats(1);
+      setSeats("");
       sendToast(true, response.data);
     } else {
       if ("data" in response) {
@@ -26,10 +28,10 @@ function AddTableModal({ restaurantId, fetchTables }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let requestBody = {
-      managerUsername: username,
+      managerUsername: authDetails.username,
       seatsNumber: seats,
     };
-    console.log("managerUsername:", username);
+    console.log("managerUsername:", authDetails.username);
     console.log("seatsNumber:", seats);
     let res = await postData(
       "/tables/" + restaurantId + "/add",
@@ -91,6 +93,7 @@ function AddTableModal({ restaurantId, fetchTables }) {
                     id="add-table-submit-butoon"
                     className="btn w-100 btn-primary rounded-3"
                     data-bs-dismiss="modal"
+                    disabled={seats === ""}
                   >
                     Add
                   </button>

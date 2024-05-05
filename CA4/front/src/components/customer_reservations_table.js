@@ -5,8 +5,6 @@ import { fetchData } from "../utils/request_utils.js";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-// import "../styles/cancel_reservation_modal.css";
-
 function CustomerReservations() {
   const { authDetails } = useAuth();
   const [cancelReservationIds, setCancelReservationId] = useState(-1);

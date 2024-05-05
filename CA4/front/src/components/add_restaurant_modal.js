@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { postData, sendToast } from "../utils/request_utils.js";
+import { useAuth } from "../context/AuthContext";
 import "bootstrap/dist/js/bootstrap.js";
 import "../styles/add_rest_modal.css";
 
@@ -30,9 +31,9 @@ const round_times = [
   "22:00",
   "23:00",
 ];
-const managerUsername = "ali";
 let restaurantBody = {};
 function AddRestaurantModal({ fetchRestaurants }) {
+  const { authDetails } = useAuth();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
@@ -101,7 +102,7 @@ function AddRestaurantModal({ fetchRestaurants }) {
       },
       startTime: startTime,
       endTime: endTime,
-      managerUsername: managerUsername,
+      managerUsername: authDetails.username,
     };
     console.log("Name:", name);
     console.log("type:", type);

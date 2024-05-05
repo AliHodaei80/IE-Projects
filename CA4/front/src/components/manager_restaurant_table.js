@@ -5,10 +5,11 @@ import { fetchData } from "../utils/request_utils.js";
 import { Link } from "react-router-dom";
 import "../styles/manager_restaurants.css";
 import ManagerRestaurantsTableHeader from "./manager_restaurant_table_header.js";
-
-let username = "ali";
+import { useAuth } from "../context/AuthContext";
 
 function ManagerRestaurantsTable() {
+  const { authDetails } = useAuth();
+
   const [restaurants, setRestaurants] = useState([]);
 
   const handleFetchRestaurants = (response) => {
@@ -22,7 +23,7 @@ function ManagerRestaurantsTable() {
 
   const fetchRestaurants = () => {
     fetchData(
-      "/user/" + username + "/restaurants",
+      "/user/" + authDetails.username + "/restaurants",
       null,
       handleFetchRestaurants,
       (res) => {}
