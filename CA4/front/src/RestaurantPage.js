@@ -12,11 +12,11 @@ import "./styles/search_result.css";
 import "./styles/footer.css";
 import "./styles/normalize.css";
 import "./styles/search_result.css";
-import clock_icon from "./images/icons/clock.svg"
-import fork_knife from "./images/icons/fork_knife.svg"
+import clock_icon from "./images/icons/clock.svg";
+import fork_knife from "./images/icons/fork_knife.svg";
 import { useParams } from "react-router-dom";
 import { fetchData, sendToast } from "./utils/request_utils.js";
-import star_inside_review from "./images/icons/star_inside_review.png"
+import star_inside_review from "./images/icons/star_inside_review.png";
 export default function RestaurantPage() {
   const [mounted, setMounted] = useState(false);
 
@@ -116,7 +116,7 @@ export default function RestaurantPage() {
                               <div className="type">{restaurantData.type}</div>
                             </div>
                           </div>
-                          <div className="restaurant-location mt-5">
+                          <div className="restaurant-location mt-3">
                             <span className="text-muted">
                               {restaurantData.address.country +
                                 " " +
@@ -225,14 +225,14 @@ export default function RestaurantPage() {
                 <div className="col">
                   <div>
                     <h4>What {reviewData.length} people are saying</h4>
-                    <div className="container rounded-4 d-flex justify-content-start">
-                      <div class="d-flex justify-content-between align-middle">
-                        <div className="me-5 align-middle">
+                    <div className="rounded-4 d-flex justify-content-start">
+                      <div class="d-flex justify-content-between text-align">
+                        <div className="d-flex flex-column">
                           <Rating
                             rate={restaurantData.avgOverallScore}
                           ></Rating>
                         </div>
-                        <p className="text-muted ps-0 ms-5 align-middle">
+                        <p className="text-muted ps-0 align-middle mt-1 ms-2">
                           {restaurantData.avgOverallScore} based on recent
                           ratings
                         </p>
