@@ -123,8 +123,8 @@ export default function RestaurantPage() {
                           </div>
                           <div class="restaurant-location">
                             <span class="text-muted">
-                              {restaurantData.address.country},
-                              {restaurantData.address.city},
+                              {restaurantData.address.country} + " " +{" "}
+                              {restaurantData.address.city}, + " " +{" "}
                               {restaurantData.address.street}
                             </span>
                           </div>
