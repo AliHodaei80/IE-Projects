@@ -44,7 +44,7 @@ function ManagerRestaurantsTable() {
                 {restaurant.address.city}, {restaurant.address.country}
               </td>
               <td className="text-end">
-                <Link to={`/manager-restaurants/${restaurant.id}`}>
+                <Link to={`/manager_restaurants/${restaurant.id}`}>
                   <button className="manager-operation manage rounded-3 border-0">
                     Manage
                   </button>

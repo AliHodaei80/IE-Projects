@@ -76,6 +76,7 @@ export default function Home() {
         search: key_data,
       },
       (response) => {
+        
         setUserSpecificSearchResult(response.data);
         sendToast(
           response.success,
@@ -110,19 +111,19 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!isMounted) {
-      if (authDetails.logged_in === false) {
-        // navigate("/authenticate");
-        // sendToast(false, "Login First!");
-      } else {
-        fetchRestMetaInfo();
-        fetchUser();
-      }
-      setIsMounted(true);
-    } else {
-      setIsMounted(true);
-      console.log("Already Fetched user data : ", userDetails);
-    }
+    fetchRestMetaInfo();
+    fetchUser();
+    // if (!isMounted) {
+    //   if (authDetails.logged_in === false) {
+    //     // navigate("/authenticate");
+    //     // sendToast(false, "Login First!");
+    //   } else {
+    //   }
+    //   setIsMounted(true);
+    // } else {
+    //   setIsMounted(true);
+    //   console.log("Already Fetched user data : ", userDetails);
+    // }
   }, []);
 
   return (

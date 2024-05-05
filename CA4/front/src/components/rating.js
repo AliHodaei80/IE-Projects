@@ -11,7 +11,7 @@ export default function Rating({ rate }) {
     stars.push(
       <img
         key={`filled-${i}`}
-        className="icon"
+        className="icon align-middle"
         src={starFilledIcon}
         alt="star_filled"
       />
@@ -32,5 +32,5 @@ export default function Rating({ rate }) {
       />
     );
   }
-  return <div className="rate d-flex position-absolute px-2 py-1">{stars}</div>;
+  return <div>{stars}</div>;
 }
