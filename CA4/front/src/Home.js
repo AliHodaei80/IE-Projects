@@ -31,7 +31,6 @@ const all_restaurants = "/restaurants";
 export default function Home() {
   // ------------------------------------------------------------- //
   const { authDetails, setAuthDetails } = useAuth();
-  const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
   const [isMounted, setIsMounted] = useState(false);
   const [userSpecificSearchResult, setUserSpecificSearchResult] = useState({});
@@ -124,7 +123,7 @@ export default function Home() {
       setIsMounted(true);
       console.log("Already Fetched user data : ", userDetails);
     }
-  });
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
