@@ -20,6 +20,7 @@ public class LogginFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         if (req.getRequestURI().equals(LOGIN_URL) || req.getRequestURI().equals(SIGNUP_URL) ||
                 req.getRequestURI().equals(RESTAURANTS_SEARCH_URL) || req.getRequestURI().equals(RESTAURANTS_URL) ||
+                req.getRequestURI().equals(RESTAURANTS_SEARCH_GENERAL_URL) ||
                 req.getRequestURI().matches(RESTAURANT_URL_REGEX) || req.getRequestURI().matches(RESTAURANT_REVIEW_URL_REGEX)) {
             chain.doFilter(request, response);
             return;

@@ -157,13 +157,19 @@ public class RestaurantRestController {
 
     @RequestMapping(value = "/restaurants/{id}/feedback", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getRestaurantFeedBackHandler(@PathVariable Long id) {
+    public ResponseEntity<Response> getRestaurantFeedBackHandler(@PathVariable Long id, @RequestBody(required=false) Map<String, Object> data) {
         try {
             Map<String, Object> outputData = new HashMap<>();
             Restaurant restaurant = restaurantHandler.getRestaurant(id);
             if (restaurant == null)
                 throw new RestaurantNotFound();
-            outputData.put("reviews", reviewHandler.getRestReviews(restaurant.getName()));
+//            outputData.put("reviews", reviewHandler.getRestReviews(restaurant.getName()));
+            List<Review> reviewList = reviewHandler.getRestReviews(restaurant.getName());
+            int pageLimit = (data != null && data.containsKey("pageLimit")) ? (int) data.get("pageLimit") : reviewList.size();
+            int page = (data != null && data.containsKey("page")) ? (int) data.get("page") : 1;
+            List<Object> restaurantObjectList = new ArrayList<>(reviewList);
+            outputData.put("reviews",
+                    PageData.paginate(restaurantObjectList, page, pageLimit, "Reviews"));
             logger.info("feedback of Restaurant `" + restaurant.getName() + "` retrieved successfully");
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
         }  catch (RestaurantNotFound e) {

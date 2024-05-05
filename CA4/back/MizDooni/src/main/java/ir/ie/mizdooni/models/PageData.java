@@ -39,12 +39,21 @@ public class PageData {
     }
 
     public static PageData paginate(List<Object> dataList, int pageNumber, int limit, String dataType) {
+        if (pageNumber <= 0 || limit <= 0 || dataList.isEmpty()) {
+            return new PageData(false, dataType, 0, 0, new ArrayList<>());
+        }
+        int totalItems = dataList.size();
+        int totalPages = (int) Math.ceil((double) totalItems / limit);
+
+        if (pageNumber > totalPages) {
+            return new PageData(false, dataType, totalPages, 0, new ArrayList<>());
+        }
+
         int startIndex = (pageNumber - 1) * limit;
         int endIndex = Math.min(startIndex + limit, dataList.size());
 
         List<Object> pageList = new ArrayList<>(dataList.subList(startIndex, endIndex));
         boolean hasNextPage = endIndex < dataList.size();
-        long totalPages = (long) Math.ceil((double) dataList.size() / limit);
 
         return new PageData(hasNextPage, dataType, totalPages, pageNumber, new ArrayList<>(pageList));
     }

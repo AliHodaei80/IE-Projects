@@ -8,6 +8,8 @@ public class Paths {
 
     public static final String RESTAURANTS_URL = "/restaurants";
     public static final String RESTAURANTS_SEARCH_URL = "/restaurants/search";
+    public static final String RESTAURANTS_SEARCH_GENERAL_URL = "/restaurants/search_general";
+
 
     public static final String CLIENT_HOME_JSP_PAGE = "client_home.jsp";
     public static final String MANAGER_HOME_JSP_PAGE = "manager_home.jsp";
