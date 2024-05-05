@@ -64,26 +64,16 @@ export default function SearchResultPage() {
 
       <div className="align-bottom">
         <ReactPaginate
-          className="align-middle d-flex justify-content-center fixed-bottom p-5"
+          className="align-middle d-flex justify-content-center fixed-bottom p-5 list-unstyled"
           containerClassName={"align-middle"}
           pageClassName={"button page-button align-middle m-2"}
           pageLinkClassName="page-link rounded-circle h-100 pt-2"
           activeClassName={"border-danger border-2"}
           onPageChange={handlePageChange}
           pageCount={state.state.restaurants.totalPages}
-          breakLabel={null}  
-          previousLabel={
-            null
-            // <IconContext.Provider value={{ color: "#B8C1CC", size: "36px" }}>
-            //   <AiFillLeftCircle />
-            // </IconContext.Provider>
-          }
-          nextLabel={
-            null
-            // <IconContext.Provider value={{ color: "#B8C1CC", size: "36px" }}>
-            //   {/* <AiFillRightCircle /> */}
-            // </IconContext.Provider>
-          }
+          breakLabel={null}
+          previousLabel={null}
+          nextLabel={null}
         />
       </div>
       <Footer />

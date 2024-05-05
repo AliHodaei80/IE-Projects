@@ -5,6 +5,9 @@ import Header from "./components/header.js";
 import Footer from "./components/footer.js";
 import TimeInfoComponent from "./components/time_info.js";
 import Rating from "./components/rating.js";
+import ReviewCard from "./components/review_card.js";
+import ReactPaginate from "react-paginate";
+
 import "./styles/shared.css";
 import "./styles/header.css";
 import "./styles/restaurant.css";
@@ -17,9 +20,9 @@ import fork_knife from "./images/icons/fork_knife.svg";
 import { useParams } from "react-router-dom";
 import { fetchData, sendToast } from "./utils/request_utils.js";
 import star_inside_review from "./images/icons/star_inside_review.png";
+const review_page_size = 5;
 export default function RestaurantPage() {
   const [mounted, setMounted] = useState(false);
-
   const [restaurantData, setRestaurantData] = useState({
     address: {},
     startTime: "12:00:00",
@@ -28,6 +31,21 @@ export default function RestaurantPage() {
   const [reviewData, setReviewData] = useState([]);
   const [tableData, setTables] = useState([]);
   const { id } = useParams();
+
+  const [page, setPage] = useState(0);
+  const [filteredReview, setFilteredReview] = useState();
+
+  useEffect(() => {
+    setFilteredReview(
+      reviewData.filter((item, index) => {
+        return (
+          (index >= page * review_page_size) &
+          (index < (page + 1) * review_page_size)
+        );
+      })
+    );
+  }, [page]);
+
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
@@ -40,6 +58,7 @@ export default function RestaurantPage() {
             sendToast(true, "Restaurant loaded succesfully");
             setRestaurantData(response.data.restaurant);
             setReviewData(response.data.reviews);
+            setFilteredReview(response.data.reviews.filter((items,index) => { return (index <= review_page_size)}));
             setTables(response.data.restaurantTables);
           } else {
             sendToast(false, "Restaurant fetch failed");
@@ -102,6 +121,7 @@ export default function RestaurantPage() {
                                   alt="review"
                                 />
                               </div>
+
                               <div className="rating p-0">
                                 {reviewData.length} Reviews
                               </div>
@@ -278,476 +298,48 @@ export default function RestaurantPage() {
                     <div className="rounded-4">
                       <h4>{reviewData.length} Reviews</h4>
                     </div>
-                    <button className="add-review-btn rounded-4">
+                    <button className="add-review-btn rounded-4 ">
                       Add Review
                     </button>
                   </div>
 
-                  <div className="">
-                    <div className="review-header">
-                      <div className="profile-photo d-flex">
-                        <span className="fw-bolder profile-name general-text position-relative">
-                          AD
-                        </span>
-                      </div>
-                      <span className="fw-bolder profile-name general-text review-namer">
-                        Ali Daei
-                      </span>
-
+                  {filteredReview &&
+                    filteredReview.map((rD, index) => (
                       <div>
-                        <div className=" rounded-4 d-flex justify-content-start">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <span className="review-date ms-2">
-                            Dined on February 17, 2024
-                          </span>
-                        </div>
+                        <ReviewCard key={index} reviewData={rD} />
                       </div>
-                    </div>
-                    <div className=" ms-5">
-                      <div className="fw-bolder">
-                        <small>
-                          Overall<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Food<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Service<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Ambiance<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                      </div>
-                      <div className="review-content fw-bolder mt-2">
-                        <p>
-                          Excellent pre-theatre meal. Good food and service.
-                          Only small criticism is that music was intrusive.
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                  <div className="">
-                    <div className="review-header">
-                      <div className="profile-photo d-flex">
-                        <span className="fw-bolder profile-name general-text position-relative">
-                          AD
-                        </span>
-                      </div>
-                      <span className="fw-bolder profile-name general-text review-namer">
-                        Ali Dari
-                      </span>
-
-                      <div>
-                        <div className=" rounded-4 d-flex justify-content-start">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <span className="review-date ms-2">
-                            Dined on February 17, 2024
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className=" ms-5">
-                      <div className="fw-bolder">
-                        <small>
-                          Overall<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Food<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Service<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Ambiance<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                      </div>
-                      <div className="review-content fw-bolder mt-2">
-                        <p>
-                          Excellent pre-theatre meal. Good food and service.
-                          Only small criticism is that music was intrusive.
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                  <div className="">
-                    <div className="review-header">
-                      <div className="profile-photo d-flex">
-                        <span className="fw-bolder profile-name general-text position-relative">
-                          AD
-                        </span>
-                      </div>
-                      <span className="fw-bolder profile-name general-text review-namer">
-                        Ali Daryayei
-                      </span>
-
-                      <div>
-                        <div className=" rounded-4 d-flex justify-content-start">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <span className="review-date ms-2">
-                            Dined on February 17, 2024
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className=" ms-5">
-                      <div className="fw-bolder">
-                        <small>
-                          Overall<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Food<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Service<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Ambiance<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                      </div>
-                      <div className="review-content fw-bolder mt-2">
-                        <p>
-                          Excellent pre-theatre meal. Good food and service.
-                          Only small criticism is that music was intrusive.
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                  <div className="">
-                    <div className="review-header">
-                      <div className="profile-photo d-flex">
-                        <span className="fw-bolder profile-name general-text position-relative">
-                          AD
-                        </span>
-                      </div>
-                      <span className="fw-bolder profile-name general-text review-namer">
-                        Ali Daei
-                      </span>
-
-                      <div>
-                        <div className=" rounded-4 d-flex justify-content-start">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <span className="review-date ms-2">
-                            Dined on February 17, 2024
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className=" ms-5">
-                      <div className="fw-bolder">
-                        <small>
-                          Overall<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Food<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Service<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Ambiance<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                      </div>
-                      <div className="review-content fw-bolder mt-2">
-                        <p>
-                          Excellent pre-theatre meal. Good food and service.
-                          Only small criticism is that music was intrusive.
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                  <div className="">
-                    <div className="review-header">
-                      <div className="profile-photo d-flex">
-                        <span className="fw-bolder profile-name general-text position-relative">
-                          AD
-                        </span>
-                      </div>
-                      <span className="fw-bolder profile-name general-text review-namer">
-                        Ali Daei
-                      </span>
-
-                      <div>
-                        <div className=" rounded-4 d-flex justify-content-start">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <span className="review-date ms-2">
-                            Dined on February 17, 2024
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className=" ms-5">
-                      <div className="fw-bolder">
-                        <small>
-                          Overall<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Food<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Service<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Ambiance<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                      </div>
-                      <div className="review-content fw-bolder mt-2">
-                        <p>
-                          Excellent pre-theatre meal. Good food and service.
-                          Only small criticism is that music was intrusive.
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                  <div className="">
-                    <div className="review-header">
-                      <div className="profile-photo d-flex">
-                        <span className="fw-bolder profile-name general-text position-relative">
-                          AD
-                        </span>
-                      </div>
-                      <span className="fw-bolder profile-name general-text review-namer">
-                        Ali Daryayei
-                      </span>
-
-                      <div>
-                        <div className=" rounded-4 d-flex justify-content-start">
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <img
-                            className="icon p-0"
-                            src="../images/icons/star_filled.svg"
-                            alt="star_filled"
-                          />
-                          <span className="review-date ms-2">
-                            Dined on February 17, 2024
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className=" ms-5">
-                      <div className="fw-bolder">
-                        <small>
-                          Overall<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Food<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Service<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                        <small className="ms-1">
-                          Ambiance<span className="red-text ms-1">5 </span>
-                          <span>&#183;</span>
-                        </small>
-                      </div>
-                      <div className="review-content fw-bolder mt-2">
-                        <p>
-                          Excellent pre-theatre meal. Good food and service.
-                          Only small criticism is that music was intrusive.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    ))}
                 </div>
-                <div className="rounded-4 d-flex fw-bold justify-content-center mt-5">
-                  <button type="button" className="page-button text-center">
-                    <span className="page-no">1</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="page-button text-center ms-3"
-                  >
-                    <span className="page-no">2</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="page-button text-center ms-3"
-                  >
-                    <span className="page-no">3 </span>
-                  </button>
-                  <span type="button" className="ms-3 mt-3">
-                    <span>&#183;</span>
-                    <span>&#183;</span>
-                    <span>&#183;</span>
-                  </span>
-                  <button
-                    type="button"
-                    className="page-button text-center ms-3"
-                  >
-                    <span className="page-no">19 </span>
-                  </button>
+
+                <div className="align-bottom">
+                  <ReactPaginate
+                    className="align-middle d-flex justify-content-center p-5 list-unstyled"
+                    containerClassName={"align-middle list-unstyled"}
+                    pageClassName={"button page-button align-middle m-2 list-unstyled"}
+                    pageLinkClassName="page-link rounded-circle h-100 pt-2 list-unstyled"
+                    activeClassName={"border-danger border-2"}
+                    onPageChange={(event) => setPage(event.selected)}
+              
+                    pageCount={Math.ceil(reviewData.length / review_page_size)}
+                    breakLabel={null}
+                    previousLabel={
+                      null
+                      // <IconContext.Provider value={{ color: "#B8C1CC", size: "36px" }}>
+                      //   <AiFillLeftCircle />
+                      // </IconContext.Provider>
+                    }
+                    nextLabel={
+                      null
+                      // <IconContext.Provider value={{ color: "#B8C1CC", size: "36px" }}>
+                      //   {/* <AiFillRightCircle /> */}
+                      // </IconContext.Provider>
+                    }
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
 
         <Footer></Footer>
       </main>
