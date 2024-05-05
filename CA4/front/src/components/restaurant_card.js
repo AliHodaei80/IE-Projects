@@ -11,14 +11,14 @@ export default function RestaurantCard({ data }) {
   const city = data.address.city;
   const type = data.type;
   const restName = data.name;
-
+  const restId = data.id;
   return (
     <div className="col">
       <div className="restaurant card rounded-4 h-100 position-relative">
         <Link
           to={{
-            pathname: "/restaurant",
-            state: { overall : overall,imageUrl:imageUrl,type:type,city:city,name:restName },
+            pathname: "/restaurant/" + restId,
+            state: {},
           }}
           className="text-decoration-none text-reset"
         >

@@ -15,13 +15,12 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Link to="/restaurant">Go to Other Component</Link>
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/error" element={<Error />} />
           <Route path="/authenticate" element={<AuthPage />} />
           <Route path="/search_result" element={<SearchResultPage />} />
-          <Route path="/restaurant" element={<RestaurantPage />} />
+          <Route path="/restaurant/:id" element={<RestaurantPage />} />
           <Route path="/manager-restaurants" element={<ManagerRestaurants />} />
           <Route path="/reservations" element={<ReservationsPage />} />
 
