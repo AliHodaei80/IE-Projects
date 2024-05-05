@@ -153,6 +153,23 @@ public class RestaurantRestController {
         }
     }
 
+    @RequestMapping(value = "/restaurants/{id}/feedback", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Response> getRestaurantFeedBackHandler(@PathVariable Long id) {
+        try {
+            Map<String, Object> outputData = new HashMap<>();
+            Restaurant restaurant = restaurantHandler.getRestaurant(id);
+            if (restaurant == null)
+                throw new RestaurantNotFound();
+            outputData.put("reviews", reviewHandler.getRestReviews(restaurant.getName()));
+            logger.info("feedback of Restaurant `" + restaurant.getName() + "` retrieved successfully");
+            return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
+        }  catch (RestaurantNotFound e) {
+            logger.error("feedback of Restaurant `" + id + "` retrieve failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
     // RestaurantPageController POST
     @RequestMapping(value = "/restaurants/{id}/reserve", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")

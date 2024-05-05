@@ -4,6 +4,8 @@ public class Paths {
     public static final String LOGIN_URL = "/login";
     public static final String SIGNUP_URL = "/signup";
     public static final String RESTAURANT_URL_REGEX = "^/restaurants/\\d+$";
+    public static final String RESTAURANT_REVIEW_URL_REGEX = "^/restaurants/\\d+/feedback$";
+
     public static final String RESTAURANTS_URL = "/restaurants";
     public static final String RESTAURANTS_SEARCH_URL = "/restaurants/search";
 
