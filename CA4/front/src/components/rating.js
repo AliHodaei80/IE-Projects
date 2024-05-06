@@ -33,5 +33,5 @@ export default function Rating({ rate }) {
       />
     );
   }
-  return <div>{stars}</div>;
+  return <div className="d-flex">{stars}</div>;
 }

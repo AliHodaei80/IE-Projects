@@ -23,7 +23,7 @@ body {
   /* z-index: 1; */
 }
 
-#rest-status {
+#rest-status-open {
   font-size: 18px;
   font-weight: 400;
   color: white;
@@ -31,7 +31,18 @@ body {
   top: 50%;
   position: relative;
   height: 33px;
-  background-color: green;
+  background-color: rgb(124, 228, 124);
+}
+
+#rest-status-closed {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+  width: 90px;
+  top: 50%;
+  position: relative;
+  height: 33px;
+  background-color: rgb(255, 121, 81);
 }
 
 review-card {
@@ -202,4 +213,30 @@ review-card {
 .page-no {
   top: 25%;
   font-weight: 400;
+}
+
+
+.pagination-container {
+  display: flex;
+  list-style: none;  
+  justify-content: center;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px; 
+}
+
+.page-link {
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%; 
+  border: 1px solid #ccc;
+}
+
+.active .page-link {
+  border-color: #007bff;
 }

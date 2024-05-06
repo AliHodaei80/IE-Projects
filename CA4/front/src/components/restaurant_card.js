@@ -4,7 +4,7 @@ import location_icon from "../images/icons/location.svg";
 import dot_icon from "../images/icons/dot.svg";
 import Rating from "./rating.js";
 import TimeInfoComponent from "./time_info.js";
-
+import { isOpen } from "./time_info.js";
 export default function RestaurantCard({ data }) {
   const overall = data.avgOverallScore;
   const imageUrl = data.imageUrl;
@@ -42,7 +42,11 @@ export default function RestaurantCard({ data }) {
             {city}
           </div>
           <div className="card-text d-flex time">
-            <div className="open">Open</div>
+            {isOpen(data.startTime,data.endTime) ? (
+              <div className="open">Open</div>
+            ) : (
+              <div className="closed">Closed</div>
+            )}
             <img
               className="icon align-self-center"
               src={dot_icon}
