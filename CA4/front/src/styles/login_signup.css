@@ -22,22 +22,39 @@ body {
 
 .top-btn {
   color: #2e2e2e;
-  height: 50px ;
-  transition-property: 'color, background-color';
+  height: 50px;
+  transition-property: "color, background-color";
   background-color: #ffe1e1;
 }
 
-.top-btn-active{
-  height: 50px ;
+.top-btn-active {
+  height: 50px;
   background-color: #ed3545;
-  transition-property: 'color, background-color';
+  transition-property: "color, background-color";
   color: #ffffff;
 }
 
-
-.action-button{
+.action-button {
   height: "500px";
   border-radius: 12px;
   background: #ed3545;
   font-weight: 400;
+}
+
+#radio_1:checked,
+#radio_2:checked {
+  background-color: var(--red);
+  border: 1px solid var(--red);
+  box-shadow: 0 0 7px var(--red);
+}
+
+#signup-btn,
+#login-btn {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+#login-signup input {
+  background-color: var(--light-grey);
+  border: none;
 }

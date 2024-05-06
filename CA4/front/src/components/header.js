@@ -36,7 +36,7 @@ function Header() {
     buttonOnClick = handleMyReservations;
   }
   const handleNavigateHome = () => {
-    navigate("/home");
+    navigate("/");
   };
   return (
     <header

@@ -43,10 +43,11 @@ public class LoginRestController {
                     (String) data.get(USER_ROLE_KEY),
                     (String) data.get(PASSWORD_KEY),
                     (Map<String, String>) data.get(USER_ADDRESS_KEY));
+            userHandler.loginUser((String) data.get(USERNAME_KEY), (String) data.get(PASSWORD_KEY));
             logger.info("User added successfully");
             return new ResponseEntity<>(new Response(true, USER_ADDED_SUCCESSFULLY), HttpStatus.OK);
         } catch (UserNameAlreadyTaken | InvalidUserRole | EmailAlreadyTaken | InvalidRequestTypeFormat |
-                 InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat e) {
+                 InvalidUsernameFormat | InvalidRequestFormat | InvalidEmailFormat | UserNotExists | AuthenticationFailed e) {
             logger.error("User addition failed. error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }

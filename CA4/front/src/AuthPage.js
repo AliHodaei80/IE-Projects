@@ -31,13 +31,13 @@ export default function AuthPage() {
   };
 
   const onLoginSuccess = (response) => {
-    navigate("/home", { replace: true, state: userData });
+    navigate("/", { replace: true, state: userData });
     const NuserData = userData;
     NuserData.logged_in = true;
     setAuthDetails(NuserData);
   };
   const onSignupSuccess = (response) => {
-    navigate("/home", { replace: true, state: userData });
+    navigate("/", { replace: true, state: userData });
     const NuserData = userData;
     NuserData.logged_in = true;
     setAuthDetails(NuserData);
@@ -64,7 +64,7 @@ export default function AuthPage() {
         className="d-flex h-100 w-100 justify-content-center align-self-center
       position-absolute"
       >
-        <div className="w-50 h-50 align-self-center">
+        <div id="login-signup" className="w-50 h-50 align-self-center">
           <div className="d-flex justify-content-between">
             <button
               className={
@@ -97,19 +97,20 @@ export default function AuthPage() {
                     <label className="form-label">Username</label>
                     <input
                       type="text"
-                      className="form-control rounded-2 bg-light border-0"
+                      id="login-username-input"
+                      className="form-control rounded-2 border-0"
                       onChange={handleChange}
                       name="username"
                       aria-label="Username"
                       aria-describedby="usernameHelp"
                     ></input>
                   </div>
-                  <div className="mt-4 w-100 rounded-2 bg-light border-0">
+                  <div className="mt-4 w-100 rounded-2 border-0">
                     <label className="form-label ">Password</label>
                     <input
                       type="password"
                       onChange={handleChange}
-                      className="form-control rounded-2 rounded-2 bg-light border-0"
+                      className="form-control rounded-2 rounded-2 border-0"
                       name="password"
                       aria-label="Password"
                       aria-describedby="passwordHelp"
@@ -117,6 +118,7 @@ export default function AuthPage() {
                   </div>
                 </div>
                 <button
+                  id="login-btn"
                   className="btn btn-outline-secondary w-75 mt-4 border-0"
                   onClick={() => {
                     postData(
@@ -141,7 +143,7 @@ export default function AuthPage() {
                     <label className="form-label">Username</label>
                     <input
                       type="text"
-                      className="form-control rounded-2 rounded-2 bg-light border-0"
+                      className="form-control rounded-2 rounded-2 date border-0"
                       name="username"
                       onChange={handleChange}
                       aria-label="Username"
@@ -152,7 +154,7 @@ export default function AuthPage() {
                     <label className="form-label">Email</label>
                     <input
                       type="email"
-                      className="form-control rounded-2 rounded-2 bg-light border-0"
+                      className="form-control rounded-2 rounded-2 date border-0"
                       name="email"
                       onChange={handleChange}
                       aria-label="email"
@@ -163,7 +165,7 @@ export default function AuthPage() {
                     <label className="form-label">Country</label>
                     <input
                       type="text"
-                      className="form-control rounded-2 rounded-2 bg-light border-0"
+                      className="form-control rounded-2 rounded-2 date border-0"
                       name="country"
                       onChange={handleChange}
                       aria-label="country"
@@ -174,7 +176,7 @@ export default function AuthPage() {
                     <label className="form-label">City</label>
                     <input
                       type="text"
-                      className="form-control rounded-2 rounded-2 bg-light border-0"
+                      className="form-control rounded-2 rounded-2 date border-0"
                       name="city"
                       onChange={handleChange}
                       aria-label="city"
@@ -185,7 +187,7 @@ export default function AuthPage() {
                     <label className="form-label">Password</label>
                     <input
                       type="password"
-                      className="form-control rounded-2 rounded-2 bg-light border-0"
+                      className="form-control rounded-2 rounded-2 date border-0"
                       name="password"
                       onChange={handleChange}
                       aria-label="Password"
@@ -220,7 +222,7 @@ export default function AuthPage() {
                 </div>
                 <button
                   type="button"
-                  id="signup_button"
+                  id="signup-btn"
                   className="btn btn-outline-secondary w-100 mt-4 border-0"
                   onClick={() => {
                     console.log("Printing Error message ", AxiosResult);

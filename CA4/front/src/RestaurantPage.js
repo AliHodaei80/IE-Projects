@@ -79,16 +79,18 @@ export default function RestaurantPage() {
       payload,
       (response) => {
         console.log("Reservation response", response);
-        setReservedTable(response.data.reservation.tableNumber);
-        const reservationInfoModal = new Modal(
-          document.getElementById("reservationInfoModal")
-        );
-        reservationInfoModal.show();
+        if (response.success) {
+          setReservedTable(response.data.reservation.tableNumber);
+          const reservationInfoModal = new Modal(
+            document.getElementById("reservationInfoModal")
+          );
+          reservationInfoModal.show();
+        }
       },
       (response) => {
         sendToast(true, "Reservation succesfully placed");
       },
-      () => {
+      (response) => {
         sendToast(false, "Reservation failed!");
       }
     );
@@ -422,11 +424,13 @@ export default function RestaurantPage() {
             setMounted(false);
           }}
         />
-        <ReservationInfoModal
-          tableNumber={reservedTable}
-          restAddress={restaurantData.address}
-          reserveDateTime={targetTime}
-        />
+        {targetTime && (
+          <ReservationInfoModal
+            tableNumber={reservedTable}
+            restAddress={restaurantData.address}
+            reserveDateTime={targetTime}
+          />
+        )}
 
         <Footer></Footer>
       </main>

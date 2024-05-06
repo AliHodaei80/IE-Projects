@@ -99,10 +99,7 @@ function RestaurantReservationList({ restaurantId, tableSelected }) {
                 }
               >
                 <td className="manage-reservation-date">
-                  {new Date(reservation.datetime)
-                    .toISOString()
-                    .slice(0, 16)
-                    .replace("T", " ")}
+                  {new Date(reservation.datetime).toLocaleString()}
                 </td>
                 <td className="reserver">{"By " + reservation.username}</td>
                 <td className="manage-table-id">

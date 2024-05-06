@@ -46,10 +46,7 @@ function ReservationInfoModal({ tableNumber, restAddress, reserveDateTime }) {
                   <label className="col-form-label col-md-4">Time</label>
 
                   <div className="col-form-label ms-auto col-md-4">
-                    {new Date(reserveDateTime)
-                      .toISOString()
-                      .slice(0, 16)
-                      .replace("T", " ")}
+                    {new Date(reserveDateTime).toLocaleString()}
                   </div>
                 </div>
                 <div className="mb-3 d-flex flex-column">

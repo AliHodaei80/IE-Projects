@@ -91,6 +91,12 @@ public class Reservations extends Container<Reservations>{
 //                .remove(reservation.getDatetime());
 //        reservationsIdIndex.remove(reservationId);
         reservation.setCanceled(true);
+        reservations.values().stream()
+                .flatMap(innerMap -> innerMap.values().stream())
+                .flatMap(innerMap2 -> innerMap2.values().stream())
+                .flatMap(List::stream)
+                .filter(reservation1 -> reservation1.getReservationId() == reservationId)
+                .forEach(reservation1 -> reservation1.setCanceled(true));
     }
 
     public List<Reservation> getAllReservations() {

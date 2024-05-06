@@ -58,10 +58,7 @@ function CustomerReservations() {
                 }
               >
                 <td className="reservation-date">
-                  {new Date(reservation.datetime)
-                    .toISOString()
-                    .slice(0, 16)
-                    .replace("T", " ")}
+                  {new Date(reservation.datetime).toLocaleString()}
                 </td>
                 <td className="restaurant-link">
                   <Link
