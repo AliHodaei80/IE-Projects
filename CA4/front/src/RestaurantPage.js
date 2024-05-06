@@ -8,6 +8,7 @@ import Rating from "./components/rating.js";
 import ReviewCard from "./components/review_card.js";
 import ReactPaginate from "react-paginate";
 import { isOpen } from "./components/time_info.js";
+import OpeningList from "./components/opening_list.js";
 import "./styles/shared.css";
 import "./styles/header.css";
 import "./styles/restaurant.css";
@@ -40,13 +41,7 @@ export default function RestaurantPage() {
   const [filteredReview, setFilteredReview] = useState();
 
   const handleDatetimeChange = (e) => {
-    console.log("time " + e.target.value);
     setTargetDateTime(e.target.value);
-  };
-  const handleCountChange = (e) => {
-    console.log("Count", e.target.value);
-    console.log("County",targetDateTime , targetPeopleCount)
-    setTargetPeopleCount(e.target.value)
     if (targetDateTime && targetPeopleCount) {
       const payload = {
         datetime: targetDateTime,
@@ -54,15 +49,34 @@ export default function RestaurantPage() {
         seatsNumber: targetPeopleCount,
       };
       postData(
-         "/restaurant/"+ restaurantData.id + "/avails",
+        "/restaurant/" + restaurantData.id + "/avails",
         payload,
-        (response) => {setResolvedTables(response.data)},
+        (response) => {
+          setResolvedTables(response.data);
+        },
         () => {},
         () => {}
       );
-      console.log(resolvedTables);
-    } else {
-    }
+    } 
+  };
+  const handleCountChange = (e) => {
+    setTargetPeopleCount(e.target.value);
+    if (targetDateTime && targetPeopleCount) {
+      const payload = {
+        datetime: targetDateTime,
+        time: "12:00",
+        seatsNumber: targetPeopleCount,
+      };
+      postData(
+        "/restaurant/" + restaurantData.id + "/avails",
+        payload,
+        (response) => {
+          setResolvedTables(response.data);
+        },
+        () => {},
+        () => {}
+      );
+    } 
   };
 
   useEffect(() => {
@@ -223,36 +237,11 @@ export default function RestaurantPage() {
                   </div>
                   <br />
                   <br />
-                  <span>Available Times for Table #1 ({targetPeopleCount} seats)</span>
+                  <span>
+                    Available Times for Table #1 ({targetPeopleCount} seats)
+                  </span>
                   <div className=" text-center mt-3 ms-0">
-                    <div className="row">
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        11:00 AM
-                      </button>
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        12:00PM
-                      </button>
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        13:00PM
-                      </button>
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        14:00PM
-                      </button>
-                    </div>
-                    <div className="row">
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        15:00PM
-                      </button>
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        18:00PM
-                      </button>
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        19:00PM
-                      </button>
-                      <button className="reserve-blob col-sm ms-2 rounded-4 mt-2">
-                        20:00PM
-                      </button>
-                    </div>
+                  {resolvedTables && <OpeningList openingData={resolvedTables.availableTimes} />}
                     <div className="general-text w-100 mt-3 mb-3">
                       <p className="fw-bolder red-text">
                         You will reserve this table only for <u>one</u> hour,

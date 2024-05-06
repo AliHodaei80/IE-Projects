@@ -59,7 +59,6 @@ export default function Home() {
           setRestLocations(restLocations);
           const rests = response.data.restaurants;
           rests.sort((a, b) => b.avgOverallScore - a.avgOverallScore);
-          console.log("Rest rests", rests);
           setTopRestaurants({ restaurants: rests });
         }
       },

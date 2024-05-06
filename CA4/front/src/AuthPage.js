@@ -31,14 +31,12 @@ export default function AuthPage() {
   };
 
   const onLoginSuccess = (response) => {
-    console.log("Login success");
     navigate("/home", { replace: true, state: userData });
     const NuserData = userData;
     NuserData.logged_in = true;
     setAuthDetails(NuserData);
   };
   const onSignupSuccess = (response) => {
-    console.log("Signup success");
     navigate("/home", { replace: true, state: userData });
     const NuserData = userData;
     NuserData.logged_in = true;
