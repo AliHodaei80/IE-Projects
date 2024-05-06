@@ -36,9 +36,9 @@ function CustomerReservations() {
   }, []);
 
   return (
-    <div class="table-responsive">
-      <table class="table-responsive table mt-4 rounded-3 overflow-hidden">
-        <thead class="reservations-header">
+    <div className="table-responsive">
+      <table className="table-responsive table mt-4 rounded-3 overflow-hidden">
+        <thead className="reservations-header">
           <tr>
             <th colspan="5" scope="colgroup">
               My Reservations
@@ -46,75 +46,78 @@ function CustomerReservations() {
           </tr>
         </thead>
         <tbody>
-          {reservations.map((reservation) => (
-            <tr
-              className={
-                reservation.canceled
-                  ? "reservation-cancelled"
-                  : new Date() < new Date(reservation.datetime)
-                  ? "reservation-active"
-                  : "reservation-done"
-              }
-            >
-              <td className="reservation-date">
-                {new Date(reservation.datetime).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </td>
-              <td className="restaurant-link">
-                <Link
-                  to={{
-                    pathname: "/restaurant/" + reservation.restaurantId,
-                    state: {},
-                  }}
-                >
-                  {reservation.restaurantName}
-                </Link>
-              </td>
-              <td className="table-id">Table-{reservation.tableNumber}</td>
-              <td className="seats-num">{reservation.seatsReserved} Seats</td>
-              <td
+          {reservations.length > 0 ? (
+            reservations.map((reservation) => (
+              <tr
                 className={
                   reservation.canceled
-                    ? "text-end no-operation"
+                    ? "reservation-cancelled"
                     : new Date() < new Date(reservation.datetime)
-                    ? "operation cancel text-end"
-                    : "operation add-comment text-end"
+                    ? "reservation-active"
+                    : "reservation-done"
                 }
               >
-                {reservation.canceled ? (
-                  <div>Canceled</div>
-                ) : new Date() < new Date(reservation.datetime) ? (
+                <td className="reservation-date">
+                  {new Date(reservation.datetime)
+                    .toISOString()
+                    .slice(0, 16)
+                    .replace("T", " ")}
+                </td>
+                <td className="restaurant-link">
                   <Link
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#cancelConfirmationModal"
-                    onClick={() => {
-                      setCancelReservationId(reservation.reservationId);
+                    to={{
+                      pathname: "/restaurant/" + reservation.restaurantId,
+                      state: {},
                     }}
                   >
-                    Cancel
+                    {reservation.restaurantName}
                   </Link>
-                ) : (
-                  <Link
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addReviewModal"
-                    onClick={() => {
-                      setAddReviewRestaurantName(reservation.restaurantName);
-                      setAddReviewRestaurantId(reservation.restaurantId);
-                    }}
-                  >
-                    Add Comment
-                  </Link>
-                )}
-              </td>
-            </tr>
-          ))}
+                </td>
+                <td className="table-id">Table-{reservation.tableNumber}</td>
+                <td className="seats-num">{reservation.seatsReserved} Seats</td>
+                <td
+                  className={
+                    reservation.canceled
+                      ? "text-end no-operation"
+                      : new Date() < new Date(reservation.datetime)
+                      ? "operation cancel text-end"
+                      : "operation add-comment text-end"
+                  }
+                >
+                  {reservation.canceled ? (
+                    <div>Canceled</div>
+                  ) : new Date() < new Date(reservation.datetime) ? (
+                    <Link
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#cancelConfirmationModal"
+                      onClick={() => {
+                        setCancelReservationId(reservation.reservationId);
+                      }}
+                    >
+                      Cancel
+                    </Link>
+                  ) : (
+                    <Link
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addReviewModal"
+                      onClick={() => {
+                        setAddReviewRestaurantName(reservation.restaurantName);
+                        setAddReviewRestaurantId(reservation.restaurantId);
+                      }}
+                    >
+                      Add Comment
+                    </Link>
+                  )}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <div className="d-flex h-75 justify-content-center align-items-center mt-2">
+              No Reservations yet!
+            </div>
+          )}
         </tbody>
       </table>
       <CancelConfirmationModal

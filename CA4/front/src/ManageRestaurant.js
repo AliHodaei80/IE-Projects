@@ -41,33 +41,35 @@ function ManageRestaurantPage() {
 
   return (
     <>
-      <Header />
-      <RestaurantInfoNavBar
-        address={"address" in restaurant ? restaurant.address : ""}
-        restName={"name" in restaurant ? restaurant.name : ""}
-      />
-      <main className="flex-grow-1">
-        <div className="container-fluid h-100">
-          <div className="row h-100">
-            <RestaurantReservationList
-              restaurantId={id}
-              tableSelected={tableSelected}
-            />
+      <div id="manage-restaurant-body" className="vh-100 d-flex flex-column">
+        <Header />
+        <RestaurantInfoNavBar
+          address={"address" in restaurant ? restaurant.address : ""}
+          restName={"name" in restaurant ? restaurant.name : ""}
+        />
+        <main className="flex-grow-1">
+          <div className="container-fluid h-100">
+            <div className="row h-100">
+              <RestaurantReservationList
+                restaurantId={id}
+                tableSelected={tableSelected}
+              />
 
-            <RestaurantTableList
-              restaurantId={id}
-              tableSelected={tableSelected}
-              setTableSelected={(tableNum) => {
-                setTableSelected(tableNum);
-                console.log("ManageRestaurantPage tableNum " + tableNum);
-                console.log("ManageRestaurantPage selected " + tableSelected);
-              }}
-            />
+              <RestaurantTableList
+                restaurantId={id}
+                tableSelected={tableSelected}
+                setTableSelected={(tableNum) => {
+                  setTableSelected(tableNum);
+                  console.log("ManageRestaurantPage tableNum " + tableNum);
+                  console.log("ManageRestaurantPage selected " + tableSelected);
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
 
-      <Footer />
+        <Footer />
+      </div>
     </>
   );
 }

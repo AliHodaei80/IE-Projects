@@ -1,10 +1,10 @@
-.manage-restaurant-body {
+#manage-restaurant-body {
   background-color: var(--red);
   font-family: "SplineSans", serif;
   min-height: 100vh;
 }
 
-.manage-restaurant-body main {
+#manage-restaurant-body main {
   min-height: 0;
 }
 

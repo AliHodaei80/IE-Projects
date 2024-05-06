@@ -4,7 +4,7 @@ export default function ReviewCard({ reviewData }) {
   return (
     <div className="container">
       <div className="d-flex review-header justify-content-between">
-        <div class="col-0 d-flex">
+        <div className="col-0 d-flex">
           <div className="col-0 profile-photo d-flex">
             <span className="fw-bolder profile-name general-text position-relative">
               AD

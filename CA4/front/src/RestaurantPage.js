@@ -3,6 +3,8 @@ import "./styles/search_result.css";
 import React, { useState, useEffect } from "react";
 import Header from "./components/header.js";
 import Footer from "./components/footer.js";
+import ReservationInfoModal from "./components/reservation_info_modal.js";
+import { Modal } from "bootstrap";
 import TimeInfoComponent from "./components/time_info.js";
 import Rating from "./components/rating.js";
 import ReviewCard from "./components/review_card.js";
@@ -39,7 +41,9 @@ export default function RestaurantPage() {
   const { id } = useParams();
   const [targetDate, setTargetDate] = useState();
   const [targetSeatNumber, setTargetSeatNumber] = useState();
-  const [targetTime, setTargeTime] = useState();
+  const [reservedTable, setReservedTable] = useState(-1);
+
+  const [targetTime, setTargeTime] = useState(new Date());
   const [resolvedTables, setResolvedTables] = useState();
   const [page, setPage] = useState(0);
   const [filteredReview, setFilteredReview] = useState();
@@ -63,6 +67,7 @@ export default function RestaurantPage() {
       );
     }
   };
+
   const submitReservation = () => {
     const payload = {
       username: authDetails.username,
@@ -74,8 +79,13 @@ export default function RestaurantPage() {
       payload,
       (response) => {
         console.log("Reservation response", response);
+        setReservedTable(response.data.reservation.tableNumber);
+        const reservationInfoModal = new Modal(
+          document.getElementById("reservationInfoModal")
+        );
+        reservationInfoModal.show();
       },
-      () => {
+      (response) => {
         sendToast(true, "Reservation succesfully placed");
       },
       () => {
@@ -297,7 +307,7 @@ export default function RestaurantPage() {
                     <div>
                       <h4>What {reviewData.length} people are saying</h4>
                       <div className="rounded-4 d-flex justify-content-start">
-                        <div class="d-flex justify-content-between text-align">
+                        <div className="d-flex justify-content-between text-align">
                           <div className="d-flex flex-column">
                             <Rating
                               rate={restaurantData.avgOverallScore}
@@ -361,12 +371,18 @@ export default function RestaurantPage() {
                     </button>
                   </div>
 
-                  {filteredReview &&
+                  {reviewData.length > 0 ? (
+                    filteredReview &&
                     filteredReview.map((rD, index) => (
                       <div>
                         <ReviewCard key={index} reviewData={rD} />
                       </div>
-                    ))}
+                    ))
+                  ) : (
+                    <div className="d-flex h-75 justify-content-center align-items-center mt-2">
+                      No Reviews yet!
+                    </div>
+                  )}
                 </div>
 
                 <div className="align-bottom">
@@ -405,6 +421,11 @@ export default function RestaurantPage() {
           updateReviews={() => {
             setMounted(false);
           }}
+        />
+        <ReservationInfoModal
+          tableNumber={reservedTable}
+          restAddress={restaurantData.address}
+          reserveDateTime={targetTime}
         />
 
         <Footer></Footer>

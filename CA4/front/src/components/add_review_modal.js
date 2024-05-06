@@ -230,7 +230,7 @@ function AddReviewModal({ restaurantName, restaurantId, updateReviews }) {
                   <button
                     type="button"
                     id="close-add-review-btn"
-                    class="btn btn-secondary w-100 rounded-4 mt-2"
+                    className="btn btn-secondary w-100 rounded-4 mt-2"
                     data-bs-dismiss="modal"
                   >
                     Cancel
