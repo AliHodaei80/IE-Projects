@@ -61,7 +61,7 @@ export default function AuthPage() {
         <Header />
       </header>
       <div
-        className="d-flex h-100 w-100 justify-content-center bg-light align-self-center
+        className="d-flex h-100 w-100 justify-content-center align-self-center
       position-absolute"
       >
         <div className="w-50 h-50 align-self-center">
@@ -97,19 +97,19 @@ export default function AuthPage() {
                     <label className="form-label">Username</label>
                     <input
                       type="text"
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 bg-light border-0"
                       onChange={handleChange}
                       name="username"
                       aria-label="Username"
                       aria-describedby="usernameHelp"
                     ></input>
                   </div>
-                  <div className="mt-4 w-100">
-                    <label className="form-label">Password</label>
+                  <div className="mt-4 w-100 rounded-2 bg-light border-0">
+                    <label className="form-label ">Password</label>
                     <input
                       type="password"
                       onChange={handleChange}
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 rounded-2 bg-light border-0"
                       name="password"
                       aria-label="Password"
                       aria-describedby="passwordHelp"
@@ -117,7 +117,7 @@ export default function AuthPage() {
                   </div>
                 </div>
                 <button
-                  className="btn btn-outline-secondary w-75 mt-4 "
+                  className="btn btn-outline-secondary w-75 mt-4 border-0"
                   onClick={() => {
                     postData(
                       login_path,
@@ -137,11 +137,11 @@ export default function AuthPage() {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-md-6 w-75">
-                  <div className="mt-4 w-100">
+                  <div className="mt-4 w-100 ">
                     <label className="form-label">Username</label>
                     <input
                       type="text"
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 rounded-2 bg-light border-0"
                       name="username"
                       onChange={handleChange}
                       aria-label="Username"
@@ -152,7 +152,7 @@ export default function AuthPage() {
                     <label className="form-label">Email</label>
                     <input
                       type="email"
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 rounded-2 bg-light border-0"
                       name="email"
                       onChange={handleChange}
                       aria-label="email"
@@ -163,7 +163,7 @@ export default function AuthPage() {
                     <label className="form-label">Country</label>
                     <input
                       type="text"
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 rounded-2 bg-light border-0"
                       name="country"
                       onChange={handleChange}
                       aria-label="country"
@@ -174,7 +174,7 @@ export default function AuthPage() {
                     <label className="form-label">City</label>
                     <input
                       type="text"
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 rounded-2 bg-light border-0"
                       name="city"
                       onChange={handleChange}
                       aria-label="city"
@@ -185,7 +185,7 @@ export default function AuthPage() {
                     <label className="form-label">Password</label>
                     <input
                       type="password"
-                      className="form-control rounded-2"
+                      className="form-control rounded-2 rounded-2 bg-light border-0"
                       name="password"
                       onChange={handleChange}
                       aria-label="Password"
@@ -221,7 +221,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   id="signup_button"
-                  className="btn btn-outline-secondary w-75 mt-4"
+                  className="btn btn-outline-secondary w-100 mt-4 border-0"
                   onClick={() => {
                     console.log("Printing Error message ", AxiosResult);
                     const newUserData = userData;

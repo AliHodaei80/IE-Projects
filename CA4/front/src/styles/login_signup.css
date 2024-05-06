@@ -33,3 +33,11 @@ body {
   transition-property: 'color, background-color';
   color: #ffffff;
 }
+
+
+.action-button{
+  height: "500px";
+  border-radius: 12px;
+  background: #ed3545;
+  font-weight: 400;
+}
