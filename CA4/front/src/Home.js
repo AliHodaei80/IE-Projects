@@ -32,7 +32,6 @@ export default function Home() {
   // ------------------------------------------------------------- //
   const { authDetails, setAuthDetails } = useAuth();
   const [userDetails, setUserDetails] = useState({});
-  const [isMounted, setIsMounted] = useState(false);
   const [userSpecificSearchResult, setUserSpecificSearchResult] = useState({});
   const [topRestaurants, setTopRestaurants] = useState({});
   const [restTypes, setRestTypes] = useState([]);
