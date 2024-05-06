@@ -8,15 +8,36 @@ body {
   background-color: var(--cream);
 }
 
-.red-btn{
+.red-btn {
   /* Register */
 
-position: relative;
-color:   #FFFCFC;
-background: #ED3545;
-border-radius: 12px;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-  
+  position: relative;
+  color: #fffcfc;
+  background: #ed3545;
+  border-radius: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.top-btn {
+  color: #2e2e2e;
+  height: 50px ;
+  transition-property: 'color, background-color';
+  background-color: #ffe1e1;
+}
+
+.top-btn-active{
+  height: 50px ;
+  background-color: #ed3545;
+  transition-property: 'color, background-color';
+  color: #ffffff;
+}
+
+
+.action-button{
+  height: "500px";
+  border-radius: 12px;
+  background: #ed3545;
+  font-weight: 400;
 }

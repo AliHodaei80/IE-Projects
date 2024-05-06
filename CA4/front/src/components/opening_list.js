@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function OpeningList({ openingData, targetTimeSetter }) {
+  const [localTargetDate, setLocalTargetDate] = useState();
   const formatTime = (datetime) => {
     const date = new Date(datetime);
     return date.toLocaleTimeString("en-US", {
@@ -16,6 +17,12 @@ export default function OpeningList({ openingData, targetTimeSetter }) {
     }
     return chunked;
   };
+
+  useEffect(() => {
+    console.log(localTargetDate);
+    targetTimeSetter(localTargetDate);
+  }, [localTargetDate]);
+
   const timeButtons = openingData.sort();
   const rows = chunkArray(timeButtons, 6);
   return (
@@ -26,7 +33,9 @@ export default function OpeningList({ openingData, targetTimeSetter }) {
             <button
               className="reserve-blob col-sm ms-2 rounded-4 mt-2"
               key={index}
-              onClick={targetTimeSetter(time)}
+              onClick={() => {
+                targetTimeSetter(time);
+              }}
             >
               {formatTime(time)}
             </button>
