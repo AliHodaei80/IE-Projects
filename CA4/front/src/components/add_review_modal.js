@@ -8,7 +8,7 @@ import InputStarRating from "./input_star_rating.js";
 import "bootstrap/dist/js/bootstrap.js";
 import "../styles/add_review_modal.css";
 
-function AddReviewModal({ restaurantName, restaurantId }) {
+function AddReviewModal({ restaurantName, restaurantId, updateReviews }) {
   const [overalRate, setOveralRate] = useState(0);
   const [foodQualityRate, setFoodQualityRate] = useState(0);
   const [serviceRate, setServiceRate] = useState(0);
@@ -21,6 +21,7 @@ function AddReviewModal({ restaurantName, restaurantId }) {
     console.log(response);
     console.log(response.success);
     if (response.success) {
+      updateReviews();
       sendToast(true, response.data);
     } else {
       if ("data" in response) {
@@ -83,8 +84,10 @@ function AddReviewModal({ restaurantName, restaurantId }) {
       setHadReservationBefore(false);
     }
   };
-
-  checkHadReservationBefore();
+  useEffect(() => {
+    console.log("rest name" + restaurantName);
+    checkHadReservationBefore();
+  }, [restaurantName, restaurantId]);
 
   return (
     <>

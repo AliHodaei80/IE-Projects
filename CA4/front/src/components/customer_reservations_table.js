@@ -138,6 +138,7 @@ function CustomerReservations() {
       <AddReviewModal
         restaurantName={addReviewRestaurantName}
         restaurantId={addReviewRestaurantId}
+        updateReviews={() => {}}
       />
     </div>
   );

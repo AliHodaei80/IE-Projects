@@ -7,6 +7,8 @@ import TimeInfoComponent from "./components/time_info.js";
 import Rating from "./components/rating.js";
 import ReviewCard from "./components/review_card.js";
 import ReactPaginate from "react-paginate";
+import AddReviewModal from "./components/add_review_modal.js";
+
 import { isOpen } from "./components/time_info.js";
 import OpeningList from "./components/opening_list.js";
 import "./styles/shared.css";
@@ -65,19 +67,19 @@ export default function RestaurantPage() {
     const payload = {
       username: authDetails.username,
       seatsReserved: targetSeatNumber,
-      datetime:  targetTime,
+      datetime: targetTime,
     };
     postData(
       "/restaurant/" + restaurantData.id + "/reserve",
       payload,
       (response) => {
-        console.log("Reservation response",response)
+        console.log("Reservation response", response);
       },
       () => {
-        sendToast(true,"Reservation succesfully placed")
+        sendToast(true, "Reservation succesfully placed");
       },
       () => {
-        sendToast(false,"Reservation failed!")
+        sendToast(false, "Reservation failed!");
       }
     );
   };
@@ -350,7 +352,11 @@ export default function RestaurantPage() {
                     <div className="rounded-4">
                       <h4>{reviewData.length} Reviews</h4>
                     </div>
-                    <button className="add-review-btn rounded-4 ">
+                    <button
+                      className="add-review-btn rounded-4 "
+                      data-bs-toggle="modal"
+                      data-bs-target="#addReviewModal"
+                    >
                       Add Review
                     </button>
                   </div>
@@ -393,6 +399,13 @@ export default function RestaurantPage() {
             </div>
           </div>
         </div>
+        <AddReviewModal
+          restaurantName={restaurantData.name}
+          restaurantId={restaurantData.id}
+          updateReviews={() => {
+            setMounted(false);
+          }}
+        />
 
         <Footer></Footer>
       </main>
