@@ -237,6 +237,7 @@ export default function RestaurantPage() {
                     <span className="mt"> For </span>
                     <input
                       type="number"
+                      min="1"
                       className="ms-2 custom-select count-picker rounded-3"
                       id="tableNumber"
                       onChange={handleCountChange}
