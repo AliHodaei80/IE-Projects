@@ -67,14 +67,22 @@ export default function AuthPage() {
         <div className="w-50 h-50 align-self-center">
           <div className="d-flex justify-content-between">
             <button
-              className="btn btn-outline-secondary w-100"
+              className={
+                showLogin
+                  ? "top-btn w-100 border-bottom-0 border-top-0 border-right-0 border-0  rounded-2"
+                  : "top-btn-active w-100 border-bottom-0 border-top-0 border-right-0 border-0 rounded-2 "
+              }
               type="button"
               onClick={() => setShowLogin(false)}
             >
               Signup
             </button>
             <button
-              className="btn btn-outline-secondary w-100"
+              className={
+                !showLogin
+                  ? "top-btn w-100 border-bottom-0 border-top-0 border-right-0 border-0 rounded-2 "
+                  : "top-btn-active w-100 border-bottom-0 border-top-0 border-right-0 border-0 rounded-2 "
+              }
               type="button"
               onClick={() => setShowLogin(true)}
             >
@@ -109,7 +117,7 @@ export default function AuthPage() {
                   </div>
                 </div>
                 <button
-                  className="btn btn-outline-secondary w-75 mt-4"
+                  className="btn btn-outline-secondary w-75 mt-4 "
                   onClick={() => {
                     postData(
                       login_path,
@@ -229,7 +237,7 @@ export default function AuthPage() {
                     );
                   }}
                 >
-                  Signup
+                  Register
                 </button>
               </div>
             </div>
