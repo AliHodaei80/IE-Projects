@@ -19,10 +19,6 @@ export function isOpen(startTime, endTime) {
       (currentHours === startHour && currentMinutes >= startMinute)) &&
     (currentHours < endHour ||
       (currentHours === endHour && currentMinutes < endMinute));
-  console.log("Hello",currentHours);
-  console.log("Hello",startHour)
-  console.log("Hello",endHour);
-  console.log("Hello",endMinute)
   return open;
 }
 const getCurrentTimeInfo = (startTime, endTime) => {
