@@ -26,7 +26,7 @@ public class ReservationHandler {
         userHandler = UserHandler.getInstance();
         restaurantHandler = RestaurantHandler.getInstance();
         restaurantTableHandler = RestaurantTableHandler.getInstance();
-        reservations = new Reservations();
+        reservations = new Reservations().loadFromFile(Locations.RESERVATIONS_LOCATION, Reservations.class);
     }
 
     public static ReservationHandler getInstance() {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import CancelConfirmationModal from "./cancel_confimation_modal";
+import AddReviewModal from "./add_review_modal.js";
 import { fetchData } from "../utils/request_utils.js";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -8,6 +9,8 @@ import { useAuth } from "../context/AuthContext";
 function CustomerReservations() {
   const { authDetails } = useAuth();
   const [cancelReservationIds, setCancelReservationId] = useState(-1);
+  const [addReviewRestaurantName, setAddReviewRestaurantName] = useState("");
+  const [addReviewRestaurantId, setAddReviewRestaurantId] = useState(-1);
   const [reservations, setReservations] = useState([]);
 
   const handleFetchReservations = (response) => {
@@ -97,7 +100,17 @@ function CustomerReservations() {
                     Cancel
                   </Link>
                 ) : (
-                  <Link href="#">Add Comment</Link>
+                  <Link
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addReviewModal"
+                    onClick={() => {
+                      setAddReviewRestaurantName(reservation.restaurantName);
+                      setAddReviewRestaurantId(reservation.restaurantId);
+                    }}
+                  >
+                    Add Comment
+                  </Link>
                 )}
               </td>
             </tr>
@@ -121,6 +134,10 @@ function CustomerReservations() {
               ).restaurantName
             : null
         }
+      />
+      <AddReviewModal
+        restaurantName={addReviewRestaurantName}
+        restaurantId={addReviewRestaurantId}
       />
     </div>
   );

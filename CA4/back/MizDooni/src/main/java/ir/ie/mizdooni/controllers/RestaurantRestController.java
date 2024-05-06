@@ -136,11 +136,22 @@ public class RestaurantRestController {
             Restaurant restaurant = restaurantHandler.getRestaurant(Long.parseLong(id));
             data.put(RESTAURANT_NAME_KEY, restaurant.getName());
             validateAddReview(data);
-            Double ambianceRate = Double.parseDouble((String) data.get(AMBIANCE_RATE_KEY));
-            Double overallRate = Double.parseDouble((String) data.get(OVERALL_RATE_KEY));
-            Double foodRate = Double.parseDouble((String) data.get(FOOD_RATE_KEY));
+//            Double ambianceRate = Double.parseDouble((String) data.get(AMBIANCE_RATE_KEY));
+            Double ambianceRate = data.get(AMBIANCE_RATE_KEY) instanceof Integer ?
+                    ((Integer) data.get(AMBIANCE_RATE_KEY)).doubleValue() : data.get(AMBIANCE_RATE_KEY) instanceof Double ? (Double) data.get(AMBIANCE_RATE_KEY) :
+                            Double.parseDouble((String) data.get(AMBIANCE_RATE_KEY));
+
+            Double overallRate = data.get(OVERALL_RATE_KEY) instanceof Integer ?
+                    ((Integer) data.get(OVERALL_RATE_KEY)).doubleValue() : data.get(OVERALL_RATE_KEY) instanceof Double ? (Double) data.get(OVERALL_RATE_KEY) :
+                            Double.parseDouble((String) data.get(OVERALL_RATE_KEY));
+            Double foodRate = data.get(FOOD_RATE_KEY) instanceof Integer ?
+                    ((Integer) data.get(FOOD_RATE_KEY)).doubleValue() : data.get(FOOD_RATE_KEY) instanceof Double ? (Double) data.get(FOOD_RATE_KEY) :
+                            Double.parseDouble((String) data.get(FOOD_RATE_KEY));
             String comment = (String) data.get(COMMENT_KEY);
-            Double serviceRate = Double.parseDouble((String) data.get(SERVICE_RATE_KEY));
+            Double serviceRate = data.get(SERVICE_RATE_KEY) instanceof Integer ?
+                    ((Integer) data.get(SERVICE_RATE_KEY)).doubleValue() :
+                    data.get(SERVICE_RATE_KEY) instanceof Double ? (Double) data.get(SERVICE_RATE_KEY) :
+                            Double.parseDouble((String) data.get(SERVICE_RATE_KEY));
             String username = (String) data.get(USERNAME_KEY);
             reviewHandler.addReview(restaurant.getName(), username, ambianceRate, overallRate, serviceRate, foodRate, comment);
             logger.info("feedback of User`" + username + "` for Restaurant `" + restaurant.getName() + "`added successfully");
