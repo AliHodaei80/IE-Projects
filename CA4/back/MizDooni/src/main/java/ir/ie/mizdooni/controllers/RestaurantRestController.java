@@ -179,7 +179,7 @@ public class RestaurantRestController {
     }
 
     // RestaurantPageController POST
-    @RequestMapping(value = "/restaurants/{id}/reserve", method = RequestMethod.POST)
+    @RequestMapping(value = "/restaurant/{id}/reserve", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> reserveRestaurantHandler(@PathVariable String id,
                                                              @RequestBody Map<String, Object> data) {

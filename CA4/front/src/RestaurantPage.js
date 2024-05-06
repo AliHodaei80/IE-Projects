@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { fetchData, postData, sendToast } from "./utils/request_utils.js";
 import star_inside_review from "./images/icons/star_inside_review.png";
 import calender from "./images/icons/calendar.svg";
+import { useAuth } from "./context/AuthContext.js";
 const review_page_size = 5;
 export default function RestaurantPage() {
   const [mounted, setMounted] = useState(false);
@@ -34,19 +35,20 @@ export default function RestaurantPage() {
   const [reviewData, setReviewData] = useState([]);
   const [tableData, setTables] = useState([]);
   const { id } = useParams();
-  const [targetDateTime, setTargetDateTime] = useState();
-  const [targetPeopleCount, setTargetPeopleCount] = useState();
+  const [targetDate, setTargetDate] = useState();
+  const [targetSeatNumber, setTargetSeatNumber] = useState();
+  const [targetTime, setTargeTime] = useState();
   const [resolvedTables, setResolvedTables] = useState();
   const [page, setPage] = useState(0);
   const [filteredReview, setFilteredReview] = useState();
-
+  const { authDetails } = useAuth();
   const handleDatetimeChange = (e) => {
-    setTargetDateTime(e.target.value);
-    if (targetDateTime && targetPeopleCount) {
+    setTargetDate(e.target.value);
+    if (targetDate && targetSeatNumber) {
       const payload = {
-        datetime: targetDateTime,
+        datetime: targetDate,
         time: "12:00",
-        seatsNumber: targetPeopleCount,
+        seatsNumber: targetSeatNumber,
       };
       postData(
         "/restaurant/" + restaurantData.id + "/avails",
@@ -57,15 +59,35 @@ export default function RestaurantPage() {
         () => {},
         () => {}
       );
-    } 
+    }
+  };
+  const submitReservation = () => {
+    const payload = {
+      username: authDetails.username,
+      seatsReserved: targetSeatNumber,
+      datetime:  targetTime,
+    };
+    postData(
+      "/restaurant/" + restaurantData.id + "/reserve",
+      payload,
+      (response) => {
+        console.log("Reservation response",response)
+      },
+      () => {
+        sendToast(true,"Reservation succesfully placed")
+      },
+      () => {
+        sendToast(false,"Reservation failed!")
+      }
+    );
   };
   const handleCountChange = (e) => {
-    setTargetPeopleCount(e.target.value);
-    if (targetDateTime && targetPeopleCount) {
+    setTargetSeatNumber(e.target.value);
+    if (targetDate && targetSeatNumber) {
       const payload = {
-        datetime: targetDateTime,
+        datetime: targetDate,
         time: "12:00",
-        seatsNumber: targetPeopleCount,
+        seatsNumber: targetSeatNumber,
       };
       postData(
         "/restaurant/" + restaurantData.id + "/avails",
@@ -76,7 +98,7 @@ export default function RestaurantPage() {
         () => {},
         () => {}
       );
-    } 
+    }
   };
 
   useEffect(() => {
@@ -238,10 +260,15 @@ export default function RestaurantPage() {
                   <br />
                   <br />
                   <span>
-                    Available Times for Table #1 ({targetPeopleCount} seats)
+                    Available Times for Table #1 ({targetSeatNumber} seats)
                   </span>
                   <div className=" text-center mt-3 ms-0">
-                  {resolvedTables && <OpeningList openingData={resolvedTables.availableTimes} />}
+                    {resolvedTables && (
+                      <OpeningList
+                        openingData={resolvedTables.availableTimes}
+                        targetTimeSetter={setTargeTime}
+                      />
+                    )}
                     <div className="general-text w-100 mt-3 mb-3">
                       <p className="fw-bolder red-text">
                         You will reserve this table only for <u>one</u> hour,
@@ -249,7 +276,10 @@ export default function RestaurantPage() {
                       </p>
                     </div>
                     <div className="row">
-                      <button className="red-stylish-button col-sm ms-2 rounded-4">
+                      <button
+                        className="red-stylish-button col-sm ms-2 rounded-4"
+                        onClick={submitReservation}
+                      >
                         Complete the reservation
                       </button>
                     </div>
