@@ -27,8 +27,8 @@ public class LoginRestController {
 
 
     @Autowired
-    public LoginRestController() {
-        userHandler = UserHandler.getInstance();
+    public LoginRestController(UserHandler userHandler) {
+        this.userHandler = userHandler;
         logger = LoggerFactory.getLogger(LoginRestController.class);
     }
 

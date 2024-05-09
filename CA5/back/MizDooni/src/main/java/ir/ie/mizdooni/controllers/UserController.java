@@ -24,10 +24,10 @@ public class UserController {
     private final Logger logger;
 
     @Autowired
-    public UserController() {
-        userHandler = UserHandler.getInstance();
-        restaurantHandler = RestaurantHandler.getInstance();
-        logger = LoggerFactory.getLogger(UserController.class);
+    public UserController(UserHandler userHandler, RestaurantHandler restaurantHandler) {
+        this.userHandler = userHandler;
+        this.restaurantHandler = restaurantHandler;
+        this.logger = LoggerFactory.getLogger(UserController.class);
     }
 
     @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)

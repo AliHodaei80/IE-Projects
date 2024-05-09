@@ -31,10 +31,10 @@ public class ReservationRestController {
     private final Logger logger;
 
     @Autowired
-    public ReservationRestController() {
-        restaurantHandler = RestaurantHandler.getInstance();
-        userHandler = UserHandler.getInstance();
-        reservationHandler = ReservationHandler.getInstance();
+    public ReservationRestController(ReservationHandler reservationHandler, RestaurantHandler restaurantHandler, UserHandler userHandler) {
+        this.restaurantHandler = restaurantHandler;
+        this.userHandler = userHandler;
+        this.reservationHandler = reservationHandler;
         logger = LoggerFactory.getLogger(ReservationRestController.class);
     }
 

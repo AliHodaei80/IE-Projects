@@ -10,19 +10,24 @@ import java.util.function.Function;
 import ir.ie.mizdooni.storage.Reviews;
 import ir.ie.mizdooni.utils.Parser;
 import ir.ie.mizdooni.definitions.Locations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
 public class ReviewHandler {
     private final UserHandler userHandler;
     private final RestaurantHandler restaurantHandler;
-    private static ReviewHandler reviewHandler;
+    private ReservationHandler reservationHandler;
     private final Reviews reviews;
 
-    private ReviewHandler() {
-        userHandler = UserHandler.getInstance();
-        restaurantHandler = RestaurantHandler.getInstance();
+    @Autowired
+    private ReviewHandler(UserHandler userHandler, RestaurantHandler restaurantHandler, ReservationHandler reservationHandler) {
+        this.userHandler = userHandler;
+        this.restaurantHandler = restaurantHandler;
+        this.reservationHandler = reservationHandler;
         reviews = new Reviews().loadFromUrl(DataBaseUrlPath.REVIEWS_DATABASE_URL);
         List<Restaurant> restaurantList = restaurantHandler.getRestaurants().getRestaurantList(false);
         for (Restaurant restaurant : restaurantList) {
@@ -34,22 +39,16 @@ public class ReviewHandler {
         }
     }
 
-    public static ReviewHandler getInstance() {
-        if (reviewHandler == null)
-            reviewHandler = new ReviewHandler();
-        return reviewHandler;
-    }
-
     public boolean isClient(String username) {
         UserRole u = userHandler.getUserRole(username);
         return (u != null && u.equals(UserRole.CLIENT));
     }
 
     public boolean hadReservationBefore(String username, String restName) {
-        List<Reservation> reservations = ReservationHandler.getInstance().showHistoryReservation(username);
+        List<Reservation> reservations = reservationHandler.showHistoryReservation(username);
         Reservation reservation = reservations.stream()
                 .filter(reserve -> reserve.getRestaurantName().equals(restName))
-                .filter(reserve -> (!ReservationHandler.getInstance().currentDateTimeIsBefore(reserve.getDatetime())))
+                .filter(reserve -> (!reservationHandler.currentDateTimeIsBefore(reserve.getDatetime())))
                 .findFirst().orElse(null);
         return reservation != null;
     }

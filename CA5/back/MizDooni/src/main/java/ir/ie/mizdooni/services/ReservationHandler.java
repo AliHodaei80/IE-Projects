@@ -5,6 +5,8 @@ import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.storage.Reservations;
 import ir.ie.mizdooni.utils.Parser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,25 +16,20 @@ import java.util.stream.Collectors;
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 import static java.lang.Integer.max;
 
+@Service
 public class ReservationHandler {
-    private static ReservationHandler reservationHandler;
     private final UserHandler userHandler;
     private final RestaurantHandler restaurantHandler;
     private final RestaurantTableHandler restaurantTableHandler;
-
     private final Reservations reservations;
 
-    private ReservationHandler() {
-        userHandler = UserHandler.getInstance();
-        restaurantHandler = RestaurantHandler.getInstance();
-        restaurantTableHandler = RestaurantTableHandler.getInstance();
-        reservations = new Reservations().loadFromFile(Locations.RESERVATIONS_LOCATION, Reservations.class);
-    }
-
-    public static ReservationHandler getInstance() {
-        if (reservationHandler == null)
-            reservationHandler = new ReservationHandler();
-        return reservationHandler;
+    @Autowired
+    private ReservationHandler(UserHandler userHandler, RestaurantHandler restaurantHandler,
+            RestaurantTableHandler restaurantTableHandler) {
+        this.userHandler = userHandler;
+        this.restaurantHandler = restaurantHandler;
+        this.restaurantTableHandler = restaurantTableHandler;
+        this.reservations = new Reservations();
     }
 
     public boolean isClient(String username) {

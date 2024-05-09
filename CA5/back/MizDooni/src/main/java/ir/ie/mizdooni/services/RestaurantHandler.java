@@ -13,15 +13,17 @@ import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.Restaurants;
 import ir.ie.mizdooni.utils.Parser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class RestaurantHandler {
-    private static RestaurantHandler restaurantHandler;
     private final UserHandler userHandler;
     private final Restaurants restaurants;
 
-    private RestaurantHandler() {
-        userHandler = UserHandler.getInstance();
+    @Autowired
+    private RestaurantHandler(UserHandler userHandler) {
+        this.userHandler = userHandler;
         restaurants = new Restaurants().loadFromUrl(DataBaseUrlPath.RESTAURANT_DATABASE_URL);
     }
 
@@ -108,12 +110,6 @@ public class RestaurantHandler {
         LocalTime timeToCheck = LocalTime.of(dateTime.getHour(), dateTime.getMinute());
         return (timeToCheck.isAfter(startTime) && timeToCheck.isBefore(endTime)) ||
                 timeToCheck.equals(startTime) || timeToCheck.equals(endTime);
-    }
-
-    public static RestaurantHandler getInstance() {
-        if (restaurantHandler == null)
-            restaurantHandler = new RestaurantHandler();
-        return restaurantHandler;
     }
 
     public void updateScores(String restName, Double foodScore, Double serviceScore, Double overallScore,

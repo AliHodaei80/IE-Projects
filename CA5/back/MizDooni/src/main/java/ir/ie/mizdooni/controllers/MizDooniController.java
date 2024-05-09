@@ -33,11 +33,11 @@ public class MizDooniController {
     private static MizDooniController mizDooniController;
 
     private MizDooniController() {
-        userHandler = UserHandler.getInstance();
-        restaurantHandler = RestaurantHandler.getInstance();
-        reservationHandler = ReservationHandler.getInstance();
-        restaurantTableHandler = RestaurantTableHandler.getInstance();
-        reviewHandler = ReviewHandler.getInstance();
+//        userHandler = UserHandler.getInstance();
+//        restaurantHandler = RestaurantHandler.getInstance();
+//        reservationHandler = ReservationHandler.getInstance();
+//        restaurantTableHandler = RestaurantTableHandler.getInstance();
+//        reviewHandler = ReviewHandler.getInstance();
 
         // getInstance();
 

@@ -32,19 +32,21 @@ import static ir.ie.mizdooni.validators.RequestSchemaValidator.*;
 
 @RestController
 public class RestaurantRestController {
-
-    private static RestaurantHandler restaurantHandler;
-    private static ReviewHandler reviewHandler;
-    private static ReservationHandler reservationHandler;
+    private RestaurantTableHandler restaurantTableHandler;
+    private RestaurantHandler restaurantHandler;
+    private ReviewHandler reviewHandler;
+    private ReservationHandler reservationHandler;
 
     private final Logger logger;
 
     @Autowired
-    public RestaurantRestController() {
-        restaurantHandler = RestaurantHandler.getInstance();
-        reviewHandler = ReviewHandler.getInstance();
-        reservationHandler = ReservationHandler.getInstance();
-        logger = LoggerFactory.getLogger(RestaurantRestController.class);
+    public RestaurantRestController(RestaurantHandler restaurantHandler, ReviewHandler reviewHandler,
+                                    ReservationHandler reservationHandler, RestaurantTableHandler restaurantTableHandler) {
+        this.restaurantHandler = restaurantHandler;
+        this.reviewHandler = reviewHandler;
+        this.reservationHandler = reservationHandler;
+        this.restaurantTableHandler = restaurantTableHandler;
+        this.logger = LoggerFactory.getLogger(RestaurantRestController.class);
     }
 
     // addRestaurant
@@ -104,7 +106,7 @@ public class RestaurantRestController {
             case "sort_by_rate" -> outputData.put("restaurants",
                     restaurantHandler.getRestaurants().getRestaurantList(true));
             default -> outputData.put("restaurants",
-                    (RestaurantHandler.getInstance().getRestaurants().getRestaurantList(false)));
+                    (restaurantHandler.getRestaurants().getRestaurantList(false)));
         }
         logger.info("Restaurants filtered (`" + action + ", `" + search + "`) retrieved successfully");
         return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
@@ -259,7 +261,7 @@ public class RestaurantRestController {
             if (restaurant == null)
                 throw new RestaurantNotFound();
             outputData.put("restaurant", restaurant);
-            List<RestaurantTable> restaurantTables = new ArrayList<>(RestaurantTableHandler.getInstance().getRestTables(restaurant.getName()));
+            List<RestaurantTable> restaurantTables = new ArrayList<>(restaurantTableHandler.getRestTables(restaurant.getName()));
             outputData.put("restaurantTables", restaurantTables);
             outputData.put("reviews", reviewHandler.getRestReviews(restaurant.getName()));
             logger.info("Restaurant `" + restaurant.getName() + "` retrieved successfully");

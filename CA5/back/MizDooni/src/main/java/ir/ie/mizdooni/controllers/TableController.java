@@ -32,11 +32,11 @@ public class TableController {
     private final Logger logger;
 
     @Autowired
-    public TableController() {
-        restaurantTableHandler = RestaurantTableHandler.getInstance();
-        restaurantHandler = RestaurantHandler.getInstance();
-        reservationHandler = ReservationHandler.getInstance();
-        logger = LoggerFactory.getLogger(TableController.class);
+    public TableController(RestaurantTableHandler restaurantTableHandler, RestaurantHandler restaurantHandler, ReservationHandler reservationHandler) {
+        this.restaurantTableHandler = restaurantTableHandler;
+        this.restaurantHandler = restaurantHandler;
+        this.reservationHandler = reservationHandler;
+        this.logger = LoggerFactory.getLogger(TableController.class);
     }
 
     @RequestMapping(value = "/tables/{restaurantId}/add", method = RequestMethod.POST)
