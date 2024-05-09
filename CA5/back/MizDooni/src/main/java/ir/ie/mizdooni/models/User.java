@@ -5,9 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.Map;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User {
+@MappedSuperclass
+public abstract class User {
     @Id
     String username;
     String password;

@@ -1,6 +1,8 @@
 package ir.ie.mizdooni.storage;
 
 import ir.ie.mizdooni.commons.HttpRequestSender;
+import ir.ie.mizdooni.models.ClientUser;
+import ir.ie.mizdooni.models.ManagerUser;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.storage.commons.Container;
@@ -55,7 +57,9 @@ public class Users extends Container<Users>{
 
     public void addUser(String username, String email, UserRole role, String password, Map<String, String> address) {
         this.saveToFile(Locations.USERS_LOCATION);
-        users.put(username, new User(username, password, email, address, role));
+        users.put(username, role.equals(UserRole.CLIENT) ?
+                new ClientUser(username, password, email, address) :
+                new ManagerUser(username, password, email, address));
     }
 
     public Map<String, User> getUsers() {
