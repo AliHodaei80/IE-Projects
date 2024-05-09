@@ -1,0 +1,15 @@
+#reservationInfoModal .modal-content {
+  background-color: var(--white);
+  font-family: "SplineSans", serif;
+}
+
+#reservationInfoModal .modal-header {
+  color: var(--black);
+  font-weight: 500;
+}
+
+#close-reservation-info-btn {
+  background-color: var(--white);
+  border: 1px solid var(--red);
+  color: var(--red);
+}
