@@ -2,6 +2,7 @@ package ir.ie.mizdooni.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
+import jakarta.persistence.*;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,49 +11,50 @@ import java.util.Map;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.TimeFormats.RESTAURANT_TIME_FORMAT;
 
+@Entity
 public class Restaurant {
-    @Expose()
+//    @Column(unique = true)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+@Column(unique = true)
     Long id;
-    @Expose()
+    @Id
     String name;
-    @Expose()
     Double avgAmbianceScore;
-    @Expose()
     Double avgOverallScore;
-    @Expose()
     Double avgServiceScore;
-    @Expose()
     Double avgFoodScore;
-    @Expose()
     LocalTime startTime;
-    @Expose()
     LocalTime endTime;
-    @Expose()
     String type;
-    @Expose()
+    @Column(columnDefinition = "TEXT")
     String description;
-    @Expose(serialize = false)
-    String managerUsername;
+    @ManyToOne
+    @JoinColumn(name = "manager_user_id")
+    ManagerUser managerUser;
     @Expose()
-    Map<String, String> address;
-    @Expose()
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    RestaurantAddress address;
     String imageUrl;
 
+    public Restaurant() {
+    }
+
     public Restaurant(String name, LocalTime startTime, LocalTime endTime, String type, String description,
-                      String managerUsername, Map<String, String> address, String imageUrl, Long id) {
+                      ManagerUser managerUser, Map<String, String> address, String imageUrl, long id) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.type = type;
         this.description = description;
-        this.managerUsername = managerUsername;
-        this.address = address;
-        this.id = id;
+        this.managerUser = managerUser;
+        this.address = new RestaurantAddress(address.get(CITY_KEY), address.get(COUNTRY_KEY), address.get(STREET_KEY));
         this.imageUrl = imageUrl;
         this.avgOverallScore = 0.0;
         this.avgServiceScore = 0.0;
         this.avgFoodScore = 0.0;
         this.avgAmbianceScore = 0.0;
+        this.id = id;
     }
 
     public String getName() {
@@ -114,31 +116,28 @@ public class Restaurant {
     }
 
     public String getManagerUsername() {
-        return managerUsername;
+        return managerUser.getUsername();
     }
 
     public String getImageUrl() { return imageUrl;};
-    public void setManagerUsername(String managerUsername) {
-        this.managerUsername = managerUsername;
-    }
 
     public Map<String, String> getAddress() {
-        return address;
+        return address.getAddressMap();
     }
 
     @JsonIgnore
     public String getAddressString() {
-        return address.get(STREET_KEY) + ", " + address.get(CITY_KEY) + ", " + address.get(COUNTRY_KEY);
+        return address.getStreet() + ", " + address.getCity() + ", " + address.getCountry();
     }
 
     @JsonIgnore
     public String getCity() {
-        return address.get("city");
+        return address.getCity();
     }
 
     @JsonIgnore
     public String getCountry() {
-        return address.get("country");
+        return address.getCountry();
     }
 
     @JsonIgnore
@@ -159,7 +158,7 @@ public class Restaurant {
     }
 
     public void setAddress(Map<String, String> address) {
-        this.address = address;
+        this.address = new RestaurantAddress(address.get(CITY_KEY), address.get(COUNTRY_KEY), address.get(STREET_KEY));
     }
 
     public Long getId() {
@@ -176,5 +175,33 @@ public class Restaurant {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setAvgAmbianceScore(Double avgAmbianceScore) {
+        this.avgAmbianceScore = avgAmbianceScore;
+    }
+
+    public void setAvgOverallScore(Double avgOverallScore) {
+        this.avgOverallScore = avgOverallScore;
+    }
+
+    public void setAvgServiceScore(Double avgServiceScore) {
+        this.avgServiceScore = avgServiceScore;
+    }
+
+    public void setAvgFoodScore(Double avgFoodScore) {
+        this.avgFoodScore = avgFoodScore;
+    }
+
+    public void setManagerUser(ManagerUser managerUser) {
+        this.managerUser = managerUser;
+    }
+
+    public void setAddress(RestaurantAddress address) {
+        this.address = address;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

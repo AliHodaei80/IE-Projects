@@ -28,24 +28,24 @@ public class Restaurants extends Container<Restaurants> {
         restaurantCount = 0;
     }
 
-    @Override
-    public Restaurants loadFromUrl(String urlPath) {
-        String response = HttpRequestSender.sendGetRequest(urlPath);
-        List<Map<String, Object>> restaurantsList = Parser.parseStringToJsonArray(response);
-        Restaurants restaurantsObject = new Restaurants();
-        for (var restaurantMap : restaurantsList) {
-            restaurantsObject.addRestaurant(
-                    (String) restaurantMap.get(ADD_RESTAURANT_NAME_KEY),
-                    (String) restaurantMap.get(RESTAURANT_TYPE_KEY),
-                    Parser.parseTime((String) restaurantMap.get(START_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
-                    Parser.parseTime((String) restaurantMap.get(END_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
-                    (String) restaurantMap.get(DESCRIPTION_KEY),
-                    (String) restaurantMap.get(MANAGER_USERNAME_KEY),
-                    (Map<String, String>) restaurantMap.get(RESTAURANT_ADDRESS_KEY),
-                    (String) restaurantMap.get(RESTAURANT_IMAGE_URL_KEY));
-        }
-        return restaurantsObject;
-    }
+//    @Override
+//    public Restaurants loadFromUrl(String urlPath) {
+//        String response = HttpRequestSender.sendGetRequest(urlPath);
+//        List<Map<String, Object>> restaurantsList = Parser.parseStringToJsonArray(response);
+//        Restaurants restaurantsObject = new Restaurants();
+//        for (var restaurantMap : restaurantsList) {
+//            restaurantsObject.addRestaurant(
+//                    (String) restaurantMap.get(ADD_RESTAURANT_NAME_KEY),
+//                    (String) restaurantMap.get(RESTAURANT_TYPE_KEY),
+//                    Parser.parseTime((String) restaurantMap.get(START_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
+//                    Parser.parseTime((String) restaurantMap.get(END_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
+//                    (String) restaurantMap.get(DESCRIPTION_KEY),
+//                    (String) restaurantMap.get(MANAGER_USERNAME_KEY),
+//                    (Map<String, String>) restaurantMap.get(RESTAURANT_ADDRESS_KEY),
+//                    (String) restaurantMap.get(RESTAURANT_IMAGE_URL_KEY));
+//        }
+//        return restaurantsObject;
+//    }
 
     public boolean typeSearchFilter(Restaurant rest, String type) {
         return rest.getType().equals(type);
@@ -110,12 +110,12 @@ public class Restaurants extends Container<Restaurants> {
                 .collect(Collectors.toList());
     }
 
-    public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
-                              String managerUsername, Map<String, String> address, String imageUrl) {
-        restaurantCount++;
-        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address, imageUrl, restaurantCount));
-        this.saveToFile(Locations.RESTAURANTS_LOCATION);
-    }
+//    public void addRestaurant(String restName, String type, LocalTime startTime, LocalTime endTime, String desc,
+//                              String managerUsername, Map<String, String> address, String imageUrl) {
+//        restaurantCount++;
+//        restaurants.put(restName, new Restaurant(restName, startTime, endTime, type, desc, managerUsername, address, imageUrl));
+//        this.saveToFile(Locations.RESTAURANTS_LOCATION);
+//    }
 
     public Map<String, Restaurant> getRestaurants() {
         return restaurants;

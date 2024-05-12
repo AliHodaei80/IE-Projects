@@ -29,7 +29,7 @@ public class ReviewHandler {
         this.restaurantHandler = restaurantHandler;
         this.reservationHandler = reservationHandler;
         reviews = new Reviews().loadFromUrl(DataBaseUrlPath.REVIEWS_DATABASE_URL);
-        List<Restaurant> restaurantList = restaurantHandler.getRestaurants().getRestaurantList(false);
+        List<Restaurant> restaurantList = restaurantHandler.getRestaurants(false);
         for (Restaurant restaurant : restaurantList) {
             restaurantHandler.updateScores(restaurant.getName(),
                     scoreAverage(restaurant.getName(),Review::getFoodRate)

@@ -82,7 +82,7 @@ public class RestaurantRestController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> getRestaurantsHandler() {
         Map<String, Object> outputData = new HashMap<>();
-        List<Restaurant> restaurantList = restaurantHandler.getRestaurants().getRestaurantList(false);
+        List<Restaurant> restaurantList = restaurantHandler.getRestaurants(false);
         outputData.put("restaurants", restaurantList);
         logger.info("Restaurants retrieved successfully");
         return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
@@ -104,9 +104,9 @@ public class RestaurantRestController {
                             new ArrayList<>()));
             case "search_by_city" -> outputData.put("restaurants", restaurantHandler.searchRestaurantByCity(search));
             case "sort_by_rate" -> outputData.put("restaurants",
-                    restaurantHandler.getRestaurants().getRestaurantList(true));
+                    restaurantHandler.getRestaurants(true));
             default -> outputData.put("restaurants",
-                    (restaurantHandler.getRestaurants().getRestaurantList(false)));
+                    (restaurantHandler.getRestaurants(false)));
         }
         logger.info("Restaurants filtered (`" + action + ", `" + search + "`) retrieved successfully");
         return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
