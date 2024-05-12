@@ -1,22 +1,28 @@
 package ir.ie.mizdooni.models;
 
 import com.google.gson.annotations.Expose;
+import jakarta.persistence.*;
 
+@Entity
 public class RestaurantTable {
-    @Expose()
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long tableNumber;
-    @Expose()
-    String restaurantName;
-    @Expose()
-    String managerUsername;
-    @Expose()
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    Restaurant restaurant;
+    @ManyToOne
+    @JoinColumn(name = "manager_user_id")
+    ManagerUser managerUser;
     int seatsNumber;
 
-    public RestaurantTable(Long tableNumber, String restaurantName, String managerUsername, int seatsNumber) {
-        this.tableNumber = tableNumber;
-        this.restaurantName = restaurantName;
-        this.managerUsername = managerUsername;
+    public RestaurantTable(Restaurant restaurant , ManagerUser managerUser, int seatsNumber) {
+        this.restaurant = restaurant;
         this.seatsNumber = seatsNumber;
+        this.managerUser = managerUser;
+    }
+
+    public RestaurantTable() {
     }
 
     public Long getTableNumber() {
@@ -28,19 +34,11 @@ public class RestaurantTable {
     }
 
     public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
+        return restaurant.getName();
     }
 
     public String getManagerUsername() {
-        return managerUsername;
-    }
-
-    public void setManagerUsername(String managerUsername) {
-        this.managerUsername = managerUsername;
+        return managerUser.getUsername();
     }
 
     public int getSeatsNumber() {

@@ -20,22 +20,22 @@ public class RestaurantTables  extends Container<RestaurantTables>{
     public RestaurantTables() {
         restaurantTables = new HashMap<>();
     }
-    @Override
-    public RestaurantTables loadFromUrl(String urlPath) {
-        String response = HttpRequestSender.sendGetRequest(urlPath);
-        List<Map<String, Object>> restaurantTablesList = Parser.parseStringToJsonArray(response);
-        RestaurantTables restaurantTablesObject = new RestaurantTables();
-        for (var restaurantTableMap : restaurantTablesList) {
-            restaurantTablesObject.addRestaurantTable(
-                    (String) restaurantTableMap.get(RESTAURANT_NAME_KEY),
-                    (String) restaurantTableMap.get(MANAGER_USERNAME_KEY),
-                    (Long) (Math.round((Double) (restaurantTableMap.get(TABLE_NUM_KEY)))),
-                    (int) (Math.round((Double) (restaurantTableMap.get(SEATS_NUM_KEY))))
-            );
-
-        }
-        return restaurantTablesObject;
-    }
+//    @Override
+//    public RestaurantTables loadFromUrl(String urlPath) {
+//        String response = HttpRequestSender.sendGetRequest(urlPath);
+//        List<Map<String, Object>> restaurantTablesList = Parser.parseStringToJsonArray(response);
+//        RestaurantTables restaurantTablesObject = new RestaurantTables();
+//        for (var restaurantTableMap : restaurantTablesList) {
+//            restaurantTablesObject.addRestaurantTable(
+//                    (String) restaurantTableMap.get(RESTAURANT_NAME_KEY),
+//                    (String) restaurantTableMap.get(MANAGER_USERNAME_KEY),
+//                    (Long) (Math.round((Double) (restaurantTableMap.get(TABLE_NUM_KEY)))),
+//                    (int) (Math.round((Double) (restaurantTableMap.get(SEATS_NUM_KEY))))
+//            );
+//
+//        }
+//        return restaurantTablesObject;
+//    }
 
     public Collection<RestaurantTable> getRestTables(String restName) {
         return (restaurantTables.containsKey(restName)) ? restaurantTables.get(restName).values() : new ArrayList<>();
@@ -54,24 +54,24 @@ public class RestaurantTables  extends Container<RestaurantTables>{
         return restaurantTables;
     }
 
-    public void addRestaurantTable(String restName, String restManagerName, Long tableNo, int seatsNo) {
-        if (restaurantTables.get(restName) == null) {
-            restaurantTables.put(restName, new HashMap<>());
-        }
-        long tableID = restaurantTables.get(restName).size() + 1;
-        restaurantTables.get(restName).put(tableNo, new RestaurantTable(tableNo, restName, restManagerName, seatsNo));
-        this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
-    }
+//    public void addRestaurantTable(String restName, String restManagerName, Long tableNo, int seatsNo) {
+//        if (restaurantTables.get(restName) == null) {
+//            restaurantTables.put(restName, new HashMap<>());
+//        }
+//        long tableID = restaurantTables.get(restName).size() + 1;
+//        restaurantTables.get(restName).put(tableNo, new RestaurantTable(tableNo, restName, restManagerName, seatsNo));
+//        this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
+//    }
 
-    public Long addRestaurantTable(String restName, String restManagerName, int seatsNo) {
-        if (restaurantTables.get(restName) == null) {
-            restaurantTables.put(restName, new HashMap<>());
-        }
-        long tableID = restaurantTables.get(restName).size() + 1;
-        restaurantTables.get(restName).put(tableID, new RestaurantTable(tableID, restName, restManagerName, seatsNo));
-        this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
-        return tableID;
-    }
+//    public Long addRestaurantTable(String restName, String restManagerName, int seatsNo) {
+//        if (restaurantTables.get(restName) == null) {
+//            restaurantTables.put(restName, new HashMap<>());
+//        }
+//        long tableID = restaurantTables.get(restName).size() + 1;
+//        restaurantTables.get(restName).put(tableID, new RestaurantTable(tableID, restName, restManagerName, seatsNo));
+//        this.saveToFile(Locations.RESTAURANT_TABLES_LOCATION);
+//        return tableID;
+//    }
 
     public Map<String, Map<Long, RestaurantTable>> getRestaurantTables() {
         return restaurantTables;
@@ -83,11 +83,5 @@ public class RestaurantTables  extends Container<RestaurantTables>{
 
     public List<RestaurantTable> getRestaurantTables(String restName) {
         return restaurantTables.get(restName) !=null ? new ArrayList<>(restaurantTables.get(restName).values()) : new ArrayList<>();
-    }
-
-    public Map<String, Map<Long, RestaurantTable>> getRestaurantTables(List<String> restaurantNames) {
-        return restaurantTables.entrySet().stream()
-                .filter(entry -> restaurantNames.contains(entry.getKey()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

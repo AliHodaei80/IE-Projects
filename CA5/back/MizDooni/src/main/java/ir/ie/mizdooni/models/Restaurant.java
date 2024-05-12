@@ -204,4 +204,9 @@ public class Restaurant {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    @JsonIgnore
+    public ManagerUser getManagerUser() {
+        return managerUser;
+    }
 }
