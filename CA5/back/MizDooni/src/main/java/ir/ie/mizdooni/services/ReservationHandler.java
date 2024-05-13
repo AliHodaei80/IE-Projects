@@ -1,10 +1,8 @@
 package ir.ie.mizdooni.services;
 
-import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.repositories.ReservationRepository;
-import ir.ie.mizdooni.storage.Reservations;
 import ir.ie.mizdooni.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +20,11 @@ public class ReservationHandler {
     private final UserHandler userHandler;
     private final RestaurantHandler restaurantHandler;
     private final RestaurantTableHandler restaurantTableHandler;
-//    private final Reservations reservations;
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
     @Autowired
     private ReservationHandler(UserHandler userHandler, RestaurantHandler restaurantHandler,
-            RestaurantTableHandler restaurantTableHandler, ReservationRepository reservationRepository) {
+                               RestaurantTableHandler restaurantTableHandler, ReservationRepository reservationRepository) {
         this.userHandler = userHandler;
         this.restaurantHandler = restaurantHandler;
         this.restaurantTableHandler = restaurantTableHandler;
@@ -45,13 +42,12 @@ public class ReservationHandler {
     }
 
     private boolean tableIsAvailable(String restName, long tableNumber, LocalDateTime dateTime) {
-//        Reservation reservation = reservations.getReservation(restName, tableNumber, dateTime);
-//        List<Reservation> reservations1 = reservations.getReservation(restName, tableNumber, dateTime);
         List<Reservation> reservations1 = reservationRepository.findReservationsByRestaurantTableAndDateTime(restName, tableNumber, dateTime);
-        if (reservations1 ==null || reservations1.isEmpty()) {
+        if (reservations1 == null || reservations1.isEmpty()) {
             return true;
         }
-        List<Reservation> notCancelledReservations = reservations1.stream().filter(reservation -> !reservation.isCanceled()).toList();;
+        List<Reservation> notCancelledReservations = reservations1.stream().filter(reservation -> !reservation.isCanceled()).toList();
+        ;
         return notCancelledReservations.isEmpty();
     }
 
@@ -61,14 +57,12 @@ public class ReservationHandler {
     }
 
     private boolean checkReservationIsForUser(String username, long reservationId) {
-//        Reservation reservation = reservations.getReservation(reservationId);
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         return reservation != null && reservation.getUsername().equals(username);
     }
 
     private boolean checkCancellationTimeValid(long reservationId) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-//        Reservation reservation = reservations.getReservation(reservationId);
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         return reservation != null && currentDateTime.isBefore(reservation.getDatetime());
     }
@@ -79,31 +73,28 @@ public class ReservationHandler {
         ArrayList<LocalDateTime> openingDateTimes = new ArrayList<>();
 
         LocalDateTime currentDateTime;
-        for(int day = 0; day <= nextDays; day++) {
+        for (int day = 0; day <= nextDays; day++) {
             currentDateTime = date.plusDays(day);
-            int startHour = (LocalDateTime.now().toLocalDate().isEqual(date.toLocalDate()))?
-                    max(startTime.getHour(), LocalDateTime.now().getHour() + 1):
+            int startHour = (LocalDateTime.now().toLocalDate().isEqual(date.toLocalDate())) ?
+                    max(startTime.getHour(), LocalDateTime.now().getHour() + 1) :
                     startTime.getHour();
             for (int time = startHour; time <= endTime.getHour(); time = time + 1) {
-                openingDateTimes.add(LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.of(time,0)));
+                openingDateTimes.add(LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.of(time, 0)));
             }
         }
         return openingDateTimes;
     }
 
     public ArrayList<LocalDateTime> findAvailableDateTimes(String restName, RestaurantTable table,
-            LocalDateTime desiredDate) throws RestaurantNotFound {
+                                                           LocalDateTime desiredDate) {
         Restaurant rest = restaurantHandler.getRestaurant(restName);
         if (desiredDate.toLocalDate().isBefore(LocalDateTime.now().toLocalDate())) {
             return new ArrayList<>();
         }
-//        Map<LocalDateTime, List<Reservation>> tableReserves = reservations.getTableReservations(restName,
-//                table.getTableNumber());
         List<Reservation> tableReserves = reservationRepository.findReservationsByRestaurantTable(restName, table.getTableNumber());
 
         Set<LocalDateTime> reservedDateTimes = tableReserves.stream().filter(reservation -> !reservation.isCanceled()).toList().stream().map(Reservation::getDatetime).collect(Collectors.toSet());
 
-        // CHECK
         ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate, 0);
         Set<LocalDateTime> openingDateTimesSet = new HashSet<>(restOpeningDateTimes);
         openingDateTimesSet.removeAll(reservedDateTimes);
@@ -134,8 +125,7 @@ public class ReservationHandler {
     }
 
     public ArrayList<Opening> findAvailableTables(String restName, long seatNum, LocalDateTime desiredDate, LocalTime desiredTime) throws RestaurantNotFound {
-        ArrayList<Opening> resultOpenings = findAvailableTables( restName,  seatNum,  desiredDate);
-        // check resultOpenings that if they have desiredTime in their available times or not
+        ArrayList<Opening> resultOpenings = findAvailableTables(restName, seatNum, desiredDate);
         ArrayList<Opening> resultOpeningsFinal = new ArrayList<>(resultOpenings.stream().filter(opening -> opening.getAvailableTimes().stream().anyMatch(dateTime -> dateTime.toLocalTime().equals(desiredTime))).toList());
         return resultOpeningsFinal;
     }
@@ -165,8 +155,6 @@ public class ReservationHandler {
                 Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT))) {
             throw new DateTimeNotInRange();
         }
-//        return reservations.addReservation(username, restName, tableNumber,
-//                Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT), restaurantId, seatsReserved);
         RestaurantTable table = restaurantTableHandler.getRestaurantTable(restName, tableNumber);
         Restaurant restaurant = restaurantHandler.getRestaurant(restName);
         ClientUser clientUser = userHandler.getClientUserByUsername(username);
@@ -182,26 +170,18 @@ public class ReservationHandler {
         if (!checkCancellationTimeValid(reservationId)) {
             throw new CancellationTimePassed();
         }
-//        reservations.cancelReservation(reservationId);
         reservationRepository.cancelReservation(reservationId);
     }
 
     public List<Reservation> showHistoryReservation(String username) {
-//        return reservations.getUserReservations(username);
         return reservationRepository.findReservationsByUsername(username);
     }
 
-//    public Reservations getReservations() {
-//        return reservations;
-//    }
-
     public List<Reservation> getRestaurantReservation(String restName) {
-//        return reservations.getRestaurantReservations(restName);
         return reservationRepository.findReservationsByRestaurantName(restName);
     }
 
-    public  List<Reservation> getTableReservations(String restName, long tableNumber) throws RestaurantNotFound {
-//        return new ArrayList<>(reservations.getTableReservations(restName, tableNumber).values().stream().flatMap(Collection::stream).toList());
+    public List<Reservation> getTableReservations(String restName, long tableNumber) throws RestaurantNotFound {
         return reservationRepository.findReservationsByRestaurantTable(restName, tableNumber);
     }
 }

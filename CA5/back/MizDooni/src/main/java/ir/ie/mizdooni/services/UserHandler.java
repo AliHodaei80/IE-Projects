@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.services;
 
+import ir.ie.mizdooni.commons.HttpRequestSender;
 import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.ClientUser;
@@ -8,7 +9,7 @@ import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.repositories.ClientRepository;
 import ir.ie.mizdooni.repositories.ManagerRepository;
-import ir.ie.mizdooni.storage.Users;
+import ir.ie.mizdooni.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static ir.ie.mizdooni.definitions.RequestKeys.*;
+
 @Service
 public class UserHandler {
 
-    private ClientRepository clientUserRepository;
-    private ManagerRepository managerUserRepository;
+    private final ClientRepository clientUserRepository;
+    private final ManagerRepository managerUserRepository;
     private User currentUser;
 
     @Autowired
@@ -28,19 +31,34 @@ public class UserHandler {
         this.clientUserRepository = clientUserRepository;
         this.managerUserRepository = managerUserRepository;
         if (clientUserRepository.count() == 0 && managerUserRepository.count() == 0) {
-            List<User> users = new ArrayList<>(new Users().loadFromUrl(DataBaseUrlPath.USERS_DATABASE_URL).getUsers().values());
-            List<ClientUser> clientUsers = new ArrayList<>();
-            List<ManagerUser> managerUsers = new ArrayList<>();
-            for (User user : users) {
-                if (user.getRole() == UserRole.CLIENT) {
-                    clientUsers.add(new ClientUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getAddress()));
-                } else {
-                    managerUsers.add(new ManagerUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getAddress()));
-                }
-            }
-            clientUserRepository.saveAll(clientUsers);
-            managerUserRepository.saveAll(managerUsers);
+            loadInitDatabase();
         }
+    }
+
+    private void loadInitDatabase() {
+        List<ClientUser> clientUsers = new ArrayList<>();
+        List<ManagerUser> managerUsers = new ArrayList<>();
+        String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.USERS_DATABASE_URL);
+        List<Map<String, Object>> usersList = Parser.parseStringToJsonArray(response);
+        for (var userMap : usersList) {
+            if (UserRole.getUserRole((String) userMap.get(USER_ROLE_KEY)) == UserRole.CLIENT) {
+                clientUsers.add(new ClientUser(
+                        (String) userMap.get(USERNAME_KEY),
+                        (String) userMap.get(PASSWORD_KEY),
+                        (String) userMap.get(EMAIL_KEY),
+                        (Map<String, String>) userMap.get(USER_ADDRESS_KEY)
+                ));
+            } else {
+                managerUsers.add(new ManagerUser(
+                        (String) userMap.get(USERNAME_KEY),
+                        (String) userMap.get(PASSWORD_KEY),
+                        (String) userMap.get(EMAIL_KEY),
+                        (Map<String, String>) userMap.get(USER_ADDRESS_KEY)
+                ));
+            }
+        }
+        clientUserRepository.saveAll(clientUsers);
+        managerUserRepository.saveAll(managerUsers);
     }
 
 
@@ -105,16 +123,6 @@ public class UserHandler {
     public boolean doesUserExist(String username) {
         return getUserByUsername(username) != null;
     }
-
-//    public static UserHandler getInstance() {
-//        if (userHandler == null)
-//            userHandler = new UserHandler();
-//        return userHandler;
-//    }
-
-//    public Users getUsers() {
-//        return users;
-//    }
 
     public User getCurrentUser() {
         return currentUser;
