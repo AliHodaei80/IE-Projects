@@ -43,24 +43,24 @@ public class Reservations extends Container<Reservations>{
         }
     }
 
-    public Reservation addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime,
-                                      long restaurantId, long seatsReserved) {
-        if (reservations.get(restaurantName) == null) {
-            reservations.put(restaurantName, new HashMap<>());
-        }
-        if (reservations.get(restaurantName).get(tableNumber) == null) {
-            reservations.get(restaurantName).put(tableNumber, new HashMap<>());
-        }
-        long reservationId = generateReservationId();
-        Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId, restaurantId, seatsReserved);
-        if (reservations.get(restaurantName).get(tableNumber).get(dateTime) == null) {
-            reservations.get(restaurantName).get(tableNumber).put(dateTime, new ArrayList<>());
-        }
-        reservations.get(restaurantName).get(tableNumber).get(dateTime).add(reservation);
-        reservationsIdIndex.put(reservationId, reservation);
-        this.saveToFile(Locations.RESERVATIONS_LOCATION);
-        return reservation;
-    }
+//    public Reservation addReservation(String username, String restaurantName, long tableNumber, LocalDateTime dateTime,
+//                                      long restaurantId, long seatsReserved) {
+//        if (reservations.get(restaurantName) == null) {
+//            reservations.put(restaurantName, new HashMap<>());
+//        }
+//        if (reservations.get(restaurantName).get(tableNumber) == null) {
+//            reservations.get(restaurantName).put(tableNumber, new HashMap<>());
+//        }
+//        long reservationId = generateReservationId();
+//        Reservation reservation = new Reservation(username, restaurantName, tableNumber, dateTime, reservationId, restaurantId, seatsReserved);
+//        if (reservations.get(restaurantName).get(tableNumber).get(dateTime) == null) {
+//            reservations.get(restaurantName).get(tableNumber).put(dateTime, new ArrayList<>());
+//        }
+//        reservations.get(restaurantName).get(tableNumber).get(dateTime).add(reservation);
+//        reservationsIdIndex.put(reservationId, reservation);
+//        this.saveToFile(Locations.RESERVATIONS_LOCATION);
+//        return reservation;
+//    }
     public List<Reservation> getReservation(String restName, long tableNumber, LocalDateTime dateTime) {
         if (!reservations.containsKey(restName) || !reservations.get(restName).containsKey(tableNumber)) {
             return null;

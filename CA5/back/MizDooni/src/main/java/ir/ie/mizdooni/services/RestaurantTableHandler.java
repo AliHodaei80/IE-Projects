@@ -33,25 +33,27 @@ public class RestaurantTableHandler {
         this.restaurantTableRepository = restaurantTableRepository;
         this.restaurantsHandler = restaurantsHandler;
         this.userHandler = userHandler;
-        String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.RESTAURANT_TABLES_DATABASE_URL);
-        List<Map<String, Object>> restaurantTablesList = Parser.parseStringToJsonArray(response);
-        RestaurantTables restaurantTablesObject = new RestaurantTables();
-        List<RestaurantTable> restaurantTableList = new ArrayList<>();
-        for (var restaurantTableMap : restaurantTablesList) {
+        if (restaurantTableRepository.count() == 0) {
+            String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.RESTAURANT_TABLES_DATABASE_URL);
+            List<Map<String, Object>> restaurantTablesList = Parser.parseStringToJsonArray(response);
+            RestaurantTables restaurantTablesObject = new RestaurantTables();
+            List<RestaurantTable> restaurantTableList = new ArrayList<>();
+            for (var restaurantTableMap : restaurantTablesList) {
 //            restaurantTablesObject.addRestaurantTable(
 //                    (String) restaurantTableMap.get(RESTAURANT_NAME_KEY),
 //                    (String) restaurantTableMap.get(MANAGER_USERNAME_KEY),
 //                    (Long) (Math.round((Double) (restaurantTableMap.get(TABLE_NUM_KEY)))),
 //                    (int) (Math.round((Double) (restaurantTableMap.get(SEATS_NUM_KEY))))
 //            );
-            restaurantTableList.add(new RestaurantTable(
-                    restaurantsHandler.getRestaurant((String) restaurantTableMap.get(RESTAURANT_NAME_KEY)),
-                    userHandler.getManagerUserByUsername((String) restaurantTableMap.get(MANAGER_USERNAME_KEY)),
-                    (int) (Math.round((Double) (restaurantTableMap.get(SEATS_NUM_KEY))))));
+                restaurantTableList.add(new RestaurantTable(
+                        restaurantsHandler.getRestaurant((String) restaurantTableMap.get(RESTAURANT_NAME_KEY)),
+                        userHandler.getManagerUserByUsername((String) restaurantTableMap.get(MANAGER_USERNAME_KEY)),
+                        (int) (Math.round((Double) (restaurantTableMap.get(SEATS_NUM_KEY))))));
 
 
+            }
+            restaurantTableRepository.saveAll(restaurantTableList);
         }
-        restaurantTableRepository.saveAll(restaurantTableList);
     }
 
     public Long addRestaurantTable(String restName, int seatsNo, String managerUsername)

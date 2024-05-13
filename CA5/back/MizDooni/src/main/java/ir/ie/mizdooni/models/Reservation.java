@@ -2,61 +2,68 @@ package ir.ie.mizdooni.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static ir.ie.mizdooni.definitions.TimeFormats.RESERVE_DATETIME_FORMAT;
 
+@Entity
 public class Reservation {
-    @Expose(serialize = false)
-    String username;
-    @Expose()
-    String restaurantName;
-    @Expose()
-    Long tableNumber;
-    @Expose()
+    //    String username;
+    @ManyToOne
+    @JoinColumn(name = "client_user_id")
+    ClientUser clientUser;
+    //    String restaurantName;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    Restaurant restaurant;
+    @ManyToOne
+    @JoinColumn(name = "table_id")
+    RestaurantTable restaurantTable;
     LocalDateTime datetime;
-    @Expose()
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long reservationId;
-    Long restaurantId;
     boolean canceled;
     Long seatsReserved;
 
-    public Reservation(String username, String restaurantName, Long tableNumber, LocalDateTime date, Long reservationNumber, Long restaurantId, Long seatsReserved) {
-        this.username = username;
-        this.restaurantName = restaurantName;
-        this.tableNumber = tableNumber;
+    public Reservation(ClientUser clientUser, Restaurant restaurant, RestaurantTable restaurantTable, LocalDateTime date, Long seatsReserved) {
+        this.clientUser = clientUser;
+        this.restaurant = restaurant;
+        this.restaurantTable = restaurantTable;
         this.datetime = date;
-        this.reservationId = reservationNumber;
         this.canceled = false;
-        this.restaurantId = restaurantId;
         this.seatsReserved = seatsReserved;
     }
 
-    public String getUsername() {
-        return username;
+    public Reservation() {
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUsername() {
+        return clientUser.getUsername();
     }
+
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
 
     public String getRestaurantName() {
-        return restaurantName;
+        return restaurant.getName();
     }
 
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
+//    public void setRestaurantName(String restaurantName) {
+//        this.restaurantName = restaurantName;
+//    }
 
     public Long getTableNumber() {
-        return tableNumber;
+        return restaurantTable.getTableNumber();
     }
 
-    public void setTableNumber(Long tableNumber) {
-        this.tableNumber = tableNumber;
-    }
+//    public void setTableNumber(Long tableNumber) {
+//        this.tableNumber = tableNumber;
+//    }
 
     public LocalDateTime getDatetime() {
         return datetime;
@@ -85,7 +92,7 @@ public class Reservation {
     }
 
     public Long getRestaurantId() {
-        return restaurantId;
+        return restaurant.getId();
     }
 
     public Long getSeatsReserved() {

@@ -3,6 +3,7 @@ package ir.ie.mizdooni.services;
 import ir.ie.mizdooni.definitions.Locations;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.*;
+import ir.ie.mizdooni.repositories.ReservationRepository;
 import ir.ie.mizdooni.storage.Reservations;
 import ir.ie.mizdooni.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,16 @@ public class ReservationHandler {
     private final UserHandler userHandler;
     private final RestaurantHandler restaurantHandler;
     private final RestaurantTableHandler restaurantTableHandler;
-    private final Reservations reservations;
+//    private final Reservations reservations;
+    private ReservationRepository reservationRepository;
 
     @Autowired
     private ReservationHandler(UserHandler userHandler, RestaurantHandler restaurantHandler,
-            RestaurantTableHandler restaurantTableHandler) {
+            RestaurantTableHandler restaurantTableHandler, ReservationRepository reservationRepository) {
         this.userHandler = userHandler;
         this.restaurantHandler = restaurantHandler;
         this.restaurantTableHandler = restaurantTableHandler;
-        this.reservations = new Reservations().loadFromFile(Locations.RESERVATIONS_LOCATION, Reservations.class);
+        this.reservationRepository = reservationRepository;
     }
 
     public boolean isClient(String username) {
@@ -44,7 +46,8 @@ public class ReservationHandler {
 
     private boolean tableIsAvailable(String restName, long tableNumber, LocalDateTime dateTime) {
 //        Reservation reservation = reservations.getReservation(restName, tableNumber, dateTime);
-        List<Reservation> reservations1 = reservations.getReservation(restName, tableNumber, dateTime);
+//        List<Reservation> reservations1 = reservations.getReservation(restName, tableNumber, dateTime);
+        List<Reservation> reservations1 = reservationRepository.findReservationsByRestaurantTableAndDateTime(restName, tableNumber, dateTime);
         if (reservations1 ==null || reservations1.isEmpty()) {
             return true;
         }
@@ -58,13 +61,15 @@ public class ReservationHandler {
     }
 
     private boolean checkReservationIsForUser(String username, long reservationId) {
-        Reservation reservation = reservations.getReservation(reservationId);
+//        Reservation reservation = reservations.getReservation(reservationId);
+        Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         return reservation != null && reservation.getUsername().equals(username);
     }
 
     private boolean checkCancellationTimeValid(long reservationId) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        Reservation reservation = reservations.getReservation(reservationId);
+//        Reservation reservation = reservations.getReservation(reservationId);
+        Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         return reservation != null && currentDateTime.isBefore(reservation.getDatetime());
     }
 
@@ -92,10 +97,11 @@ public class ReservationHandler {
         if (desiredDate.toLocalDate().isBefore(LocalDateTime.now().toLocalDate())) {
             return new ArrayList<>();
         }
-        Map<LocalDateTime, List<Reservation>> tableReserves = reservations.getTableReservations(restName,
-                table.getTableNumber());
+//        Map<LocalDateTime, List<Reservation>> tableReserves = reservations.getTableReservations(restName,
+//                table.getTableNumber());
+        List<Reservation> tableReserves = reservationRepository.findReservationsByRestaurantTable(restName, table.getTableNumber());
 
-        Set<LocalDateTime> reservedDateTimes = tableReserves.values().stream().flatMap(Collection::stream).filter(reservation -> !reservation.isCanceled()).toList().stream().map(Reservation::getDatetime).collect(Collectors.toSet());
+        Set<LocalDateTime> reservedDateTimes = tableReserves.stream().filter(reservation -> !reservation.isCanceled()).toList().stream().map(Reservation::getDatetime).collect(Collectors.toSet());
 
         // CHECK
         ArrayList<LocalDateTime> restOpeningDateTimes = generateOpeningDateTimes(rest, desiredDate, 0);
@@ -159,8 +165,13 @@ public class ReservationHandler {
                 Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT))) {
             throw new DateTimeNotInRange();
         }
-        return reservations.addReservation(username, restName, tableNumber,
-                Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT), restaurantId, seatsReserved);
+//        return reservations.addReservation(username, restName, tableNumber,
+//                Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT), restaurantId, seatsReserved);
+        RestaurantTable table = restaurantTableHandler.getRestaurantTable(restName, tableNumber);
+        Restaurant restaurant = restaurantHandler.getRestaurant(restName);
+        ClientUser clientUser = userHandler.getClientUserByUsername(username);
+        return reservationRepository.save(new Reservation(clientUser, restaurant, table,
+                Parser.parseDateTime(dateTime, RESERVE_DATETIME_FORMAT), seatsReserved));
     }
 
     public void cancelReservation(String username, long reservationId)
@@ -171,22 +182,26 @@ public class ReservationHandler {
         if (!checkCancellationTimeValid(reservationId)) {
             throw new CancellationTimePassed();
         }
-        reservations.cancelReservation(reservationId);
+//        reservations.cancelReservation(reservationId);
+        reservationRepository.cancelReservation(reservationId);
     }
 
     public List<Reservation> showHistoryReservation(String username) {
-        return reservations.getUserReservations(username);
+//        return reservations.getUserReservations(username);
+        return reservationRepository.findReservationsByUsername(username);
     }
 
-    public Reservations getReservations() {
-        return reservations;
-    }
+//    public Reservations getReservations() {
+//        return reservations;
+//    }
 
     public List<Reservation> getRestaurantReservation(String restName) {
-        return reservations.getRestaurantReservations(restName);
+//        return reservations.getRestaurantReservations(restName);
+        return reservationRepository.findReservationsByRestaurantName(restName);
     }
 
     public  List<Reservation> getTableReservations(String restName, long tableNumber) throws RestaurantNotFound {
-        return new ArrayList<>(reservations.getTableReservations(restName, tableNumber).values().stream().flatMap(Collection::stream).toList());
+//        return new ArrayList<>(reservations.getTableReservations(restName, tableNumber).values().stream().flatMap(Collection::stream).toList());
+        return reservationRepository.findReservationsByRestaurantTable(restName, tableNumber);
     }
 }

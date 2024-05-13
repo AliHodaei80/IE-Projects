@@ -27,18 +27,20 @@ public class UserHandler {
     private UserHandler(ClientRepository clientUserRepository, ManagerRepository managerUserRepository) {
         this.clientUserRepository = clientUserRepository;
         this.managerUserRepository = managerUserRepository;
-        List<User> users = new ArrayList<>(new Users().loadFromUrl(DataBaseUrlPath.USERS_DATABASE_URL).getUsers().values());
-        List<ClientUser> clientUsers = new ArrayList<>();
-        List<ManagerUser> managerUsers = new ArrayList<>();
-        for (User user : users) {
-            if (user.getRole() == UserRole.CLIENT) {
-                clientUsers.add(new ClientUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getAddress()));
-            } else {
-                managerUsers.add(new ManagerUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getAddress()));
+        if (clientUserRepository.count() == 0 && managerUserRepository.count() == 0) {
+            List<User> users = new ArrayList<>(new Users().loadFromUrl(DataBaseUrlPath.USERS_DATABASE_URL).getUsers().values());
+            List<ClientUser> clientUsers = new ArrayList<>();
+            List<ManagerUser> managerUsers = new ArrayList<>();
+            for (User user : users) {
+                if (user.getRole() == UserRole.CLIENT) {
+                    clientUsers.add(new ClientUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getAddress()));
+                } else {
+                    managerUsers.add(new ManagerUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getAddress()));
+                }
             }
+            clientUserRepository.saveAll(clientUsers);
+            managerUserRepository.saveAll(managerUsers);
         }
-        clientUserRepository.saveAll(clientUsers);
-        managerUserRepository.saveAll(managerUsers);
     }
 
 

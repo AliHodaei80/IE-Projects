@@ -29,23 +29,26 @@ public class RestaurantHandler {
     private RestaurantHandler(UserHandler userHandler, RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
         this.userHandler = userHandler;
-        String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.RESTAURANT_DATABASE_URL);
-        List<Map<String, Object>> restaurantsList = Parser.parseStringToJsonArray(response);
-        List<Restaurant> restaurantList = new ArrayList<>();
-        long id = 1;
-        for (var restaurantMap : restaurantsList) {
-            restaurantList.add(new Restaurant(
-                            (String) restaurantMap.get(ADD_RESTAURANT_NAME_KEY),
-                            Parser.parseTime((String) restaurantMap.get(START_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
-                            Parser.parseTime((String) restaurantMap.get(END_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
-                            (String) restaurantMap.get(RESTAURANT_TYPE_KEY),
-                            (String) restaurantMap.get(DESCRIPTION_KEY),
-                            userHandler.getManagerUserByUsername((String) restaurantMap.get(MANAGER_USERNAME_KEY)),
-                            (Map<String, String>) restaurantMap.get(RESTAURANT_ADDRESS_KEY),
-                            (String) restaurantMap.get(RESTAURANT_IMAGE_URL_KEY), id));
-            id ++;
+        if (restaurantRepository.count() == 0) {
+            String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.RESTAURANT_DATABASE_URL);
+            List<Map<String, Object>> restaurantsList = Parser.parseStringToJsonArray(response);
+            List<Restaurant> restaurantList = new ArrayList<>();
+            long id = 1;
+            for (var restaurantMap : restaurantsList) {
+                restaurantList.add(new Restaurant(
+                        (String) restaurantMap.get(ADD_RESTAURANT_NAME_KEY),
+                        Parser.parseTime((String) restaurantMap.get(START_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
+                        Parser.parseTime((String) restaurantMap.get(END_TIME_KEY), TimeFormats.RESTAURANT_TIME_FORMAT),
+                        (String) restaurantMap.get(RESTAURANT_TYPE_KEY),
+                        (String) restaurantMap.get(DESCRIPTION_KEY),
+                        userHandler.getManagerUserByUsername((String) restaurantMap.get(MANAGER_USERNAME_KEY)),
+                        (Map<String, String>) restaurantMap.get(RESTAURANT_ADDRESS_KEY),
+                        (String) restaurantMap.get(RESTAURANT_IMAGE_URL_KEY), id));
+                id ++;
+            }
+            restaurantRepository.saveAll(restaurantList);
         }
-        restaurantRepository.saveAll(restaurantList);
+
     }
 
     public boolean isManager(String managerUsername) {

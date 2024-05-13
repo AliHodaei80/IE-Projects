@@ -35,47 +35,46 @@ public class ReviewHandler {
 //    private final Reviews reviews;
 
     @Autowired
-    private ReviewHandler(UserHandler userHandler, RestaurantHandler restaurantHandler, ReservationHandler reservationHandler, ReviewRepository reviewRepository) {
+    private ReviewHandler(UserHandler userHandler, RestaurantHandler restaurantHandler, ReservationHandler reservationHandler, ReviewRepository reviewRepository) throws UserNotFound, NoReservationBefore, InvalidUserRole, RestaurantNotFound {
         this.userHandler = userHandler;
         this.restaurantHandler = restaurantHandler;
         this.reservationHandler = reservationHandler;
         this.reviewRepository = reviewRepository;
 //        reviews = new Reviews().loadFromUrl(DataBaseUrlPath.REVIEWS_DATABASE_URL);
-        String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.REVIEWS_DATABASE_URL);
-        List<Map<String, Object>> reviewsList = Parser.parseStringToJsonArray(response);
-        List<Review> reviewList = new ArrayList<>();
-        Reviews reviewsObject = new Reviews();
-        for (var reviewMap : reviewsList) {
-            reviewList.add(new Review(
-                    userHandler.getClientUserByUsername((String) reviewMap.get(USERNAME_KEY)),
-                    restaurantHandler.getRestaurant((String) reviewMap.get(RESTAURANT_NAME_KEY)),
-                    (Double) reviewMap.get(AMBIANCE_RATE_KEY),
-                    (Double) reviewMap.get(FOOD_RATE_KEY),
-                    (Double) reviewMap.get(OVERALL_RATE_KEY),
-                    (Double) reviewMap.get(SERVICE_RATE_KEY),
-                    (String) reviewMap.get(COMMENT_KEY),
-                    LocalDateTime.now()
-            ));
-
-//            reviewsObject.addReview(
-//                    (String) reviewMap.get(RESTAURANT_NAME_KEY),
-//                    (String) reviewMap.get(USERNAME_KEY),
-//                    (Double) reviewMap.get(AMBIANCE_RATE_KEY),
-//                    (Double) reviewMap.get(OVERALL_RATE_KEY),
-//                    (Double) reviewMap.get(SERVICE_RATE_KEY),
-//                    (Double) reviewMap.get(FOOD_RATE_KEY),
-//                    (String) reviewMap.get(COMMENT_KEY)
-//            );
-        }
-        reviewRepository.saveAll(reviewList);
-
-        List<Restaurant> restaurantList = restaurantHandler.getRestaurants(false);
-        for (Restaurant restaurant : restaurantList) {
-            restaurantHandler.updateScores(restaurant.getName(),
-                    scoreAverage(restaurant.getName(),Review::getFoodRate)
-                    ,scoreAverage(restaurant.getName(),Review::getServiceRate)
-                    ,scoreAverage(restaurant.getName(),Review::getOverallRate)
-                    ,scoreAverage(restaurant.getName(),Review::getAmbianceRate));
+        if (reviewRepository.count() == 0) {
+            String response = HttpRequestSender.sendGetRequest(DataBaseUrlPath.REVIEWS_DATABASE_URL);
+            List<Map<String, Object>> reviewsList = Parser.parseStringToJsonArray(response);
+            for (var reviewMap : reviewsList) {
+                Optional<Review> r = reviewRepository.findByClientUserAndRestaurant(
+                        (String) reviewMap.get(USERNAME_KEY),
+                        (String) reviewMap.get(RESTAURANT_NAME_KEY));
+                if (r.isPresent()) {
+                    reviewRepository.updateReview(r.get().getId(),
+                            (Double) reviewMap.get(AMBIANCE_RATE_KEY),
+                            (Double) reviewMap.get(OVERALL_RATE_KEY),
+                            (Double) reviewMap.get(SERVICE_RATE_KEY),
+                            (Double) reviewMap.get(FOOD_RATE_KEY),
+                            (String) reviewMap.get(COMMENT_KEY)
+                    );
+                }
+                else {
+                    reviewRepository.save(new Review(
+                            userHandler.getClientUserByUsername((String) reviewMap.get(USERNAME_KEY)),
+                            restaurantHandler.getRestaurant((String) reviewMap.get(RESTAURANT_NAME_KEY)),
+                            (Double) reviewMap.get(AMBIANCE_RATE_KEY),
+                            (Double) reviewMap.get(FOOD_RATE_KEY),
+                            (Double) reviewMap.get(OVERALL_RATE_KEY),
+                            (Double) reviewMap.get(SERVICE_RATE_KEY),
+                            (String) reviewMap.get(COMMENT_KEY),
+                            LocalDateTime.now()
+                    ));
+                }
+                restaurantHandler.updateScores((String) reviewMap.get(RESTAURANT_NAME_KEY),
+                        scoreAverage((String) reviewMap.get(RESTAURANT_NAME_KEY),Review::getFoodRate)
+                        ,scoreAverage((String) reviewMap.get(RESTAURANT_NAME_KEY),Review::getServiceRate)
+                        ,scoreAverage((String) reviewMap.get(RESTAURANT_NAME_KEY),Review::getOverallRate)
+                        ,scoreAverage((String) reviewMap.get(RESTAURANT_NAME_KEY),Review::getAmbianceRate));
+            }
         }
     }
 
@@ -133,34 +132,34 @@ public class ReviewHandler {
 //                serviceRate,
 //                foodRate,
 //                comment);
-//        Optional<Review> r = reviewRepository.findByClientUserAndRestaurant(
-//                username,
-//                restName);
-//        if (r.isPresent()) {
-//            reviewRepository.updateReview(r.get().getId(),  ambianceRate, overallRate, serviceRate, foodRate, comment);
-//        }
-//        else {
-//            reviewRepository.save(new Review(
-//                    userHandler.getClientUserByUsername(username),
-//                    restaurantHandler.getRestaurant(restName),
-//                    ambianceRate,
-//                    overallRate,
-//                    serviceRate,
-//                    foodRate,
-//                    comment,
-//                    LocalDateTime.now()
-//            ));
-//        }
-        reviewRepository.save(new Review(
-                userHandler.getClientUserByUsername(username),
-                restaurantHandler.getRestaurant(restName),
-                ambianceRate,
-                foodRate,
-                overallRate,
-                serviceRate,
-                comment,
-                LocalDateTime.now()
-        ));
+        Optional<Review> r = reviewRepository.findByClientUserAndRestaurant(
+                username,
+                restName);
+        if (r.isPresent()) {
+            reviewRepository.updateReview(r.get().getId(),  ambianceRate, overallRate, serviceRate, foodRate, comment);
+        }
+        else {
+            reviewRepository.save(new Review(
+                    userHandler.getClientUserByUsername(username),
+                    restaurantHandler.getRestaurant(restName),
+                    ambianceRate,
+                    foodRate,
+                    overallRate,
+                    serviceRate,
+                    comment,
+                    LocalDateTime.now()
+            ));
+        }
+//        reviewRepository.save(new Review(
+//                userHandler.getClientUserByUsername(username),
+//                restaurantHandler.getRestaurant(restName),
+//                ambianceRate,
+//                foodRate,
+//                overallRate,
+//                serviceRate,
+//                comment,
+//                LocalDateTime.now()
+//        ));
         restaurantHandler.updateScores(restName,
                 scoreAverage(restName,Review::getFoodRate)
                 ,scoreAverage(restName,Review::getServiceRate)
