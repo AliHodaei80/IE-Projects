@@ -170,7 +170,7 @@ public class MizDooniController {
 
     public Response addReview(Map<String, Object> data) {
         try {
-            Review review = reviewHandler.addReview((String) data.get(RESTAURANT_NAME_KEY),
+            reviewHandler.addReview((String) data.get(RESTAURANT_NAME_KEY),
                     (String) data.get(USERNAME_KEY),
                     (Double) data.get(AMBIANCE_RATE_KEY),
                     (Double) data.get(OVERALL_RATE_KEY),

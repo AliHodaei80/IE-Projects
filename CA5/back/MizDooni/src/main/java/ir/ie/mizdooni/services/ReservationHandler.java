@@ -29,7 +29,7 @@ public class ReservationHandler {
         this.userHandler = userHandler;
         this.restaurantHandler = restaurantHandler;
         this.restaurantTableHandler = restaurantTableHandler;
-        this.reservations = new Reservations();
+        this.reservations = new Reservations().loadFromFile(Locations.RESERVATIONS_LOCATION, Reservations.class);
     }
 
     public boolean isClient(String username) {

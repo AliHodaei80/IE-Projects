@@ -1,24 +1,37 @@
 package ir.ie.mizdooni.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Entity
 public class Review {
-    String username;
-    String restaurantName;
+    //    String username;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+    @ManyToOne
+    @JoinColumn(name = "client_user_id")
+    ClientUser clientUser;
+    //    String restaurantName;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    Restaurant restaurant;
     Double ambianceRate;
     Double overallRate;
     Double serviceRate;
     Double foodRate;
-
+    @Column(columnDefinition = "TEXT")
     String comment;
     LocalDateTime submitDate;
 
-    public Review(String username, String restaurantName, Double ambianceRate, Double foodRate, Double overallRate,
-            Double serviceRate,
-            String comment, LocalDateTime submitDate) {
-        this.username = username;
-        this.restaurantName = restaurantName;
+    public Review(ClientUser clientUser, Restaurant restaurant, Double ambianceRate, Double foodRate, Double overallRate,
+                  Double serviceRate,
+                  String comment, LocalDateTime submitDate) {
+        this.clientUser = clientUser;
+        this.restaurant = restaurant;
         this.ambianceRate = ambianceRate;
         this.foodRate = foodRate;
         this.overallRate = overallRate;
@@ -27,12 +40,15 @@ public class Review {
         this.submitDate = submitDate;
     }
 
+    public Review() {
+    }
+
     public String getUsername() {
-        return username;
+        return clientUser.getUsername();
     }
 
     public String getRestaurantName() {
-        return restaurantName;
+        return restaurant.getName();
     }
 
     public Double getAmbianceRate() {
@@ -61,5 +77,10 @@ public class Review {
 
     public String getSubmitDateString() {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(submitDate);
+    }
+
+    @JsonIgnore
+    public Long getId() {
+        return id;
     }
 }

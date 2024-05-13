@@ -24,44 +24,44 @@ public class Reviews extends Container<Reviews> {
         reviews = new HashMap<>();
     }
 
-    @Override
-    public Reviews loadFromUrl(String urlPath) {
-        String response = HttpRequestSender.sendGetRequest(urlPath);
-        List<Map<String, Object>> reviewsList = Parser.parseStringToJsonArray(response);
-        Reviews reviewsObject = new Reviews();
-        for (var reviewMap : reviewsList) {
-            reviewsObject.addReview(
-                    (String) reviewMap.get(RESTAURANT_NAME_KEY),
-                    (String) reviewMap.get(USERNAME_KEY),
-                    (Double) reviewMap.get(AMBIANCE_RATE_KEY),
-                    (Double) reviewMap.get(OVERALL_RATE_KEY),
-                    (Double) reviewMap.get(SERVICE_RATE_KEY),
-                    (Double) reviewMap.get(FOOD_RATE_KEY),
-                    (String) reviewMap.get(COMMENT_KEY)
-            );
-        }
-        return reviewsObject;
-    }
+//    @Override
+//    public Reviews loadFromUrl(String urlPath) {
+//        String response = HttpRequestSender.sendGetRequest(urlPath);
+//        List<Map<String, Object>> reviewsList = Parser.parseStringToJsonArray(response);
+//        Reviews reviewsObject = new Reviews();
+//        for (var reviewMap : reviewsList) {
+//            reviewsObject.addReview(
+//                    (String) reviewMap.get(RESTAURANT_NAME_KEY),
+//                    (String) reviewMap.get(USERNAME_KEY),
+//                    (Double) reviewMap.get(AMBIANCE_RATE_KEY),
+//                    (Double) reviewMap.get(OVERALL_RATE_KEY),
+//                    (Double) reviewMap.get(SERVICE_RATE_KEY),
+//                    (Double) reviewMap.get(FOOD_RATE_KEY),
+//                    (String) reviewMap.get(COMMENT_KEY)
+//            );
+//        }
+//        return reviewsObject;
+//    }
 
-    public Review addReview(
-            String restName,
-            String username,
-            Double ambianceRate,
-            Double overallRate,
-            Double serviceRate,
-            Double foodRate,
-            String comment) {
-        {
-            if (reviews.get(restName) == null) {
-                reviews.put(restName, new HashMap<>());
-            }
-            Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
-                    serviceRate, comment, LocalDateTime.now());
-            reviews.get(restName).put(username, r);
-            this.saveToFile(Locations.REVIEWS_LOCATION);
-            return r;
-        }
-    }
+//    public Review addReview(
+//            String restName,
+//            String username,
+//            Double ambianceRate,
+//            Double overallRate,
+//            Double serviceRate,
+//            Double foodRate,
+//            String comment) {
+//        {
+//            if (reviews.get(restName) == null) {
+//                reviews.put(restName, new HashMap<>());
+//            }
+//            Review r = new Review(username, restName, ambianceRate, foodRate, overallRate,
+//                    serviceRate, comment, LocalDateTime.now());
+//            reviews.get(restName).put(username, r);
+//            this.saveToFile(Locations.REVIEWS_LOCATION);
+//            return r;
+//        }
+//    }
 
     public List<Review> getAllReviews() {
         return reviews.values().stream()
