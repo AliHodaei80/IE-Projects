@@ -1,0 +1,52 @@
+#addReviewModal .modal-content {
+  background-color: var(--white);
+  font-family: "SplineSans", serif;
+}
+
+#addReviewModal .modal-header {
+  color: var(--black);
+  font-weight: 500;
+}
+
+#addReviewModal textarea {
+  background-color: var(--light-grey);
+  border: none;
+}
+
+#addReviewModal #add-review-submit-btn {
+  color: var(--white);
+  background-color: var(--red);
+  font-weight: 400;
+
+  border: 1px solid var(--red);
+}
+
+#addReviewModal textarea:focus {
+  outline: none !important;
+  border: 1px solid var(--red);
+  box-shadow: 0 0 7px var(--red);
+}
+
+#addReviewModal #add-review-submit-btn:disabled {
+  color: var(--white);
+  font-weight: 400;
+  background-color: var(--light-white);
+}
+
+#restaurant-name-feedback {
+  color: var(--red);
+}
+
+#close-add-review-btn {
+  background-color: var(--white);
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+#no-reservation-before-text {
+  color: var(--red);
+}
+
+#add-review-text {
+  color: var(--grey);
+}
