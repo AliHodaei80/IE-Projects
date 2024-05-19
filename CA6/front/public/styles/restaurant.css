@@ -1,0 +1,242 @@
+body {
+  font-family: "SplineSans", serif;
+  font-weight: 200;
+}
+
+#sample-rest-img {
+  height: 70%;
+}
+#about {
+  font-size: 24px;
+}
+
+.red-text {
+  color: #ed3545;
+}
+
+.descripton-card {
+  bottom: 20%;
+  background-color: white;
+  opacity: 92%;
+  height: 16vh;
+  position: relative;
+  /* z-index: 1; */
+}
+
+#rest-status-open {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+  width: 90px;
+  top: 50%;
+  position: relative;
+  height: 33px;
+  background-color: rgb(124, 228, 124);
+}
+
+#rest-status-closed {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+  width: 90px;
+  top: 50%;
+  position: relative;
+  height: 33px;
+  background-color: rgb(255, 121, 81);
+}
+
+review-card {
+  max-width: 540px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 20px;
+}
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.review-header .timing {
+  font-weight: 400;
+  font-size: medium;
+  margin-left: 11px;
+}
+.type {
+  padding: 2px 10px;
+  border-radius: 5px;
+  font-size: medium;
+  color: 303030;
+  font-weight: 400;
+}
+.restaurant-location {
+  font-size: 0.9em;
+  color: #555;
+}
+.review-content {
+  font-size: 16px;
+  line-height: 18px;
+  color: #303030;
+  line-height: 1.4;
+}
+
+.star-review {
+  height: 20px;
+}
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.booking {
+  font-weight: 400;
+}
+.count-picker {
+  width: 84px;
+  border-width: 0;
+  background-color: #f5f5f5;
+}
+
+.date-picker {
+  width: 200px;
+  background-color: #f5f5f5;
+  border-width: 0;
+}
+
+.reserve-blob {
+  background-color: white;
+  border-color: #ed3545;
+  border-style: solid;
+  border-width: 2px;
+  position: relative;
+  padding: 1%;
+  height: 40px;
+  width: 160px;
+  text-align: center;
+  color: #ed3545;
+  font-weight: 400;
+}
+
+.reserve-blob:focus {
+  background-color: #ed3545;
+  width: 160px;
+  border-style: solid;
+  border-width: 2px;
+  height: 40px;
+  position: relative;
+  padding: 1%;
+  color: white;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.review-box {
+  height: 25%;
+  width: 75%;
+  margin-top: 10%;
+  margin-left: 12%;
+  background-color: #fff6f7;
+}
+
+.description-box {
+  margin-bottom: 0%;
+}
+.review-pages {
+  height: 25%;
+  width: 75%;
+}
+.icon {
+  height: 20px;
+  width: 20px;
+}
+
+review-card {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 1rem 0;
+}
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.review-date {
+  font-size: 0.9rem;
+  color: #757575;
+}
+.review-content {
+  font-size: 0.95rem;
+}
+.add-review-btn {
+  background-color: #ff4757;
+  border: none;
+  color: white;
+  height: 45px;
+  width: 150px;
+  border-radius: 0.3rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.profile-photo {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  color: #000000;
+  background-color: #f0b5ba;
+}
+
+.page-button {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  color: #000000;
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  background-color: white;
+}
+
+.profile-name {
+  font-size: 22px;
+  top: 0%;
+  padding: 10px;
+}
+
+.review-namer {
+  margin-right: 89vh;
+}
+
+.page-no {
+  top: 25%;
+  font-weight: 400;
+}
+
+
+.pagination-container {
+  display: flex;
+  list-style: none;  
+  justify-content: center;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px; 
+}
+
+.page-link {
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%; 
+  border: 1px solid #ccc;
+}
+
+.active .page-link {
+  border-color: #007bff;
+}
