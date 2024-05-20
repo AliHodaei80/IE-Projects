@@ -8,9 +8,15 @@ import ir.ie.mizdooni.models.ManagerUser;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.models.UserRole;
 import ir.ie.mizdooni.repositories.ClientRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ir.ie.mizdooni.repositories.ManagerRepository;
 import ir.ie.mizdooni.utils.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +26,7 @@ import java.util.Map;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 
 @Service
-public class UserHandler {
+public class UserHandler implements UserDetailsService {
 
     private final ClientRepository clientUserRepository;
     private final ManagerRepository managerUserRepository;
@@ -155,4 +161,21 @@ public class UserHandler {
         }
         currentUser = user;
     }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user= getUserByUsername(username);
+        if ( user == null){
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        if (!user.getUsername().equals(username)) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        else {
+            return org.springframework.security.core.userdetails.User.builder()
+                    .username(user.getUsername())
+                    .password(new BCryptPasswordEncoder().encode(user.getPassword()))
+                    .roles(user.getRole().getValue())
+                    .build();
+        }
+        }
 }
