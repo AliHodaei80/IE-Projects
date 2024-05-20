@@ -35,7 +35,7 @@ function AddReviewModal({ restaurantName, restaurantId, updateReviews }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     let requestBody = {
-      username: authDetails.username,
+      username: authDetails.user.username,
       ambianceRate: ambienceRate,
       overallRate: overalRate,
       foodRate: foodQualityRate,
@@ -75,7 +75,7 @@ function AddReviewModal({ restaurantName, restaurantId, updateReviews }) {
   const checkHadReservationBefore = () => {
     if (authDetails.logged_in) {
       fetchData(
-        "/reservations/" + authDetails.username,
+        "/reservations/" + authDetails.user.username,
         null,
         handleFetchReservations,
         (res) => {}

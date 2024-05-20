@@ -84,7 +84,7 @@ public class LoginRestController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> logoutHandler() {
-        userHandler.logoutUser();
+//        userHandler.logoutUser();
         logger.info("User logout successfully");
         return new ResponseEntity<>(new Response(true, USER_LOGOUT_SUCCESSFULLY), HttpStatus.OK);
     }

@@ -102,7 +102,7 @@ function AddRestaurantModal({ fetchRestaurants }) {
       },
       startTime: startTime,
       endTime: endTime,
-      managerUsername: authDetails.username,
+      managerUsername: authDetails.user.username,
     };
     console.log("Name:", name);
     console.log("type:", type);

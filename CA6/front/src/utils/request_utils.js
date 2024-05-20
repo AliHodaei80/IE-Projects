@@ -1,13 +1,37 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-// TODO Probably add url parameters to fetch data (or alter url your self ?)
-export function fetchData(url, payload, resultSetter, onCompleted) {
-  console.log("Fetching data from url", url, "with payload", payload);
+import Cookies from "js-cookie";
+
+// TODO Probably add url parameters to fetch data (or alter url yourself ?)
+export function fetchData(
+  url,
+  payload,
+  resultSetter,
+  onCompleted,
+  use_token = true
+) {
+  console.log(
+    "Sending data to url",
+    url,
+    "with payload",
+    payload,
+    "Auth Details",
+    Cookies.get("authDetails"),
+    "Use token?",
+    use_token
+  );
+
   axios
-    .get(url, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    .get(url, {
+      headers: !use_token
+        ? {
+            "Content-Type": "application/json",
+          }
+        : {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + JSON.parse(Cookies.get("authDetails")).token,
+          },
+      params: payload, // Assuming payload is meant to be query parameters
     })
     .then((response) => {
       console.log("Data:", response.data);
@@ -34,13 +58,35 @@ export function fetchData(url, payload, resultSetter, onCompleted) {
     });
 }
 
-export function postData(url, payload, resultSetter, onSuccess, onFailure) {
-  console.log("Sending data to url", url, "with payload", payload);
+export function postData(
+  url,
+  payload,
+  resultSetter,
+  onSuccess,
+  onFailure,
+  use_token = true
+) {
+  console.log(
+    "Sending data to url",
+    url,
+    "with payload",
+    payload,
+    "Auth Details",
+    Cookies.get("authDetails"),
+    "Use token?",
+    use_token
+  );
+
   axios
     .post(url, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: !use_token
+        ? {
+            "Content-Type": "application/json",
+          }
+        : {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + JSON.parse(Cookies.get("authDetails")).token,
+          },
     })
     .then((response) => {
       console.log("Data:", response.data);

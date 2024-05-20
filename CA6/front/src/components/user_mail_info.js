@@ -4,23 +4,30 @@ import "../styles/user_info_bar.css";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { postData, sendToast } from "../utils/request_utils";
+import Cookies from "js-cookie";
 function UserMailInfo() {
   const { authDetails, setAuthDetails } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
-    postData(
-      "/logout",
-      {},
-      () => {},
-      () => {
-        navigate("/authenticate");
-        sendToast(true, "Logged out successfully");
-        setAuthDetails({ logged_in: false });
-      },
-      () => {
-        sendToast(true, "Logout failed");
-      }
-    );
+    Cookies.remove("authDetails");
+    setAuthDetails({ logged_in: false });
+    navigate("/authenticate");
+    sendToast(true, "Logout Succesful");
+    // postData(
+    //   "/logout",
+    //   {},
+    //   () => {},
+    //   () => {
+    //     navigate("/authenticate");
+    //     sendToast(true, "Logged out successfully");
+    //     const authDetailsCopy=authDetails;
+    //     authDetailsCopy.logged_in=false;
+    //     setAuthDetails(authDetailsCopy);
+    //   },
+    //   () => {
+    //     sendToast(false, "Logout failed");
+    //   }
+    // );
   };
   let content = (
     <div className="user-info align-items-center d-flex p-2 rounded-3 mt-2">
@@ -34,7 +41,8 @@ function UserMailInfo() {
       </div>
       {"MANAGER" !== authDetails.role ? (
         <div className="address ms-auto">
-          Address: {authDetails.address.city}, {authDetails.address.country}
+          Address: {authDetails.user.address.city},{" "}
+          {authDetails.user.address.country}
         </div>
       ) : (
         <div className="address ms-auto"></div>

@@ -70,7 +70,7 @@ export default function RestaurantPage() {
 
   const submitReservation = () => {
     const payload = {
-      username: authDetails.username,
+      username: authDetails.user.username,
       seatsReserved: targetSeatNumber,
       datetime: targetTime,
     };
@@ -148,7 +148,8 @@ export default function RestaurantPage() {
             sendToast(false, "Restaurant fetch failed");
           }
         },
-        (res) => {}
+        (res) => {},
+        true
       );
     }
   }, [mounted, id]);

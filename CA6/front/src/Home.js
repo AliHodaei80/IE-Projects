@@ -6,6 +6,7 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
+
 import { fetchData, postData, sendToast } from "./utils/request_utils.js";
 import { useAuth, UserContext } from "./context/AuthContext.js";
 import "./styles/home.css";
@@ -27,6 +28,20 @@ const user_details_endpoint = "/user/";
 const restaurant_search_endpoint = "/restaurants/search";
 const all_restaurants = "/restaurants";
 // ------------------------------------------------------------- //
+
+function combineMaps(map1, map2) {
+  let combinedMap = new Map([...map1]);
+
+  map2.forEach((value, key) => {
+    if (combinedMap.has(key)) {
+      combinedMap.set(key, combinedMap.get(key) + value);
+    } else {
+      combinedMap.set(key, value);
+    }
+  });
+
+  return combinedMap;
+}
 
 export default function Home() {
   // ------------------------------------------------------------- //
@@ -61,7 +76,8 @@ export default function Home() {
           setTopRestaurants({ restaurants: rests });
         }
       },
-      (res) => {}
+      (res) => {},
+      true
     );
     return;
   };
@@ -88,23 +104,24 @@ export default function Home() {
   };
 
   const fetchUser = () => {
-    if (authDetails.logged_in) {
+    if (authDetails.token) {
       fetchData(
-        user_details_endpoint + authDetails.username,
-        { username: authDetails.username, password: authDetails.password },
+        user_details_endpoint + authDetails.user.username,
+        {},
         (response) => {
-          setUserDetails(response.data);
-          const user_details_response = response.data.user;
-          user_details_response.logged_in = true;
-          setAuthDetails(user_details_response);
           if (response.success) {
+            console.log("Fetch User Response", response);
+            setUserDetails(response.data);
+            const authDetailsCopy = authDetails;
+            authDetailsCopy.user.address=response.data.user.address;
             searchRestaurants(
               search_method_city,
               response.data.user.address.city
             );
           }
         },
-        (res) => {}
+        (res) => {},
+        true
       );
     }
   };

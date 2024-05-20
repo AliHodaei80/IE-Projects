@@ -13,7 +13,7 @@ function Header() {
   const { authDetails } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("Auth Details", authDetails);
+    console.log("Auth Details Header", authDetails);
   });
   const handleReserveNow = () => {
     navigate("/authenticate");
@@ -28,7 +28,7 @@ function Header() {
   if (authDetails.logged_in === false) {
     buttonText = "Reserve Now!";
     buttonOnClick = handleReserveNow;
-  } else if (authDetails.role === MANAGER) {
+  } else if (authDetails.user.role === MANAGER) {
     buttonText = "My Restaurants";
     buttonOnClick = handleMyRestaurants;
   } else {
@@ -55,9 +55,9 @@ function Header() {
         {authDetails.logged_in === false ? null : (
           <span className="d-flex align-items-center flex-wrap align-middle w-75">
             {"Welcome  " +
-              (authDetails.role === "MANAGER"
+              (authDetails.user.role === "MANAGER"
                 ? "Admin!"
-                : authDetails.username)}
+                : authDetails.user.username)}
           </span>
         )}
         <button

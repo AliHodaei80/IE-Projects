@@ -23,7 +23,7 @@ function ManagerRestaurantsTable() {
 
   const fetchRestaurants = () => {
     fetchData(
-      "/user/" + authDetails.username + "/restaurants",
+      "/user/" + authDetails.user.username + "/restaurants",
       null,
       handleFetchRestaurants,
       (res) => {}

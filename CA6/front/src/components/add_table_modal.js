@@ -28,10 +28,10 @@ function AddTableModal({ restaurantId, fetchTables }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let requestBody = {
-      managerUsername: authDetails.username,
+      managerUsername: authDetails.user.username,
       seatsNumber: seats,
     };
-    console.log("managerUsername:", authDetails.username);
+    console.log("managerUsername:", authDetails.user.username);
     console.log("seatsNumber:", seats);
     let res = await postData(
       "/tables/" + restaurantId + "/add",

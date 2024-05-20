@@ -31,7 +31,7 @@ function CancelConfirmationModal({
     event.preventDefault();
 
     let requestBody = {
-      username: authDetails.username,
+      username: authDetails.user.username,
     };
     console.log(`Reservation ${reservationId} cancelled`);
     let res = postData(

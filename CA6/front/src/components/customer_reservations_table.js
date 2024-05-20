@@ -24,10 +24,11 @@ function CustomerReservations() {
 
   const fetchReservations = () => {
     fetchData(
-      "/reservations/" + authDetails.username,
+      "/reservations/" + authDetails.user.username,
       null,
       handleFetchReservations,
-      (res) => {}
+      (res) => {},
+      true
     );
   };
 
