@@ -2,6 +2,7 @@ package ir.ie.mizdooni.controllers;
 
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.configs.JwtUtil;
+import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.services.UserHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,6 @@ public class LoginRestController {
                     (String) data.get(USER_ROLE_KEY),
                     (String) data.get(PASSWORD_KEY),
                     (Map<String, String>) data.get(USER_ADDRESS_KEY));
-            userHandler.loginUser((String) data.get(USERNAME_KEY), (String) data.get(PASSWORD_KEY));
             logger.info("User added successfully");
             return new ResponseEntity<>(new Response(true, USER_ADDED_SUCCESSFULLY), HttpStatus.OK);
         } catch (Exception e) {

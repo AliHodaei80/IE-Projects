@@ -151,16 +151,7 @@ public class UserHandler implements UserDetailsService {
         return user != null && user.getPassword().equals(password);
     }
 
-    public void loginUser(String username, String password) throws UserNotExists, AuthenticationFailed {
-        User user = getUserByUsername(username);
-        if (user == null) {
-            throw new UserNotExists();
-        }
-        if (!user.getPassword().equals(password)) {
-            throw new AuthenticationFailed();
-        }
-        currentUser = user;
-    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user= getUserByUsername(username);
