@@ -9,15 +9,14 @@ import { fetchData, postData, sendToast } from "./utils/request_utils.js";
 import { useAuth, AuthProvider } from "./context/AuthContext.js";
 const login_path = "/login";
 const signup_path = "/signup";
-const ROLE_MANAGER = "ROLE_manager"
+const ROLE_MANAGER = "ROLE_manager";
 
-function resolve_role(data){
+function resolve_role(data) {
   const copy_data = data;
-  if (data.user.authorities[0].authority === ROLE_MANAGER){
-    copy_data.user.role ="MANAGER"
-  }
-  else {
-    copy_data.user.role="CLIENT"
+  if (data.user.authorities[0].authority === ROLE_MANAGER) {
+    copy_data.user.role = "MANAGER";
+  } else {
+    copy_data.user.role = "CLIENT";
   }
   return copy_data;
 }
@@ -50,11 +49,7 @@ export default function AuthPage() {
     navigate("/", { replace: true, state: userData });
   };
   const onSignupSuccess = (response) => {
-    console.log("Signup Response",response);
-    const NuserData = resolve_role(response);
-    NuserData.logged_in=true;
-    setAuthDetails(NuserData);
-    navigate("/", { replace: true, state: userData });
+    postData(login_path, userData, setResult, onLoginSuccess, onLoginFailure);
   };
   const onLoginFailure = (response) => {
     console.log("Login failed not redirecting");

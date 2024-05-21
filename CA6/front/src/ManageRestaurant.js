@@ -14,7 +14,6 @@ function ManageRestaurantPage() {
   const [tableSelected, setTableSelected] = useState(-1);
   const [restaurant, setRestaurant] = useState({});
   const handleFetchRestaurantInfo = (response) => {
-    console.log(response);
     if (response.success) {
       setRestaurant(response.data.restaurant);
     } else {

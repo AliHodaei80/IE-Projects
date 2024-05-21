@@ -29,6 +29,7 @@ function UserMailInfo() {
     //   }
     // );
   };
+  console.log("Reservations :",authDetails)
   let content = (
     <div className="user-info align-items-center d-flex p-2 rounded-3 mt-2">
       <div className="mail-info">

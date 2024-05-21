@@ -10,26 +10,34 @@ import SearchResultPage from "./SearchResultPage";
 import RestaurantPage from "./RestaurantPage";
 import ReservationsPage from "./reservations";
 import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/private_route";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/error" element={<Error />} />
           <Route path="/authenticate" element={<AuthPage />} />
-          <Route path="/search_result" element={<SearchResultPage />} />
-          <Route path="/restaurant/:id" element={<RestaurantPage />} />
-          <Route path="/manager_restaurants" element={<ManagerRestaurants />} />
-          <Route path="/reservations" element={<ReservationsPage />} />
-          <Route
-            path="/manager_restaurants/:id"
-            element={<ManageRestaurantPage />}
-          />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/search_result" element={<SearchResultPage />} />
+            <Route path="/restaurant/:id" element={<RestaurantPage />} />
+            <Route
+              path="/manager_restaurants"
+              element={<ManagerRestaurants />}
+            />
+            <Route path="/reservations" element={<ReservationsPage />} />
+            <Route
+              path="/manager_restaurants/:id"
+              element={<ManageRestaurantPage />}
+            />
+          </Route>
         </Routes>
       </Router>
     </AuthProvider>
   );
 }
+
 export default App;
