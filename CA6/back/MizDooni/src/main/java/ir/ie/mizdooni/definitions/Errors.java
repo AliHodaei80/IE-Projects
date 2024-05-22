@@ -28,6 +28,7 @@ public class Errors {
     public static final String MANAGER_USERNAME_NOT_MATCH = "Username of manager not match with restaurant manager";
     public static final String AUTHENTICATION_FAILED = "Authentication failed";
     public static final String NO_RESERVATION_BEFORE = "You had no reservation before to add review";
+    public static final String CAN_NOT_SIGNIN_BY_GOOGLE = "Because of username conflict You can not sign in by google";
 
 
 }

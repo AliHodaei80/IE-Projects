@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/search").permitAll()
                         .requestMatchers("/signup").permitAll()
+                        .requestMatchers("/Callback*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
