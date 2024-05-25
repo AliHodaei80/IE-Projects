@@ -27,6 +27,7 @@ import java.util.Map;
 
 import static ir.ie.mizdooni.commons.HttpRequestSender.sendGetRequest;
 import static ir.ie.mizdooni.commons.HttpRequestSender.sendPostRequest;
+import static ir.ie.mizdooni.commons.PasswordHasher.hashAndEncodePassword;
 import static ir.ie.mizdooni.definitions.RequestKeys.PASSWORD_KEY;
 import static ir.ie.mizdooni.definitions.RequestKeys.USERNAME_KEY;
 
@@ -90,7 +91,7 @@ public class GoogleAuthController {
             userHandler.updateOrAddUser(modifiedUsername, (String) getUserInfoResponse.get("email"), "client", default_password, new HashMap<>());
 
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(modifiedUsername, default_password)
+                    new UsernamePasswordAuthenticationToken(modifiedUsername, hashAndEncodePassword(default_password))
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails userDetails = userHandler.loadUserByUsername((String) modifiedUsername);
