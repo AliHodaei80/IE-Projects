@@ -88,7 +88,7 @@ public class UserHandler implements UserDetailsService {
 
     public void updateOrAddUser(String username, String email, String role, String password, Map<String, String> address)
             throws UserNameAlreadyTaken, EmailAlreadyTaken, InvalidUserRole, CantSigninByGoogle {
-         User user = getUserByEmail(username);
+         User user = getUserByEmail(email);
         if (user == null) {
             User userByUsername = getUserByUsername(username);
             if (userByUsername == null) {

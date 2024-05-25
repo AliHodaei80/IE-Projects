@@ -10,7 +10,8 @@ import { useAuth, AuthProvider } from "./context/AuthContext.js";
 const login_path = "/login";
 const signup_path = "/signup";
 const ROLE_MANAGER = "ROLE_manager";
-
+const googleOAuthLink =
+  "https://accounts.google.com/o/oauth2/auth?client_id=279622359341-pc20rcuufoc1j6kcabusflb3v26a3ecj.apps.googleusercontent.com&response_type=code&scope=profile%20email&redirect_uri=http://127.0.0.1:3000/Callback";
 function resolve_role(data) {
   const copy_data = data;
   if (data.user.authorities[0].authority === ROLE_MANAGER) {
@@ -142,6 +143,9 @@ export default function AuthPage() {
                 >
                   Login
                 </button>
+                <button className="btn btn-outline-secondary w-75 mt-4 border-0 signin-google">
+                  <a href={googleOAuthLink}>Login with Google</a>
+                </button>
               </div>
             </div>
           ) : (
@@ -232,7 +236,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   id="signup-btn"
-                  className="btn btn-outline-secondary w-100 mt-4 border-0"
+                  className="btn btn-outline-secondary w-100 mt-3 border-0"
                   onClick={() => {
                     console.log("Printing Error message ", AxiosResult);
                     const newUserData = userData;
@@ -249,6 +253,9 @@ export default function AuthPage() {
                   }}
                 >
                   Register
+                </button>
+                <button className="btn btn-outline-secondary w-100 mt-2 border-0 signin-google">
+                  <a href={googleOAuthLink}>Login with Google</a>
                 </button>
               </div>
             </div>

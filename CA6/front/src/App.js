@@ -9,6 +9,7 @@ import AuthPage from "./AuthPage";
 import SearchResultPage from "./SearchResultPage";
 import RestaurantPage from "./RestaurantPage";
 import ReservationsPage from "./reservations";
+import CallBackPage from "./CallBackPage";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/private_route";
 
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/error" element={<Error />} />
           <Route path="/authenticate" element={<AuthPage />} />
+          <Route path="/Callback" element={<CallBackPage />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />

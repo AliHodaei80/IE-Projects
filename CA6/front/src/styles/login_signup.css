@@ -54,6 +54,20 @@ body {
   color: var(--white);
 }
 
+.signin-google {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.signin-google a {
+  text-decoration: none;
+}
+
+.signin-google:hover {
+  background-color: var(--red);
+  color: var(--white);
+}
+
 #login-signup input {
   background-color: var(--light-grey);
   border: none;
