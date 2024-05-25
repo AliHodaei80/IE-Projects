@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import static ir.ie.mizdooni.commons.PasswordHasher.hashAndEncodePassword;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.Successes.*;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddUser;
@@ -65,7 +66,7 @@ public class LoginRestController {
         try {
             validateLoginUser(data);
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(data.get(USERNAME_KEY), data.get(PASSWORD_KEY))
+                    new UsernamePasswordAuthenticationToken(data.get(USERNAME_KEY), hashAndEncodePassword((String) data.get(PASSWORD_KEY)))
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails userDetails = userHandler.loadUserByUsername((String) data.get(USERNAME_KEY));

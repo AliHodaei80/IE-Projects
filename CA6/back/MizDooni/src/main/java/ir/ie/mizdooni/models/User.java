@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.Map;
 
+import static ir.ie.mizdooni.commons.PasswordHasher.hashAndEncodePassword;
+
 @MappedSuperclass
 public abstract class User {
     @Id
@@ -19,7 +21,7 @@ public abstract class User {
 
     public User(String username, String password, String email, Map<String, String> address, UserRole role) {
         this.username = username;
-        this.password = password;
+        this.password = hashAndEncodePassword(password);
         this.email = email;
         this.address = new UserAddress(address.get("city"), address.get("country"));
         this.role = role;
@@ -27,7 +29,7 @@ public abstract class User {
 
     public User(String username, String password, String email, UserAddress address, UserRole role) {
         this.username = username;
-        this.password = password;
+        this.password = hashAndEncodePassword(password);
         this.email = email;
         this.address = address;
         this.role = role;
