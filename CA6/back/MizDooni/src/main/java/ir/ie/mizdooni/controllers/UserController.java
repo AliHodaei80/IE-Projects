@@ -1,6 +1,7 @@
 package ir.ie.mizdooni.controllers;
 
 import ir.ie.mizdooni.commons.Response;
+import ir.ie.mizdooni.exceptions.InvalidAccess;
 import ir.ie.mizdooni.exceptions.UserNotFound;
 import ir.ie.mizdooni.models.User;
 import ir.ie.mizdooni.services.ReservationHandler;
@@ -32,9 +33,11 @@ public class UserController {
 
     @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getUserInfoHandler(@PathVariable String username) {
+    public ResponseEntity<Response> getUserInfoHandler(@PathVariable String username, @RequestAttribute String JWTUsername) {
         Map<String, Object> outputData = new HashMap<>();
         try {
+            if (!username.equals(JWTUsername))
+                throw new InvalidAccess();
             User user = userHandler.getUserByUsername(username);
             if (user == null)
                 throw new UserNotFound();
@@ -45,14 +48,19 @@ public class UserController {
         } catch (UserNotFound e) {
             logger.error("User Info retrieve for User `" + username + "` failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("User Info retrieve for User `" + username + "` failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = "/user/{username}/restaurants", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getUserRestaurantHandler(@PathVariable String username) {
+    public ResponseEntity<Response> getUserRestaurantHandler(@PathVariable String username, @RequestAttribute String JWTUsername) {
         Map<String, Object> outputData = new HashMap<>();
         try {
+            if (!username.equals(JWTUsername))
+                throw new InvalidAccess();
             User user = userHandler.getUserByUsername(username);
             if (user == null)
                 throw new UserNotFound();
@@ -62,6 +70,9 @@ public class UserController {
         } catch (UserNotFound e) {
             logger.error("User Restaurants for User `" + username + "`  failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("User Restaurants for User `" + username + "`  failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 }

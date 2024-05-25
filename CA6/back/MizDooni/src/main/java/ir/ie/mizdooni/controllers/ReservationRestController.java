@@ -40,9 +40,12 @@ public class ReservationRestController {
 
     @RequestMapping(value = "/reservations/{username}", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getReservationHandler(@PathVariable String username) {
+    public ResponseEntity<Response> getReservationHandler(@PathVariable String username,
+                                                          @RequestAttribute String JWTUsername) {
         Map<String, Object> outputData = new HashMap<>();
         try {
+            if (!username.equals(JWTUsername))
+                throw new InvalidAccess();
             User user = userHandler.getUserByUsername(username);
             if (user == null)
                 throw new UserNotFound();
@@ -54,22 +57,31 @@ public class ReservationRestController {
         } catch (UserNotFound e) {
             logger.error("Reservations retrieve for User `" + username + "` failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("Reservations retrieve for User `" + username + "` failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = "/reservations/{id}/cancel", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> cancelReservationHandler(@PathVariable String id,
-                                                             @RequestBody Map<String, Object> data) {
+                                                             @RequestBody Map<String, Object> data,
+                                                             @RequestAttribute String JWTUsername) {
         try {
+            if (!JWTUsername.equals(data.get(USERNAME_KEY)))
+                throw new InvalidAccess();
             data.put(RESERVATION_NUM_KEY, id);
             validateCancelReservation(data);
             reservationHandler.cancelReservation((String) data.get(USERNAME_KEY), Long.parseLong(id));
             logger.info("Reservation `" + id + "` cancelled successfully");
             return new ResponseEntity<>(new Response(true, RESERVATION_CANCELLED_SUCCESSFULLY), HttpStatus.OK);
-        } catch (InvalidRequestFormat | InvalidRequestTypeFormat | ReservationNotForUser | CancellationTimePassed e) {
+        } catch (InvalidRequestFormat | InvalidRequestTypeFormat | CancellationTimePassed e) {
             logger.error("Cancellation reserve `" + id + "` failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (InvalidAccess | ReservationNotForUser e) {
+            logger.error("Cancellation reserve `" + id + "` failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 }

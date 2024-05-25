@@ -84,6 +84,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
         }
+        request.setAttribute("JWTUsername", username);
         chain.doFilter(request, response);
     }
 

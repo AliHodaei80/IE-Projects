@@ -41,8 +41,12 @@ public class TableController {
 
     @RequestMapping(value = "/tables/{restaurantId}/add", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> addTableHandler(@PathVariable Long restaurantId, @RequestBody Map<String, Object> data) {
+    public ResponseEntity<Response> addTableHandler(@PathVariable Long restaurantId,
+                                                    @RequestBody Map<String, Object> data,
+                                                    @RequestAttribute String JWTUsername) {
         try {
+            if (!JWTUsername.equals(data.get(MANAGER_USERNAME_KEY)))
+                throw new InvalidAccess();
             Restaurant restaurant = restaurantHandler.getRestaurant(restaurantId);
             if (restaurant == null)
                 throw new RestaurantNotFound();
@@ -65,16 +69,23 @@ public class TableController {
             logger.error("Restaurant `" + (String) data.get(ADD_RESTAURANT_NAME_KEY) +
                     "` addition failed. error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (InvalidAccess e) {
+            logger.error("Restaurant `" + (String) data.get(ADD_RESTAURANT_NAME_KEY) +
+                    "` Table `" + data.get(TABLE_NUM_KEY) + "` addition failed. error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = "/tables/{restaurantId}", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getRestaurantTableHandler(@PathVariable Long restaurantId) {
+    public ResponseEntity<Response> getRestaurantTableHandler(@PathVariable Long restaurantId,
+                                                              @RequestAttribute String JWTUsername) {
         try {
             Restaurant restaurant = restaurantHandler.getRestaurant(restaurantId);
             if (restaurant == null)
                 throw new RestaurantNotFound();
+            if (!JWTUsername.equals(restaurant.getManagerUsername()))
+                throw new InvalidAccess();
             logger.info("Restaurant `" + restaurant.getName() + "` Tables retrieved successfully");
             return new ResponseEntity<>(new Response(true,
                     Map.of("restaurantTables", new ArrayList<>(restaurantTableHandler.getRestTables(restaurant.getName()))))
@@ -82,16 +93,22 @@ public class TableController {
         } catch (RestaurantNotFound e) {
             logger.error("Restaurant `" + restaurantId + "` Tables retrieve failed. error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("Restaurant `" + restaurantId + "` Tables retrieve failed. error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = "/tables/reservations", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getRestaurantTableReservationHandler(@RequestBody Map<String, Object> body) {
+    public ResponseEntity<Response> getRestaurantTableReservationHandler(@RequestBody Map<String, Object> body,
+                                                                         @RequestAttribute String JWTUsername) {
         try {
             Restaurant restaurant = restaurantHandler.getRestaurant((Long) body.get(RESTAURANT_ID_KEY));
             if (restaurant == null)
                 throw new RestaurantNotFound();
+            if (!JWTUsername.equals(restaurant.getManagerUsername()))
+                throw new InvalidAccess();
             RestaurantTable table = restaurantTableHandler.getRestaurantTable(restaurant.getName(), (Long) body.get(TABLE_NUM_KEY));
             if (table == null)
                 throw new TableDoesntExist();
@@ -102,6 +119,9 @@ public class TableController {
         } catch (RestaurantNotFound | TableDoesntExist e) {
             logger.error("Reservations retrieve failed. error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("Reservations retrieve failed. error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 }

@@ -52,9 +52,12 @@ public class RestaurantRestController {
     // addRestaurant
     @RequestMapping(value = "/restaurants/add", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> addRestaurantHandler(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Response> addRestaurantHandler(@RequestBody Map<String, Object> data,
+                                                         @RequestAttribute String JWTUsername) {
         try {
             validateAddRest(data);
+            if (!JWTUsername.equals(data.get(MANAGER_USERNAME_KEY)))
+                throw new InvalidAccess();
             restaurantHandler.addRestaurant((String) data.get(ADD_RESTAURANT_NAME_KEY),
                     (String) data.get(RESTAURANT_TYPE_KEY),
                     (String) data.get(START_TIME_KEY),
@@ -74,6 +77,10 @@ public class RestaurantRestController {
             logger.error("Restaurant `" + (String) data.get(ADD_RESTAURANT_NAME_KEY) +
                     "` addition failed. error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (InvalidAccess e) {
+            logger.error("Restaurant `" + (String) data.get(ADD_RESTAURANT_NAME_KEY) +
+                    "` addition failed. error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
@@ -133,8 +140,11 @@ public class RestaurantRestController {
     @RequestMapping(value = "/restaurants/{id}/feedback", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> feedbackRestaurantHandler(@PathVariable String id,
-                                                              @RequestBody Map<String, Object> data) {
+                                                              @RequestBody Map<String, Object> data,
+                                                              @RequestAttribute String JWTUsername) {
         try {
+            if (!JWTUsername.equals(data.get(USERNAME_KEY)))
+                throw new InvalidAccess();
             Restaurant restaurant = restaurantHandler.getRestaurant(Long.parseLong(id));
             data.put(RESTAURANT_NAME_KEY, restaurant.getName());
             validateAddReview(data);
@@ -165,6 +175,9 @@ public class RestaurantRestController {
         } catch (UserNotFound | RestaurantNotFound e) {
             logger.error("feedback failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("feedback failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
@@ -195,8 +208,11 @@ public class RestaurantRestController {
     @RequestMapping(value = "/restaurant/{id}/reserve", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> reserveRestaurantHandler(@PathVariable String id,
-                                                             @RequestBody Map<String, Object> data) {
+                                                             @RequestBody Map<String, Object> data,
+                                                             @RequestAttribute String JWTUsername) {
         try {
+            if (!JWTUsername.equals(data.get(USERNAME_KEY)))
+                throw new InvalidAccess();
             Restaurant restaurant = restaurantHandler.getRestaurant(Long.parseLong(id));
             if (restaurant == null)
                 throw new RestaurantNotFound();
@@ -248,6 +264,9 @@ public class RestaurantRestController {
         } catch (RestaurantNotFound | UserNotExists e) {
             logger.error("Reservation failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("Reservation failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
@@ -274,18 +293,24 @@ public class RestaurantRestController {
 
     @RequestMapping(value = "/restaurants/{restId}/reservations", method = RequestMethod.GET)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Response> getRestaurantReservationsHandler(@PathVariable Long restId) {
+    public ResponseEntity<Response> getRestaurantReservationsHandler(@PathVariable Long restId,
+                                                                     @RequestAttribute String JWTUsername) {
         Map<String, Object> outputData = new HashMap<>();
         try {
             Restaurant restaurant = restaurantHandler.getRestaurant(restId);
             if (restaurant == null)
                 throw new RestaurantNotFound();
+            if (!JWTUsername.equals(restaurant.getManagerUsername()))
+                throw new InvalidAccess();
             outputData.put("reservations", reservationHandler.getRestaurantReservation(restaurant.getName()));
             logger.info("Reservations for Restaurant `" + restId + "` retrieved successfully");
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
         } catch (RestaurantNotFound e) {
             logger.error("Reservations retrieve for Restaurant `" + restId + "`` failed: error: " + e.getMessage(), e);
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (InvalidAccess e) {
+            logger.error("Reservations retrieve for Restaurant `" + restId + "`` failed: error: " + e.getMessage(), e);
+            return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }
 
