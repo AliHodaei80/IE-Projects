@@ -13,7 +13,9 @@ const user_details_endpoint = "/user/";
 function UserMailInfo() {
   const { authDetails, setAuthDetails } = useAuth();
   const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({
+    address: { city: "", country: "" },
+  });
 
   const handleFetchUserDetails = (response) => {
     console.log(response);
@@ -43,24 +45,9 @@ function UserMailInfo() {
     setAuthDetails({ logged_in: false });
     navigate("/authenticate");
     sendToast(true, "Logout Succesful");
-    // postData(
-    //   "/logout",
-    //   {},
-    //   () => {},
-    //   () => {
-    //     navigate("/authenticate");
-    //     sendToast(true, "Logged out successfully");
-    //     const authDetailsCopy=authDetails;
-    //     authDetailsCopy.logged_in=false;
-    //     setAuthDetails(authDetailsCopy);
-    //   },
-    //   () => {
-    //     sendToast(false, "Logout failed");
-    //   }
-    // );
   };
-  console.log("Reservations :", authDetails);
-  let content = (
+
+  return (
     <div className="user-info align-items-center d-flex p-2 rounded-3 mt-2">
       <div className="mail-info">
         {"MANAGER" === authDetails.role
@@ -72,8 +59,7 @@ function UserMailInfo() {
       </div>
       {"MANAGER" !== authDetails.role ? (
         <div className="address ms-auto">
-          Address: {authDetails.user.address.city},{" "}
-          {authDetails.user.address.country}
+          Address: {userDetails.address.city}, {userDetails.address.country}
         </div>
       ) : (
         <div className="address ms-auto"></div>
@@ -88,7 +74,6 @@ function UserMailInfo() {
       </button>
     </div>
   );
-  return content;
 }
 
 export default UserMailInfo;
