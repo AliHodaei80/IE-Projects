@@ -77,7 +77,8 @@ export default function Home() {
         }
       },
       (res) => {},
-      true
+      true,
+      authDetails
     );
     return;
   };
@@ -104,6 +105,7 @@ export default function Home() {
   };
 
   const fetchUser = () => {
+
     if (authDetails.token) {
       fetchData(
         user_details_endpoint + authDetails.user.username,
@@ -121,7 +123,8 @@ export default function Home() {
           }
         },
         (res) => {},
-        true
+        true,
+        authDetails
       );
     }
   };

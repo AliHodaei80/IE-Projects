@@ -8,19 +8,11 @@ export function fetchData(
   payload,
   resultSetter,
   onCompleted,
-  use_token = true
+  use_token = true,
+  authDetails = {}
 ) {
-  console.log(
-    "Sending data to url",
-    url,
-    "with payload",
-    payload,
-    "Auth Details",
-    Cookies.get("authDetails"),
-    "Use token?",
-    use_token
-  );
-
+  const token = authDetails.token ?? JSON.parse(Cookies.get("authDetails")).token;
+  console.log("Token",token)
   axios
     .get(url, {
       headers: !use_token
@@ -29,7 +21,7 @@ export function fetchData(
           }
         : {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + JSON.parse(Cookies.get("authDetails")).token,
+            "Authorization": "Bearer " + token,
           },
       params: payload, // Assuming payload is meant to be query parameters
     })
