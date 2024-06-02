@@ -73,29 +73,29 @@ public class TableReservationTests {
         return g.toJson(data);
     }
 
-    User createAnonymousClientUser() {
-        Map<String, String> address = new HashMap<>();
-        address.put("city", "Tehran");
-        address.put("country", "Iran");
-        return new User("user1", "123", "user@gmail.com", address, UserRole.CLIENT);
-    }
+//    User createAnonymousClientUser() {
+//        Map<String, String> address = new HashMap<>();
+//        address.put("city", "Tehran");
+//        address.put("country", "Iran");
+//        return new User("user1", "123", "user@gmail.com", address, UserRole.CLIENT);
+//    }
+//
+//
+//    Restaurant createAnonymousRestaurant() {
+//        Map<String, String> address = new HashMap<>();
+//        address.put("city", "Tehran");
+//        address.put("country", "Iran");
+//        address.put("street", "Ferdoos");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT);
+//        LocalTime startTime = LocalTime.parse("08:00", formatter);
+//        LocalTime endTime = LocalTime.parse("23:00", formatter);
+//
+//        return new Restaurant("r1", startTime, endTime, "Iranian", "Nothing", "m1", address, 1L);
+//    }
 
-
-    Restaurant createAnonymousRestaurant() {
-        Map<String, String> address = new HashMap<>();
-        address.put("city", "Tehran");
-        address.put("country", "Iran");
-        address.put("street", "Ferdoos");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT);
-        LocalTime startTime = LocalTime.parse("08:00", formatter);
-        LocalTime endTime = LocalTime.parse("23:00", formatter);
-
-        return new Restaurant("r1", startTime, endTime, "Iranian", "Nothing", "m1", address, 1L);
-    }
-
-    RestaurantTable creteRestaurantTable(String restName, String managerUsername, long tableNum, int seatsNum) {
-        return new RestaurantTable(tableNum, restName, managerUsername, seatsNum);
-    }
+//    RestaurantTable creteRestaurantTable(String restName, String managerUsername, long tableNum, int seatsNum) {
+//        return new RestaurantTable(tableNum, restName, managerUsername, seatsNum);
+//    }
 
     String getCurrDateTimePlus(int plusHours, int plusDays, LocalTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESERVE_DATETIME_FORMAT);

@@ -71,25 +71,25 @@ public class AddReviewTests {
         return g.toJson(data);
     }
 
-    User createAnonymousClientUser() {
-        Map<String, String> address = new HashMap<>();
-        address.put("city", "Tehran");
-        address.put("country", "Iran");
-        return new User("user1", "123", "user@gmail.com", address, UserRole.CLIENT);
-    }
-
-
-    Restaurant createAnonymousRestaurant() {
-        Map<String, String> address = new HashMap<>();
-        address.put("city", "Tehran");
-        address.put("country", "Iran");
-        address.put("street", "Ferdoos");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT);
-        LocalTime startTime = LocalTime.parse("08:00", formatter);
-        LocalTime endTime = LocalTime.parse("23:00", formatter);
-
-        return new Restaurant("r1", startTime, endTime, "Iranian", "Nothing", "m1", address, 1L);
-    }
+//    User createAnonymousClientUser() {
+//        Map<String, String> address = new HashMap<>();
+//        address.put("city", "Tehran");
+//        address.put("country", "Iran");
+//        return new User("user1", "123", "user@gmail.com", address, UserRole.CLIENT);
+//    }
+//
+//
+//    Restaurant createAnonymousRestaurant() {
+//        Map<String, String> address = new HashMap<>();
+//        address.put("city", "Tehran");
+//        address.put("country", "Iran");
+//        address.put("street", "Ferdoos");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RESTAURANT_TIME_FORMAT);
+//        LocalTime startTime = LocalTime.parse("08:00", formatter);
+//        LocalTime endTime = LocalTime.parse("23:00", formatter);
+//
+//        return new Restaurant("r1", startTime, endTime, "Iranian", "Nothing", "m1", address, 1L);
+//    }
 
 
 
