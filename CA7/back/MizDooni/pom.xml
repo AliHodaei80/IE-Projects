@@ -103,6 +103,49 @@
 			<version>0.11.5</version> <!-- or 0.10.7 -->
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>co.elastic.apm</groupId>
+			<artifactId>apm-agent-api</artifactId>
+			<version>1.49.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>co.elastic.apm</groupId>
+			<artifactId>apm-agent-attach</artifactId>
+			<version>1.50.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-api</artifactId>
+			<version>1.16.0</version>
+		</dependency>
+
+		<!-- OpenTelemetry SDK -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk</artifactId>
+			<version>1.16.0</version>
+		</dependency>
+
+		<!-- OpenTelemetry Exporter for Jaeger (example) -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-jaeger</artifactId>
+			<version>1.16.0</version>
+		</dependency>
+
+		<!-- OpenTelemetry Exporter for Logging (example) -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-logging</artifactId>
+			<version>1.16.0</version>
+		</dependency>
+
+
+
+
 
 	</dependencies>
 
