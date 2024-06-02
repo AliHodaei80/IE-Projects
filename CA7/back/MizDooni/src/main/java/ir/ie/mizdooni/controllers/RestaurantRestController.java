@@ -1,5 +1,7 @@
 package ir.ie.mizdooni.controllers;
 
+import co.elastic.apm.api.Span;
+import co.elastic.apm.api.ElasticApm;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.exceptions.*;
@@ -122,6 +124,9 @@ public class RestaurantRestController {
     @RequestMapping(value = "/restaurants/search_general", method = RequestMethod.POST)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> searchGeneralHandler(@RequestBody Map<String, Object> data) {
+        Span span  = ElasticApm.currentSpan();
+        Span child = span.startSpan();
+        child.setName("generalSearchSpan");
         String location = (String) data.get("location");
         String restType = (String) data.get("type");
         String name = (String) data.get("name");
@@ -133,7 +138,9 @@ public class RestaurantRestController {
         outputData.put("restaurants",
                 PageData.paginate(restaurantObjectList, page, pageLimit, "Restaurants"));
         logger.info("Restaurants Searched (`" + restType + " "+ name + ", `" + location + "`) retrieved successfully");
-        return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
+        ResponseEntity<Response> r =  new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);
+        child.end();
+        return r;
     }
 
     // RestaurantPageController POST

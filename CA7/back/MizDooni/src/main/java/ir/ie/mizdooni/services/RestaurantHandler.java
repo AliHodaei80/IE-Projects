@@ -1,5 +1,7 @@
 package ir.ie.mizdooni.services;
 
+import co.elastic.apm.api.Span;
+import co.elastic.apm.api.ElasticApm;
 import ir.ie.mizdooni.commons.HttpRequestSender;
 import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.definitions.TimeFormats;
@@ -69,20 +71,37 @@ public class RestaurantHandler {
     }
 
     public List<Restaurant> searchRestaurantByType(String restType) {
-        return restaurantRepository.findByType(restType);
+        Span parent = ElasticApm.currentSpan();
+        Span child = parent.startSpan();
+        child.setName("SearchByType");
+        List<Restaurant> restaurants= restaurantRepository.findByType(restType);
+        child.end();
+        return  restaurants;
     }
 
     public List<Restaurant> searchRestaurantByCity(String city) {
-        return restaurantRepository.findByAddressCity(city);
+        Span parent = ElasticApm.currentSpan();
+        Span child = parent.startSpan();
+        child.setName("SearchByCity");
+        List<Restaurant> restaurants=restaurantRepository.findByAddressCity(city);
+        child.end();
+        return restaurants;
     }
 
     public List<Restaurant> searchRestaurantByName(String restName) {
-        return restaurantRepository.findByNameContainingIgnoreCase(restName);
+        Span parent = ElasticApm.currentSpan();
+        Span child = parent.startSpan();
+        child.setName("SearchByName");
+        List<Restaurant> restaurants = restaurantRepository.findByNameContainingIgnoreCase(restName);
+        child.end();
+        return restaurants;
     }
 
     public List<Restaurant> generalSearch(String restName, String location, String restType) {
+        Span parent = ElasticApm.currentSpan();
+        Span child = parent.startSpan();
+        child.setName("GeneralSearch");
         Set<Restaurant> resultSet = new HashSet<>();
-
         if (restName != null && !restName.isEmpty()) {
             resultSet.addAll(restaurantRepository.findByNameContainingIgnoreCase(restName));
         }
@@ -95,8 +114,9 @@ public class RestaurantHandler {
         if (restType != null && !restType.isEmpty()) {
             resultSet.addAll(restaurantRepository.findByType(restType));
         }
-
+        child.end();
         return new ArrayList<>(resultSet);
+
     }
 
     public List<Restaurant> searchRestaurantByManagerName(String managerName) {

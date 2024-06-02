@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.services;
-
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Span;
 import ir.ie.mizdooni.commons.HttpRequestSender;
 import ir.ie.mizdooni.definitions.DataBaseUrlPath;
 import ir.ie.mizdooni.exceptions.*;
@@ -101,7 +102,13 @@ public class UserHandler implements UserDetailsService {
 
     public User getUserByUsername(String username) {
         ClientUser clientUser = getClientUserByUsername(username);
-        return clientUser == null ? getManagerUserByUsername(username) : clientUser;
+        Span parent = ElasticApm.currentSpan();
+        Span span = parent.startSpan();
+        span.setName("Username Retrieval");
+        span.setType("custom");
+        User result = clientUser == null ? getManagerUserByUsername(username) : clientUser;
+        span.end();
+        return result;
     }
 
     public ClientUser getClientUserByUsername(String username) {

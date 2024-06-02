@@ -1,4 +1,6 @@
 package ir.ie.mizdooni.controllers;
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Span;
 import ir.ie.mizdooni.models.Restaurant;
 import ir.ie.mizdooni.models.RestaurantTable;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +9,6 @@ import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.services.ReservationHandler;
 import ir.ie.mizdooni.services.RestaurantHandler;
 import ir.ie.mizdooni.services.RestaurantTableHandler;
-import ir.ie.mizdooni.services.ReviewHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,7 @@ import java.util.Map;
 
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
 import static ir.ie.mizdooni.definitions.RequestKeys.ADD_RESTAURANT_NAME_KEY;
-import static ir.ie.mizdooni.definitions.Successes.RESTAURANT_ADDED_SUCCESSFULLY;
 import static ir.ie.mizdooni.definitions.Successes.TABLE_ADDED_SUCCESSFULLY;
-import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddRest;
 import static ir.ie.mizdooni.validators.RequestSchemaValidator.validateAddTable;
 
 @RestController
@@ -103,6 +102,9 @@ public class TableController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Response> getRestaurantTableReservationHandler(@RequestBody Map<String, Object> body,
                                                                          @RequestAttribute String JWTUsername) {
+        Span parent = ElasticApm.currentSpan();
+        Span child = parent.startSpan();
+        child.setName("getTableReservations");
         try {
             Restaurant restaurant = restaurantHandler.getRestaurant((Long) body.get(RESTAURANT_ID_KEY));
             if (restaurant == null)
@@ -113,14 +115,20 @@ public class TableController {
             if (table == null)
                 throw new TableDoesntExist();
             logger.info("Restaurant `" + restaurant.getName() + "` Table `" + table.getTableNumber() + "` Reservations retrieved successfully");
-            return new ResponseEntity<>(new Response(true,
+            ResponseEntity<Response> t = new ResponseEntity<>(new Response(true,
                     Map.of("reservations", reservationHandler.getTableReservations(restaurant.getName(), table.getTableNumber())))
                     , HttpStatus.OK);
+            child.end();
+            return t;
         } catch (RestaurantNotFound | TableDoesntExist e) {
             logger.error("Reservations retrieve failed. error: " + e.getMessage(), e);
+            child.captureException(e);
+            child.end();
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (InvalidAccess e) {
             logger.error("Reservations retrieve failed. error: " + e.getMessage(), e);
+            child.captureException(e);
+            child.end();
             return new ResponseEntity<>(new Response(false, e.getMessage()), HttpStatus.FORBIDDEN);
         }
     }

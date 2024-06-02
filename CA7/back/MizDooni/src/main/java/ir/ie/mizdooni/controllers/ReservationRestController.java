@@ -1,5 +1,6 @@
 package ir.ie.mizdooni.controllers;
-
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Span;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Restaurant;
@@ -46,6 +47,7 @@ public class ReservationRestController {
         try {
             if (!username.equals(JWTUsername))
                 throw new InvalidAccess();
+
             User user = userHandler.getUserByUsername(username);
             if (user == null)
                 throw new UserNotFound();

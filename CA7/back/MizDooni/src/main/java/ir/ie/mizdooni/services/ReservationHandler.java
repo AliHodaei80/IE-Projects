@@ -1,5 +1,7 @@
 package ir.ie.mizdooni.services;
 
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Span;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.repositories.ReservationRepository;
@@ -174,7 +176,13 @@ public class ReservationHandler {
     }
 
     public List<Reservation> showHistoryReservation(String username) {
-        return reservationRepository.findReservationsByUsername(username);
+        Span parent = ElasticApm.currentSpan();
+        Span historySpan = parent.startSpan();
+        historySpan.setName("ProcessingHistoryReservation");
+        historySpan.setType("custom");
+        List<Reservation> reservationHistory =reservationRepository.findReservationsByUsername(username);
+        historySpan.end();
+        return reservationHistory;
     }
 
     public List<Reservation> getRestaurantReservation(String restName) {
