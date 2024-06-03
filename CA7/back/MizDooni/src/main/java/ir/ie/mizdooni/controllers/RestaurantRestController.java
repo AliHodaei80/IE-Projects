@@ -2,6 +2,8 @@ package ir.ie.mizdooni.controllers;
 
 import co.elastic.apm.api.Span;
 import co.elastic.apm.api.ElasticApm;
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.metrics.LongCounter;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.definitions.TimeFormats;
 import ir.ie.mizdooni.exceptions.*;
@@ -25,6 +27,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static ir.ie.mizdooni.definitions.MetricsName.RESERVATION_COUNTER;
+import static ir.ie.mizdooni.definitions.MetricsName.RESERVATION_METRIC;
 import static ir.ie.mizdooni.definitions.Parameters.ACTION_FIELD;
 import static ir.ie.mizdooni.definitions.Parameters.SEARCH_FIELD;
 import static ir.ie.mizdooni.definitions.RequestKeys.*;
@@ -38,7 +42,7 @@ public class RestaurantRestController {
     private RestaurantHandler restaurantHandler;
     private ReviewHandler reviewHandler;
     private ReservationHandler reservationHandler;
-
+    private LongCounter reservationCounter;
     private final Logger logger;
 
     @Autowired
@@ -49,6 +53,11 @@ public class RestaurantRestController {
         this.reservationHandler = reservationHandler;
         this.restaurantTableHandler = restaurantTableHandler;
         this.logger = LoggerFactory.getLogger(RestaurantRestController.class);
+        this.reservationCounter = GlobalOpenTelemetry
+                .getMeter(RESERVATION_METRIC)
+                .counterBuilder(RESERVATION_COUNTER)
+                .setDescription("Total number of reservations")
+                .build();
     }
 
     // addRestaurant
@@ -261,6 +270,7 @@ public class RestaurantRestController {
                     seatsReserved);
             long reservationNum = reservation.getReservationId();
             logger.info("Reservation `" + reservationNum + "` added successfully");
+            reservationCounter.add(1);
             Map<String, Object> outputData = new HashMap<>();
             outputData.put("reservation", reservation);
             return new ResponseEntity<>(new Response(true, outputData), HttpStatus.OK);

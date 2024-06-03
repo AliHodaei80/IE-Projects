@@ -1,6 +1,8 @@
 package ir.ie.mizdooni.controllers;
 import co.elastic.apm.api.ElasticApm;
 import co.elastic.apm.api.Span;
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.metrics.LongCounter;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.Restaurant;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ir.ie.mizdooni.definitions.MetricsName.*;
 import static ir.ie.mizdooni.definitions.RequestKeys.RESERVATION_NUM_KEY;
 import static ir.ie.mizdooni.definitions.RequestKeys.USERNAME_KEY;
 import static ir.ie.mizdooni.definitions.Successes.RESERVATION_CANCELLED_SUCCESSFULLY;
@@ -28,7 +31,7 @@ public class ReservationRestController {
     private static RestaurantHandler restaurantHandler;
     private static UserHandler userHandler;
     private static ReservationHandler reservationHandler;
-
+    private LongCounter cancelReservationCounter;
     private final Logger logger;
 
     @Autowired
@@ -37,6 +40,11 @@ public class ReservationRestController {
         this.userHandler = userHandler;
         this.reservationHandler = reservationHandler;
         logger = LoggerFactory.getLogger(ReservationRestController.class);
+        this.cancelReservationCounter = GlobalOpenTelemetry
+                .getMeter(RESERVATION_METRIC)
+                .counterBuilder(CANCELLATION_COUNTER)
+                .setDescription("Total number of reservation cancellations")
+                .build();
     }
 
     @RequestMapping(value = "/reservations/{username}", method = RequestMethod.GET)
@@ -77,6 +85,7 @@ public class ReservationRestController {
             validateCancelReservation(data);
             reservationHandler.cancelReservation((String) data.get(USERNAME_KEY), Long.parseLong(id));
             logger.info("Reservation `" + id + "` cancelled successfully");
+            cancelReservationCounter.add(1);
             return new ResponseEntity<>(new Response(true, RESERVATION_CANCELLED_SUCCESSFULLY), HttpStatus.OK);
         } catch (InvalidRequestFormat | InvalidRequestTypeFormat | CancellationTimePassed e) {
             logger.error("Cancellation reserve `" + id + "` failed: error: " + e.getMessage(), e);

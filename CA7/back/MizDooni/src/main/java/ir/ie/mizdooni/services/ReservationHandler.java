@@ -2,6 +2,7 @@ package ir.ie.mizdooni.services;
 
 import co.elastic.apm.api.ElasticApm;
 import co.elastic.apm.api.Span;
+import io.opentelemetry.api.metrics.LongCounter;
 import ir.ie.mizdooni.exceptions.*;
 import ir.ie.mizdooni.models.*;
 import ir.ie.mizdooni.repositories.ReservationRepository;
@@ -23,6 +24,7 @@ public class ReservationHandler {
     private final RestaurantHandler restaurantHandler;
     private final RestaurantTableHandler restaurantTableHandler;
     private final ReservationRepository reservationRepository;
+    private static LongCounter reservationCounter;
 
     @Autowired
     private ReservationHandler(UserHandler userHandler, RestaurantHandler restaurantHandler,

@@ -1,5 +1,7 @@
 package ir.ie.mizdooni.controllers;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.metrics.LongCounter;
 import ir.ie.mizdooni.commons.JwtResponse;
 import ir.ie.mizdooni.commons.Response;
 import ir.ie.mizdooni.configs.JwtUtil;
@@ -32,6 +34,9 @@ public class LoginRestController {
     private final UserHandler userHandler;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
+    private LongCounter loginCounter;
+    private LongCounter signUpCounter;
+
     private final Logger logger;
 
     @Autowired
@@ -40,6 +45,16 @@ public class LoginRestController {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         logger = LoggerFactory.getLogger(LoginRestController.class);
+        this.loginCounter = GlobalOpenTelemetry
+                .getMeter("LoginSignupMetric")
+                .counterBuilder("login_counter")
+                .setDescription("Total number of logins")
+                .build();
+        this.signUpCounter = GlobalOpenTelemetry
+                .getMeter("LoginSignupMetric")
+                .counterBuilder("signup_counter")
+                .setDescription("Total number of signups")
+                .build();
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -53,6 +68,7 @@ public class LoginRestController {
                     (String) data.get(PASSWORD_KEY),
                     (Map<String, String>) data.get(USER_ADDRESS_KEY));
             logger.info("User added successfully");
+            signUpCounter.add(1);
             return new ResponseEntity<>(new Response(true, USER_ADDED_SUCCESSFULLY), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User addition failed. error: " + e.getMessage(), e);
@@ -71,8 +87,8 @@ public class LoginRestController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails userDetails = userHandler.loadUserByUsername((String) data.get(USERNAME_KEY));
             String jwt = jwtUtil.generateToken(userDetails.getUsername());
-
             logger.info("User `" + data.get(USERNAME_KEY) + "` login successfully");
+            loginCounter.add(1);
             return ResponseEntity.ok(new JwtResponse(jwt, "Bearer", jwtUtil.extractExpiration(jwt).toInstant().toEpochMilli(), userDetails));
         } catch (AuthenticationException e) {
             logger.error("Login failed for User `" + data.get(USERNAME_KEY) + "`. error: " + e.getMessage(), e);
