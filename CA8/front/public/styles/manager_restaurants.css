@@ -1,0 +1,37 @@
+body {
+  background-color: var(--cream);
+  font-family: "SplineSans", serif;
+  min-height: 100vh;
+}
+table.table > thead > tr > th,
+table.table > thead > tr > td {
+  background-color: var(--white);
+  border: none;
+}
+table.table > tbody > tr > th,
+table.table > tbody > tr > td {
+  border: none;
+  border-top: 1px solid var(--light-grey2);
+}
+
+.table-container {
+  background-color: var(--white);
+  min-height: 500px;
+}
+
+.manager-operation {
+  font-size: 16px;
+  color: var(--white);
+  background: var(--red);
+  font-weight: 400;
+}
+
+.add {
+  width: 85px;
+  height: 30px;
+}
+
+.manage {
+  width: 104px;
+  height: 35px;
+}
