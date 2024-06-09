@@ -11,17 +11,18 @@ export function fetchData(
   use_token = true,
   authDetails = {}
 ) {
-  const token = authDetails.token ?? JSON.parse(Cookies.get("authDetails")).token;
-  console.log("Token",token)
+  const token =
+    authDetails.token ?? JSON.parse(Cookies.get("authDetails")).token;
+  console.log("Token", token);
   axios
-    .get(url, {
+    .get("/api" + url, {
       headers: !use_token
         ? {
             "Content-Type": "application/json",
           }
         : {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
+            Authorization: "Bearer " + token,
           },
       params: payload, // Assuming payload is meant to be query parameters
     })
@@ -60,7 +61,7 @@ export function postData(
 ) {
   console.log(
     "Sending data to url",
-    url,
+    "/api" + url,
     "with payload",
     payload,
     "Auth Details",
@@ -70,14 +71,15 @@ export function postData(
   );
 
   axios
-    .post(url, payload, {
+    .post("/api" + url, payload, {
       headers: !use_token
         ? {
             "Content-Type": "application/json",
           }
         : {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + JSON.parse(Cookies.get("authDetails")).token,
+            Authorization:
+              "Bearer " + JSON.parse(Cookies.get("authDetails")).token,
           },
     })
     .then((response) => {

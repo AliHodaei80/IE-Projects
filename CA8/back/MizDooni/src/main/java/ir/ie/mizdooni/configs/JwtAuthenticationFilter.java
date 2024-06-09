@@ -36,6 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         final String requestTokenHeader = request.getHeader("Authorization");
+        System.out.println("Request received.");
 
         String username = null;
         String jwtToken = null;
@@ -92,7 +93,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return path.equals("/login") || path.equals("/signup") || path.equals("/home") || path.equals("/logout") || path.matches("/Callback.*");
+        return path.equals("/api/login") || path.equals("/api/signup") || path.equals("/api/home") || path.equals("/api/logout") || path.matches("/api/Callback.*");
     }
 
     private void setErrorResponse(int status, HttpServletResponse response, String message) throws IOException {

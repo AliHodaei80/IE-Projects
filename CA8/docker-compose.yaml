@@ -1,4 +1,5 @@
 version: "2.2"
+name: mizdooni_app
 services:
   apm-server:
     image: docker.elastic.co/apm/apm-server:7.17.21
@@ -76,7 +77,7 @@ services:
       - MYSQL_ROOT_PASSWORD=Aa123456@@
       - MYSQL_DATABASE=Mizdooni
     ports:
-      - 3306:3306
+      - 3307:3306
     networks:
       - mizdooni_network
     healthcheck:
@@ -86,27 +87,41 @@ services:
 
   react-app:
     image: pooriatajmehrabi/mizdooni_frontend:latest
+    depends_on:
+      - mizdooni-app
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_BACKEND_URL: https://127.0.0.1:8090
     ports:
       - 80:80
       - 443:443
+      - 3001:3000
     networks:
       - mizdooni_network
     environment:
-      - ELASTIC_APM_SERVER_URL=http://apm-server:8200
-      - ELASTIC_APM_SERVICE_NAME=Mizdooni
+      - REACT_APP_BACKEND_URL=https://mizdooni-back:8090
 
   mizdooni-app:
     image: pooriatajmehrabi/mizdooni_backend:latest
     ports:
-      - 8080:8080
+      - 8090:8090
+    depends_on:
+      apm-server:
+        condition: service_healthy
+      mizdooni-mysql:
+        condition: service_healthy
+    build:
+      context: ./back/Mizdooni
+      dockerfile: Dockerfile
     networks:
       - mizdooni_network
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mizdooni-mysql:3306/Mizdooni
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=Aa123456@@
-      - ELASTIC_APM_SERVER_URL=http://apm-server:8200
-      - ELASTIC_APM_SERVICE_NAME=MizDooni
+      - ELASTIC_APM_SERVER_URLS=http://apm-server:8200
 
 volumes:
   esdata:

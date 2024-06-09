@@ -38,7 +38,7 @@ const Signup = () => {
       address: { city: userData.city, country: userData.country },
     };
     try {
-      const response = await axios.post(signup_path, sendingUserData);
+      const response = await axios.post("/api" + signup_path, sendingUserData);
 
       if (response.data.success) {
         navigate("home");

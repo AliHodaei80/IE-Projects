@@ -1,16 +1,20 @@
 # Stage 1: Build the React application
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
-
+ARG REACT_APP_BACKEND_URL
+ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 COPY package*.json ./
 
-RUN npm install
 
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-COPY . .
-
+COPY package*.json .
+COPY .env .env
+COPY public public
+COPY src src
+COPY ssl ssl
+RUN npm install
 RUN npm run build
 
 # Stage 2: Serve the React application with Nginx
@@ -29,5 +33,6 @@ COPY ssl/nginx.key /etc/nginx/ssl/nginx.key
 
 EXPOSE 80
 EXPOSE 443
+EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
