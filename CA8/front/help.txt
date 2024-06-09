@@ -1,0 +1,2 @@
+// Add for compiling
+// export NODE_OPTIONS=--openssl-legacy-providere

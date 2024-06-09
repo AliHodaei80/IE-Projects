@@ -1,0 +1,24 @@
+.mail-address {
+  color: var(--red);
+  text-decoration: none;
+}
+
+.user-info {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.97px;
+  background-color: var(--white-red);
+}
+
+.user-info #logout-button {
+  width: 120px;
+  height: 35px;
+  font-size: 16px;
+  color: var(--white);
+  background: var(--red);
+  margin-right: 20px;
+}
+
+.address {
+  margin-right: 16px;
+}
