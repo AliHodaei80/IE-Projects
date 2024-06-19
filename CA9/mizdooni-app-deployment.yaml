@@ -8,7 +8,7 @@ metadata:
     io.kompose.service: mizdooni-app
   name: mizdooni-app
 spec:
-  replicas: 1
+  replicas: 2  # Updated number of replicas
   selector:
     matchLabels:
       io.kompose.service: mizdooni-app
@@ -20,6 +20,16 @@ spec:
       labels:
         io.kompose.service: mizdooni-app
     spec:
+      affinity:  # Adding affinity rules
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "io.kompose.service"
+                    operator: In
+                    values:
+                      - mizdooni-app
+              topologyKey: "kubernetes.io/hostname"
       containers:
         - env:
             - name: ELASTIC_APM_SERVER_URLS
@@ -36,5 +46,3 @@ spec:
             - containerPort: 8090
               protocol: TCP
       restartPolicy: Always
-
-
