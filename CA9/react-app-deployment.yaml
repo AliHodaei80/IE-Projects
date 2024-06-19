@@ -24,7 +24,7 @@ spec:
         - env:
             - name: REACT_APP_BACKEND_URL
               value: https://mizdooni-back:8090
-          image: pooriatajmehrabi/mizdooni_frontend:latest
+          image: pooriatajmehrabi/mizdooni_frontend:1.0.0
           name: react-app
           ports:
             - containerPort: 80
