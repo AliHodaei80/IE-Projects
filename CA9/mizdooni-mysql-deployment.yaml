@@ -21,20 +21,32 @@ spec:
         io.kompose.service: mizdooni-mysql
     spec:
       containers:
-        - env:
+        - name: mizdooni-mysql
+          image: mysql:latest
+          env:
             - name: MYSQL_DATABASE
               value: Mizdooni
             - name: MYSQL_ROOT_PASSWORD
               value: Aa123456@@
-          image: mysql:latest
-          livenessProbe:
-            exec:
-              command:
-                - mysqladmin ping -h localhost
-            failureThreshold: 5
-            periodSeconds: 10
-          name: mizdooni-mysql
           ports:
             - containerPort: 3306
               protocol: TCP
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
       restartPolicy: Always

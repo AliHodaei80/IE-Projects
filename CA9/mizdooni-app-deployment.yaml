@@ -30,9 +30,11 @@ spec:
               value: jdbc:mysql://mizdooni-mysql:3306/Mizdooni
             - name: SPRING_DATASOURCE_USERNAME
               value: root
-          image: pooriatajmehrabi/mizdooni_backend:latest
+          image: pooriatajmehrabi/mizdooni_backend:1.0.0
           name: mizdooni-app
           ports:
             - containerPort: 8090
               protocol: TCP
       restartPolicy: Always
+
+

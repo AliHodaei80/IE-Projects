@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-nodeport
+  labels:
+    app: mysql
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      targetPort: 3306
+      nodePort: 31006  # Optional: specify a nodePort in the range 30000-32767; if not specified, one will be assigned automatically.
+  selector:
+    app: mysql  # This should match the labels of the pods you want to expose.
