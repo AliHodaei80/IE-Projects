@@ -40,6 +40,13 @@ spec:
               value: jdbc:mysql://mizdooni-mysql:3306/Mizdooni
             - name: SPRING_DATASOURCE_USERNAME
               value: root
+          resources:
+            requests:
+              memory: "200Mi"  # Request 200 MiB of memory
+              cpu: "500m"      # Request 100 millicpu (0.1 CPU cores)
+            limits:
+              memory: "500Mi"  # Limit to 500 MiB of memory
+              cpu: "0.5"       # Limit to 0.5 CPU cores (500 millicpu)
           image: pooriatajmehrabi/mizdooni_backend:1.0.0
           name: mizdooni-app
           ports:
